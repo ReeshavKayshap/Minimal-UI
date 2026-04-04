@@ -88,8 +88,8 @@ export default function LaminarFluid() {
           float wave = sin(along * 1.5 - u_time * 0.4) * 0.08 
                      + cos(along * 0.8 + u_time * 0.2) * 0.04;
           
-          float centerDist = across + wave + 0.5; 
-          float halfWidth = 0.35; 
+          float centerDist = across + wave + 0.45; 
+          float halfWidth = 0.26; // Reduced from 0.35 to make the effect smaller/thinner
 
           // Normalized distance across the band (-1.0 to 1.0)
           float nx = centerDist / halfWidth;
