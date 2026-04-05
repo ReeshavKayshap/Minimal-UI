@@ -28,9 +28,9 @@ export function ComponentTabs({ preview, code }: ComponentTabsProps) {
         </TabButton>
       </div>
 
-      <div className=" rounded-xl overflow-hidden border border-white/10 ">
+      <div className=" rounded-xl overflow-hidden border border-neutral-200/10 dark:border-white/10 ">
         {activeTab === "preview" ? (
-          <div className="w-full min-h-[450px] flex items-center justify-center bg-black">
+          <div className="w-full min-h-[450px] flex items-center justify-center bg-neutral-100 dark:bg-black">
             {preview}
           </div>
         ) : (
@@ -43,7 +43,6 @@ export function ComponentTabs({ preview, code }: ComponentTabsProps) {
   );
 }
 
-// Helper component to keep the code DRY and readable
 function TabButton({
   active,
   onClick,
@@ -58,8 +57,8 @@ function TabButton({
       onClick={onClick}
       className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
         active
-          ? "text-zinc-100 bg-white/10 shadow-sm"
-          : "text-zinc-400 hover:text-zinc-200 hover:bg-white/5"
+          ? "text-neutral-900 dark:text-zinc-100 bg-black/10 dark:bg-white/10 shadow-sm"
+          : "text-neutral-500 dark:text-zinc-400 hover:text-neutral-700 dark:hover:text-zinc-200 hover:bg-black/5 dark:hover:bg-white/5"
       }`}
     >
       {children}

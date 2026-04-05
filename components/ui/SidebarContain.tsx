@@ -45,14 +45,13 @@ function Sidebar() {
             className="px-2 py-1.5 flex items-center gap-1 overflow-hidden"
           >
             <SidebarContain />
-
-            <span className="text-[14px] font-bold text-zinc-200">
+            <span className="text-[14px] text-neutral-800 font-inter font-medium  dark:text-zinc-200">
               All Components
             </span>
           </Link>
         </motion.div>
         <motion.div
-          className="absolute left-0 right-0 rounded-lg bg-white/8 pointer-events-none"
+          className="absolute left-0 right-0 rounded-lg bg-black/5 dark:bg-white/8 pointer-events-none"
           initial={false}
           animate={{
             top: hoverStyle.top,
@@ -66,19 +65,19 @@ function Sidebar() {
             damping: 25,
           }}
         />
-
         {COMPONENT_LINKS.map((link, idx) => {
           const isActive = pathname === `/components/${link.slug}`;
           const isHovered = hoveredIndex === idx;
-
           return (
             <Link
               key={link.slug}
               href={`/components/${link.slug}`}
               onMouseEnter={(e) => handleMouseEnter(idx, e)}
               onMouseLeave={handleMouseLeave}
-              className={`relative px-3 py-1 text-[14px] rounded-lg transition-colors z-10 ${
-                isActive || isHovered ? "text-neutral-100" : "text-neutral-400"
+              className={`relative px-3 py-1 text-[14px] rounded-lg transition-colors font-inter font-medium z-10 ${
+                isActive || isHovered
+                  ? "text-neutral-900 dark:text-neutral-100"
+                  : "text-neutral-500 dark:text-neutral-400"
               }`}
             >
               {link.name}
@@ -91,6 +90,7 @@ function Sidebar() {
 }
 
 export default Sidebar;
+
 const SidebarContain = () => {
   return (
     <motion.div
@@ -99,7 +99,7 @@ const SidebarContain = () => {
         visible: { x: 0, opacity: 1, width: 24 },
       }}
       transition={{ duration: 0.25, ease: "easeOut" }}
-      className="flex items-center justify-center text-white pt-0.5"
+      className="flex items-center justify-center text-neutral-900 dark:text-white pt-0.5"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

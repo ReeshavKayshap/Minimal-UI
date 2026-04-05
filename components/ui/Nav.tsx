@@ -1,9 +1,8 @@
 "use client";
-import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import Container from "../Container";
+import { ThemeToggle } from "./theme-toggle";
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,12 +16,12 @@ const Nav = () => {
 
   return (
     <nav className="py-5   fixed top-0 w-full bg-background z-20">
-      <div className="border-b border-neutral-800/50 w-full absolute bottom-0 h-px"></div>
+      <div className="border-b border-neutral-200/50 dark:border-neutral-800/50 w-full absolute bottom-0 h-px"></div>
       <div className="flex justify-between items-center mx-auto max-w-360">
         <div className="flex justify-center items-center gap-5">
           <Link
             href="/"
-            className="text-white text-[28px] font-bold font-geist"
+            className="text-neutral-900 dark:text-white text-[33px] font-bold font-geist"
           >
             Minimal UI
           </Link>
@@ -31,7 +30,7 @@ const Nav = () => {
               <li key={item.label}>
                 <Link
                   href={item.href}
-                  className="hover:bg-neutral-800/50 transition-all text-neutral-400 hover:text-neutral-200 duration-250 py-3 px-4 rounded-lg text-[15.5px]"
+                  className="hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50 transition-all text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 duration-250 py-3 px-4 rounded-lg text-[14.5px]"
                 >
                   {item.label}
                 </Link>
@@ -39,11 +38,12 @@ const Nav = () => {
             ))}
           </ul>
         </div>
-        <div className="text-neutral-400 flex gap-4">
-          <button className="hover:bg-neutral-800/50 cursor-pointer transition-all text-neutral-400 hover:text-neutral-200 duration-250 py-3 px-4 rounded-lg text-[15.5px]">
+        <div className="text-neutral-500 dark:text-neutral-400 flex gap-4 items-center">
+          <ThemeToggle />
+          <button className="hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50 cursor-pointer transition-all text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 duration-250 py-3 px-4 rounded-lg text-[14.5px]">
             Login
           </button>
-          <button className="hover:bg-neutral-800/50 cursor-pointer transition-all text-neutral-400 hover:text-neutral-200 duration-250 py-3 px-4 rounded-lg text-[15.5px]">
+          <button className="hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50 cursor-pointer transition-all text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 duration-250 py-3 px-4 rounded-lg text-[14.5px]">
             Sign Up
           </button>
         </div>

@@ -22,7 +22,6 @@ const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
     title: "Repulsion Text",
     description:
       "An interactive particle text effect that scatters away from the mouse cursor.",
-
     component: (
       <RepulsioText
         text="Hover Me"
@@ -39,7 +38,6 @@ const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
   "option-toggle": {
     title: "OptionToggle",
     description: "A beautiful glowing option toggle.",
-
     component: <OptionToggle />,
     rawCode: auroraCodeString,
   },
@@ -64,20 +62,12 @@ export default async function ComponentPage({
 
   return (
     <div>
-      {/* <Link
-        href="/components"
-        className="group inline-flex items-center text-sm font-medium text-zinc-500 hover:text-zinc-200 transition-colors mb-10"
-      >
-        <IconChevronLeft className="w-4 h-4 mr-1 transition-transform group-hover:-translate-x-1" />
-        Components
-      </Link> */}
-
       <div className="flex flex-col gap-4 py-6">
-        <h1 className="text-4xl md:text-5xl font-semibold text-zinc-100 tracking-tight">
+        <h1 className="text-4xl md:text-5xl font-semibold text-neutral-900 dark:text-zinc-100 tracking-tight">
           {componentData.title}
         </h1>
 
-        <p className="text-lg text-zinc-400 max-w-2xl leading-relaxed">
+        <p className="text-lg text-neutral-500 dark:text-zinc-400 max-w-2xl leading-relaxed">
           {componentData.description}
         </p>
       </div>

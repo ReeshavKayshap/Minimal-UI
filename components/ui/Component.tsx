@@ -11,7 +11,7 @@ const ALL_COMPONENTS = [
     slug: "option-toggle",
     name: "OptionToggle",
     description: "A beautiful glowing option toggle.",
-    thumbnailVideo: "/videos/TextHover.mp4",
+    thumbnailVideo: "/videos/OptionToggle.mp4",
   },
   {
     slug: "sidebar-menu",
@@ -25,13 +25,12 @@ function Components() {
   return (
     <div className="flex flex-col relative gap-8 w-full">
       <div className="flex flex-col gap-4 max-w-2xl">
-        <h1 className="text-white text-4xl font-bold">
-          Unlock a growing library
+        <h1 className="text-neutral-900 dark:text-white font-inter text-4xl font-bold">
+          Build stunning interfaces in minutes
         </h1>
-        <p className="text-neutral-400 text-xl">
-          A collection of beautiful, ready-to-use components built specifically
-          for hero sections. Plug in, customize, and ship stunning visuals.
-          Works seamlessly with React, shadcn, and modern design systems.
+        <p className="text-neutral-500 dark:text-neutral-400 text-lg font-inter">
+          Production-ready UI components built with React, shadcn, and Tailwind.
+          Copy the code, customize, and ship.
         </p>
       </div>
 
@@ -40,26 +39,28 @@ function Components() {
           <Link
             key={item.slug}
             href={`/components/${item.slug}`}
-            className="flex flex-col bg-neutral-900  h-80 w-full col-span-1 rounded-2xl overflow-hidden shadow-[0px_0.5px_0px_0px_var(--color-neutral-700)_inset,0px_8px_8px_0px_var(--color-neutral-900)]"
+            className="flex flex-col bg-neutral-100 dark:bg-neutral-900 p-2   w-full col-span-1 rounded-2xl shadow-[0px_0.5px_0px_0px_var(--color-neutral-700)_inset]"
           >
-            <div className="p-1 w-full h-full relative">
-              <video
-                src={item.thumbnailVideo}
-                autoPlay
-                loop
-                muted
-                playsInline
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            </div>
+            <div className=" w-full h-full relative flex flex-col gap-2 ">
+              <span className="border border-neutral-200 dark:border-neutral-800 rounded-xl">
+                <video
+                  src={item.thumbnailVideo}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="rounded-xl w-full h-full object-cover"
+                />
+              </span>
 
-            <div className="p-4 bg-zinc-950 border-t border-white/10 h-20 flex flex-col justify-center">
-              <h2 className="text-lg font-geist font-semibold text-white">
-                {item.name}
-              </h2>
-              <p className="text-sm text-zinc-500 line-clamp-1">
-                {item.description}
-              </p>
+              <span className="px-2 py-2">
+                <h2 className="text-lg font-geist font-semibold text-neutral-900 dark:text-white">
+                  {item.name}
+                </h2>
+                <p className="text-sm text-zinc-400 dark:text-zinc-500 line-clamp-1">
+                  {item.description}
+                </p>
+              </span>
             </div>
           </Link>
         ))}
