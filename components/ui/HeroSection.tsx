@@ -68,7 +68,7 @@ function HeroSection() {
           </h1>
           <p
             className="text-neutral-700 dark:text-neutral-300/80 text-xl z-20 max-w-3xl 
-          tracking-wide font-geist-mono"
+          tracking-wide font-geist"
           >
             A collection of beautiful, ready-to-use components built
             specifically for minimal interaction.Plug in, customize, and ship
