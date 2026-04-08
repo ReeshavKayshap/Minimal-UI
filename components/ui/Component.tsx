@@ -14,6 +14,18 @@ const ALL_COMPONENTS = [
     thumbnailVideo: "/videos/OptionToggle.mp4",
   },
   {
+    slug: "reveal-password",
+    name: "RevealPassword",
+    description: "Reveal password with 3D flip animation.",
+    thumbnailVideo: "/videos/RevealPassword.mp4",
+  },
+  {
+    slug: "faq",
+    name: "Faq",
+    description: "Accordion FAQ with smooth animations.",
+    thumbnailVideo: "/videos/Faq.mp4",
+  },
+  {
     slug: "sidebar-menu",
     name: "Sidebar",
     description: "Sidebar menu with hover effects.",
@@ -24,11 +36,11 @@ const ALL_COMPONENTS = [
 function Components() {
   return (
     <div className="flex flex-col relative gap-8 w-full">
-      <div className="flex flex-col gap-4 max-w-2xl">
+      <div className="flex flex-col gap-2 max-w-2xl">
         <h1 className="text-neutral-900 dark:text-white font-inter text-4xl font-bold">
           Build stunning interfaces in minutes
         </h1>
-        <p className="text-neutral-500 dark:text-neutral-400 text-lg font-inter">
+        <p className="text-neutral-500 dark:text-neutral-400 text-[17px] font-inter">
           Production-ready UI components built with React, shadcn, and Tailwind.
           Copy the code, customize, and ship.
         </p>

@@ -7,7 +7,9 @@ import { usePathname } from "next/navigation";
 
 const COMPONENT_LINKS = [
   { name: "Repulsio Text", slug: "repulsio-text" },
-  { name: "OptionToggle", slug: "option-toggle" },
+  { name: "Option Toggle", slug: "option-toggle" },
+  { name: "Reveal Password", slug: "reveal-password" },
+  { name: "Faq", slug: "faq" },
 ];
 
 function Sidebar() {

@@ -63,7 +63,7 @@ export default function RevealPassword() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[#fafafa]">
+    <div className="flex items-center justify-center">
       <div className="flex items-center gap-10 bg-white px-3.5 py-2 w-fit rounded-2xl border border-gray-200 shadow-xs">
         {/* === CARD NUMBER DISPLAY === */}
         <div className="relative font-geist text-[17px] font-medium flex items-center text-gray-800">
