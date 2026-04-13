@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { CodeBlock } from "@/components/ui/Code-block";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 interface ComponentTabsProps {
   preview: React.ReactNode;
-  code: string;
+  code: React.ReactNode;
 }
 
 export function ComponentTabs({ preview, code }: ComponentTabsProps) {
@@ -27,7 +27,7 @@ export function ComponentTabs({ preview, code }: ComponentTabsProps) {
             {activeTab === changes.id && (
               <motion.div
                 layoutId="switch"
-                className="absolute inset-0  bg-white dark:bg-neutral-600 rounded-sm shadow-sm"
+                className="absolute inset-0  bg-white dark:bg-neutral-700 rounded-sm shadow-sm"
                 transition={{
                   type: "spring",
                   stiffness: 300,
@@ -35,13 +35,7 @@ export function ComponentTabs({ preview, code }: ComponentTabsProps) {
                 }}
               />
             )}
-            <span
-              className={`relative  z-10 ${
-                activeTab === changes.id
-                  ? "text-neutral-900 dark:text-zinc-100"
-                  : "text-neutral-500 dark:text-zinc-400"
-              }`}
-            >
+            <span className="relative z-10 text-neutral-900 dark:text-zinc-100">
               {changes.label}
             </span>
           </button>
@@ -49,15 +43,31 @@ export function ComponentTabs({ preview, code }: ComponentTabsProps) {
       </div>
 
       <div className=" rounded-xl overflow-hidden border border-neutral-200/10 dark:border-white/10 ">
-        {activeTab === "preview" ? (
-          <div className="w-full min-h-[450px] flex items-center justify-center bg-neutral-100 dark:bg-black">
-            {preview}
-          </div>
-        ) : (
-          <div className="w-full max-h-[600px] overflow-auto">
-            <CodeBlock code={code} language="tsx" />
-          </div>
-        )}
+        <AnimatePresence mode="wait">
+          {activeTab === "preview" ? (
+            <motion.div
+              key="preview"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.07 }}
+              className="w-full min-h-[480px] flex items-center justify-center bg-neutral-100 dark:bg-black"
+            >
+              {preview}
+            </motion.div>
+          ) : (
+            <motion.div
+              key="code"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.07 }}
+              className="w-full max-h-[600px] overflow-auto"
+            >
+              {typeof code === "string" ? <CodeBlock code={code} /> : code}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );

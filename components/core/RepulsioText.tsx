@@ -1,9 +1,6 @@
 "use client";
 import { useRef, useEffect, useCallback } from "react";
-
-// ============================================================================
-// TYPES
-// ============================================================================
+import { cn } from "@/lib/utils";
 
 interface Vector2D {
   x: number;
@@ -47,7 +44,6 @@ interface IParticle {
 }
 
 export interface RepulsionTextProps {
-  // Text Configuration
   text?: string;
   fontFamily?: string;
   fontWeight?: string | number;
@@ -55,24 +51,17 @@ export interface RepulsionTextProps {
   maxFontSize?: number;
   fontSizeRatio?: number;
 
-  // Particle Appearance
   color?: string;
   dotRadius?: number;
 
-  // Physics Configuration
   gap?: number;
   repulseRadius?: number;
   repulseForce?: number;
   springForce?: number;
   friction?: number;
 
-  // Layout
   className?: string;
 }
-
-// ============================================================================
-// DEFAULT VALUES
-// ============================================================================
 
 const DEFAULT_PROPS = {
   text: "Minimal UI",
@@ -99,10 +88,6 @@ const ALPHA_THRESHOLD = 128;
 const PARTICLE_OFFSET_RANGE = 2;
 const CANVAS_MIN_HEIGHT = 400;
 const INIT_DELAY = 100;
-
-// ============================================================================
-// PARTICLE CLASS
-// ============================================================================
 
 class Particle implements IParticle {
   public readonly originX: number;
@@ -152,10 +137,6 @@ class Particle implements IParticle {
     ctx.closePath();
   }
 }
-
-// ============================================================================
-// UTILITIES
-// ============================================================================
 
 const calculateFontSize = (width: number, config: CanvasConfig): number => {
   return Math.max(
@@ -234,10 +215,6 @@ const createParticlesFromText = (
 
   return particles;
 };
-
-// ============================================================================
-// CUSTOM HOOKS
-// ============================================================================
 
 const useCanvasSetup = () => {
   const setupCanvas = useCallback(
@@ -374,10 +351,6 @@ const useAnimationLoop = () => {
   };
 };
 
-// ============================================================================
-// MAIN COMPONENT
-// ============================================================================
-
 export default function RepulsionText(props: RepulsionTextProps = {}) {
   const {
     text = DEFAULT_PROPS.text,
@@ -393,7 +366,7 @@ export default function RepulsionText(props: RepulsionTextProps = {}) {
     repulseForce = DEFAULT_PROPS.repulseForce,
     springForce = DEFAULT_PROPS.springForce,
     friction = DEFAULT_PROPS.friction,
-    className = "flex justify-center items-center w-full h-full py-20",
+    className,
   } = props;
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -523,7 +496,12 @@ export default function RepulsionText(props: RepulsionTextProps = {}) {
   ]);
 
   return (
-    <div className={className}>
+    <div
+      className={cn(
+        "flex justify-center items-center w-full h-full py-20",
+        className,
+      )}
+    >
       <canvas ref={canvasRef} className="block" />
     </div>
   );

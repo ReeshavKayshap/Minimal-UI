@@ -4,11 +4,11 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #080808;
 }
 
 .dark {
-  --background: #0e0b0b;
+  --background: #080808;
   --foreground: #ffffff;
 }
 

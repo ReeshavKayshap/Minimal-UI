@@ -93,7 +93,7 @@ export function CliManualTabs({
             {activeTab === tab.id && (
               <motion.div
                 layoutId="install-tab-pill"
-                className="absolute inset-0  bg-white dark:bg-neutral-600 rounded-sm shadow-sm"
+                className="absolute inset-0  bg-white dark:bg-neutral-700 rounded-sm shadow-sm"
                 transition={{
                   type: "spring",
                   stiffness: 300,
@@ -101,13 +101,7 @@ export function CliManualTabs({
                 }}
               />
             )}
-            <span
-              className={`relative  z-10 ${
-                activeTab === tab.id
-                  ? "text-neutral-900 dark:text-zinc-100"
-                  : "text-neutral-500 dark:text-zinc-400"
-              }`}
-            >
+            <span className="relative  z-10 text-neutral-900 dark:text-neutral-100 ">
               {tab.label}
             </span>
           </button>

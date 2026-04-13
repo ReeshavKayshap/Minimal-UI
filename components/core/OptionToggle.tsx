@@ -1,25 +1,21 @@
 "use client";
 import { useState, useRef, useEffect, type ComponentType } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  IconLockSquareRounded,
-  IconWorld,
-  IconChevronDown,
-} from "@tabler/icons-react";
+import { motion, AnimatePresence } from "motion/react";
+import { IconChevronDown } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 
-type VisibilityState = "private" | "public";
-
-interface Option {
-  value: VisibilityState;
+export interface ToggleOption {
+  value: string;
   label: string;
   icon: ComponentType<{ size?: number; strokeWidth?: number }>;
 }
 
-const options: Option[] = [
-  { value: "private", label: "Private", icon: IconLockSquareRounded },
-  { value: "public", label: "Public", icon: IconWorld },
-];
+export interface OptionToggleProps {
+  options: ToggleOption[];
+  value: string;
+  onChange: (value: string) => void;
+  className?: string;
+}
 
 const ICON_SIZE = 22;
 
@@ -56,9 +52,13 @@ const buttonSpring = { duration: 0.3, ease: "easeOut" } as const;
 const widthSpring = { type: "spring", stiffness: 400, damping: 30 } as const;
 const chevronSpring = { type: "spring", stiffness: 300, damping: 20 } as const;
 
-export default function OptionToggle() {
+export default function OptionToggle({
+  options,
+  value,
+  onChange,
+  className,
+}: OptionToggleProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState<VisibilityState>("public");
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -72,18 +72,20 @@ export default function OptionToggle() {
     return () => document.removeEventListener("mousedown", onClickOutside);
   }, []);
 
-  const handleSelect = (value: VisibilityState) => {
-    setSelected(value);
+  const handleSelect = (selectedValue: string) => {
+    onChange(selectedValue);
     setIsOpen(false);
   };
 
-  const current = options.find((o) => o.value === selected)!;
+  const current = options.find((o) => o.value === value) || options[0];
   const CurrentIcon = current.icon;
   const currentLabelLetters = current.label.slice(1).split("");
 
-  const renderDropdownOption = (option: Option, i: number) => {
+  const dynamicWidth = currentLabelLetters.length * 8.5;
+
+  const renderDropdownOption = (option: ToggleOption, i: number) => {
     const Icon = option.icon;
-    const active = selected === option.value;
+    const active = value === option.value;
     const borderRadius =
       i === 0 ? "rounded-r-lg rounded-l-3xl" : "rounded-l-lg rounded-r-3xl";
 
@@ -120,9 +122,10 @@ export default function OptionToggle() {
   };
 
   return (
-    <div className="flex items-center justify-center font-geist">
+    <div
+      className={cn("flex items-center justify-center font-geist", className)}
+    >
       <div className="relative flex flex-col items-center" ref={menuRef}>
-        {/* Dropdown Menu */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -135,7 +138,6 @@ export default function OptionToggle() {
             >
               {options.map(renderDropdownOption)}
 
-              {/* Tooltip pointer arrow */}
               <div className="absolute -bottom-[5.5px] left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-b border-r border-gray-100 rotate-45 z-[-1]" />
             </motion.div>
           )}
@@ -154,7 +156,7 @@ export default function OptionToggle() {
           {/* Active Option Icon */}
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
-              key={selected}
+              key={value}
               variants={iconTransitionVariants}
               initial="initial"
               animate="animate"
@@ -168,18 +170,17 @@ export default function OptionToggle() {
 
           {/* Animated Active Text Label */}
           <span className="flex">
-            {/* Using current.label[0] dynamically handles the first letter, rather than hardcoding "P" */}
             <span>{current.label[0]}</span>
 
             <motion.div
               initial={false}
-              animate={{ width: selected === "private" ? 52 : 40 }}
+              animate={{ width: dynamicWidth }} // ⭐️ Now animates dynamically based on word length!
               transition={widthSpring}
               className="relative flex items-center"
             >
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span
-                  key={selected}
+                  key={value}
                   variants={wordContainerVariants}
                   initial="initial"
                   animate="animate"

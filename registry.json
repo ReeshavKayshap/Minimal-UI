@@ -1,0 +1,72 @@
+{
+  "name": "minimal-ui",
+  "homepage": "https://minimal-ui.com",
+  "items": [
+    {
+      "name": "repulsio-text",
+      "type": "registry:ui",
+      "dependencies": [
+        "motion",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/core/RepulsioText.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "option-toggle",
+      "type": "registry:ui",
+      "dependencies": [
+        "motion",
+        "@tabler/icons-react",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/core/OptionToggle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "reveal-password",
+      "type": "registry:ui",
+      "dependencies": [
+        "motion",
+        "@tabler/icons-react",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/core/RevealPassword.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "faq",
+      "type": "registry:ui",
+      "dependencies": [
+        "motion",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/core/Faq.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}
