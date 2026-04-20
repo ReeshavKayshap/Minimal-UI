@@ -10,6 +10,7 @@ interface PreviewCardProps {
   href: string;
   thumbnailSrc: string;
   videoSrc: string;
+  loading?: "lazy" | "eager";
 }
 
 export function PreviewCard({
@@ -18,6 +19,7 @@ export function PreviewCard({
   href,
   thumbnailSrc,
   videoSrc,
+  loading,
 }: PreviewCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -53,7 +55,7 @@ export function PreviewCard({
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            priority={false}
+            loading={loading}
             className="absolute inset-0 w-full h-full object-cover"
           />
 

@@ -33,14 +33,14 @@ const ALL_COMPONENTS = [
     slug: "sidebar-menu",
     name: "Sidebar",
     description: "Sidebar menu with hover effects.",
-    thumbnailVideo: "/videos/TextHover.mp4",
-    thumbnailSrc: "/thumbnails/Sidebar.webp",
+    thumbnailVideo: "/videos/Sidebar.mp4",
+    thumbnailSrc: "/thumbnails/Sidebar.png",
   },
 ];
 
 export default function Components() {
   return (
-    <div className="flex flex-col relative gap-8 w-full">
+    <div className="flex flex-col relative gap-8 w-full ">
       <div className="flex flex-col gap-2 max-w-2xl">
         <h1 className="text-neutral-900 dark:text-white font-inter text-3xl font-bold">
           Build stunning interfaces in minutes
@@ -51,7 +51,7 @@ export default function Components() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-        {ALL_COMPONENTS.map((item) => (
+        {ALL_COMPONENTS.map((item, index) => (
           <PreviewCard
             key={item.slug}
             title={item.name}
@@ -59,6 +59,7 @@ export default function Components() {
             href={`/components/${item.slug}`}
             thumbnailSrc={item.thumbnailSrc}
             videoSrc={item.thumbnailVideo}
+            loading={index < 3 ? "eager" : undefined}
           />
         ))}
       </div>

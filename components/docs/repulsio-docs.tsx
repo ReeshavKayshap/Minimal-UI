@@ -1,5 +1,5 @@
 import { Step, PropsTable, CliManualTabs } from "@/components/ui/Doc-blocks";
-import { CodeBlock } from "@/components/ui/Code-block";
+import { CodeHighlight } from "@/components/ui/Code-highlight";
 import { InstallCommand } from "@/components/ui/Install-command";
 import { InstallDependencies } from "@/components/ui/Install-dependencies";
 
@@ -578,7 +578,7 @@ export function RepulsioDocs() {
                   and paste this code.
                 </div>
                 <div className="mb-6">
-                  <CodeBlock code={utilsCode} />
+                  <CodeHighlight code={utilsCode} />
                 </div>
               </Step>
 
@@ -592,7 +592,7 @@ export function RepulsioDocs() {
                 </div>
 
                 <div className="mb-6 max-h-[450px] overflow-y-auto rounded-xl border border-white/10 relative custom-scrollbar">
-                  <CodeBlock code={repulsioCode} />
+                  <CodeHighlight code={repulsioCode} />
                 </div>
               </Step>
             </div>

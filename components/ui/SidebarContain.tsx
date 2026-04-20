@@ -4,12 +4,14 @@ import { motion } from "motion/react";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { IconBrandX } from "@tabler/icons-react";
 
 const COMPONENT_LINKS = [
   { name: "Repulsio Text", slug: "repulsio-text" },
   { name: "Option Toggle", slug: "option-toggle" },
   { name: "Reveal Password", slug: "reveal-password" },
   { name: "Faq", slug: "faq" },
+  { name: "Sidebar Menu", slug: "sidebar-menu" },
 ];
 
 function Sidebar() {
@@ -39,15 +41,24 @@ function Sidebar() {
   };
 
   return (
-    <div className="w-56 shrink-0 hidden md:block h-full sticky top-[100px] ">
-      <div className="flex flex-col w-fit relative">
+    <div className="w-56 shrink-0 hidden md:block h-full sticky top-[120px] pt-2">
+      <span className="text-neutral-900 dark:text-white font-inter font-medium cursor-pointer ">
+        <h1 className="px-[10px] flex items-center gap-2">
+          <span className="text-neutral-900 dark:text-white ">
+            <IconBrandX size={17} />
+          </span>
+          <span className="text-sm">Follow for updates</span>
+        </h1>
+      </span>
+
+      <div className="flex flex-col w-fit relative pt-5">
         <motion.div initial="hidden" whileHover="visible" className="w-fit">
           <Link
             href="/components"
             className="px-2 py-1.5 flex items-center gap-1 overflow-hidden"
           >
             <SidebarContain />
-            <span className="text-[14px] text-neutral-800 font-inter font-medium  dark:text-zinc-200">
+            <span className="text-sm text-neutral-800 font-inter font-medium  dark:text-zinc-200">
               All Components
             </span>
           </Link>
@@ -76,7 +87,7 @@ function Sidebar() {
               href={`/components/${link.slug}`}
               onMouseEnter={(e) => handleMouseEnter(idx, e)}
               onMouseLeave={handleMouseLeave}
-              className={`relative px-3 py-1 text-[14px] rounded-lg transition-colors font-inter font-medium z-10 ${
+              className={`relative px-3 py-1 text-sm rounded-lg transition-colors font-inter font-medium z-10 ${
                 isActive || isHovered
                   ? "text-neutral-900 dark:text-neutral-100"
                   : "text-neutral-500 dark:text-neutral-400"

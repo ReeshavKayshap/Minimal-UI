@@ -49,7 +49,7 @@ export default async function ComponentPage({
 
   return (
     <div>
-      <div className="flex flex-col gap-2 pb-6 pt-1">
+      <div className="flex flex-col gap-2 pb-6">
         <h1 className="text-4xl md:text-3xl font-inter font-semibold text-neutral-900 dark:text-zinc-100 tracking-tight">
           {componentData.title}
         </h1>

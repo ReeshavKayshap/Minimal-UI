@@ -55,4 +55,13 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
     ),
     previewFileName: "faq.preview.tsx",
   },
+  "sidebar-menu": {
+    title: "Sidebar Menu",
+    description: "A collapsible sidebar menu with fluid spring animations.",
+    preview: dynamic(() => import("@/components/previews/sidebar-preview")),
+    docs: dynamic(() =>
+      import("@/components/docs/sidebar-docs").then((mod) => mod.SidebarDocs),
+    ),
+    previewFileName: "sidebar-preview.tsx",
+  },
 };

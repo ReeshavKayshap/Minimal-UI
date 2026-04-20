@@ -67,6 +67,22 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "sidebar-menu",
+      "type": "registry:ui",
+      "dependencies": [
+        "motion",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/core/Sidebar.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

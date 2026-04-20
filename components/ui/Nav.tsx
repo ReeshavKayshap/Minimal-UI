@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ThemeToggle } from "./theme-toggle";
+import { IconCommand } from "@tabler/icons-react";
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,42 +11,50 @@ const Nav = () => {
 
   const navItems = [
     { href: "/components", label: "Component" },
-    { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
+    // { href: "/about", label: "About" },
+    // { href: "/contact", label: "Contact" },
   ];
 
   return (
-    <nav className="py-5   fixed top-0 w-full bg-background z-20">
-      <div className="border-b border-neutral-200/50 dark:border-neutral-800/50 w-full absolute bottom-0 h-px"></div>
-      <div className="flex justify-between items-center mx-auto max-w-360">
-        <div className="flex justify-center items-center gap-5">
+    <nav className="py-3 fixed top-0 w-full z-50 ">
+      <div
+        className="pointer-events-none absolute left-0 top-0 h-35 w-full 
+      backdrop-blur-md mask-[linear-gradient(to_bottom,black_30%,transparent_100%)] z-[-1]"
+      />
+      <div
+        className="flex justify-between items-center mx-auto max-w-3xl bg-neutral-100 dark:bg-neutral-900  shadow-[0px_0.5px_0px_0px_var(--color-neutral-700)_inset] 
+      py-3 px-4 rounded-2xl"
+      >
+        <div className="w-full">
           <Link
             href="/"
-            className="text-neutral-900 dark:text-white text-[33px] font-bold font-geist"
+            className="text-neutral-900 dark:text-white text-[22px] font-bold font-geist"
           >
             Minimal UI
           </Link>
-          <ul className="flex justify-center items-center gap-2 font-inter ">
-            {navItems.map((item) => (
-              <li key={item.label}>
-                <Link
-                  href={item.href}
-                  className="hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50 transition-all text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 duration-250 py-3 px-4 rounded-lg text-[14.5px]"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
         </div>
-        <div className="text-neutral-500 dark:text-neutral-400 flex gap-4 items-center">
-          <ThemeToggle />
-          <button className="hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50 cursor-pointer transition-all text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 duration-250 py-3 px-4 rounded-lg text-[14.5px]">
-            Login
+        <ul className="flex justify-end items-center font-inter w-full ">
+          {navItems.map((item) => (
+            <li key={item.label}>
+              <Link
+                href={item.href}
+                className="text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 transition-all duration-300 py-3 px-4 rounded-lg text-[14px]"
+              >
+                {item.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="h-6 w-px border-l border-dashed border-neutral-700 " />
+        <div className="text-neutral-500 dark:text-neutral-400 flex justify-center items-center gap-4  pl-4">
+          <button className="cursor-pointer  ">
+            <IconCommand size={20} className="stroke-1.5" />
           </button>
-          <button className="hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50 cursor-pointer transition-all text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 duration-250 py-3 px-4 rounded-lg text-[14.5px]">
+
+          {/* <ThemeToggle /> */}
+          {/* <button className="hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50 cursor-pointer transition-all text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 duration-250 py-3 px-4 rounded-lg text-[14.5px]">
             Sign Up
-          </button>
+          </button> */}
         </div>
       </div>
     </nav>
