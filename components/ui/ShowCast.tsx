@@ -17,15 +17,15 @@ function ShowCast() {
         <div className=" bg-neutral-100 dark:bg-neutral-900 h-140 w-full rounded-2xl row-span-2">
           <div className="p-1 w-full h-full relative">
             <video
-              src="/videos/Faq.mp4"
+              src="/videos/Sidebar.mp4"
               autoPlay
               loop
               muted
               playsInline
-              className="rounded-2xl w-full h-full object-cover "
+              className="rounded-2xl w-full h-full object-cover object-left "
             />
             <h1 className="text-black absolute bottom-6 left-8 font-geist text-[16px]">
-              OptionToggle
+              Sidebar
             </h1>
           </div>
         </div>

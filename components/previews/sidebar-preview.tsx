@@ -25,8 +25,40 @@ export default function SidebarPreview() {
         className="z-30"
       />
 
+      <span>
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none z-20"
+          viewBox="0 0 1000 650"
+        >
+          <defs>
+            <marker
+              id="arrowhead"
+              markerWidth="8"
+              markerHeight="8"
+              refX="7.5"
+              refY="4"
+              orient="auto"
+            >
+              <polygon points="0 0, 8 4, 0 8, 2.5 4" fill="#a1a1aa" />
+            </marker>
+          </defs>
+
+          <circle cx="500" cy="290" r="5" fill="#a1a1aa" />
+
+          <path
+            d="M 500 290 C 450 150, 200 150, 75 75"
+            fill="none"
+            stroke="#a1a1aa"
+            strokeWidth="2.5"
+            strokeDasharray="6 6"
+            strokeLinecap="round"
+            markerEnd="url(#arrowhead)"
+          />
+        </svg>
+      </span>
+
       <span
-        className="text-white absolute top-0 left-0 font-inter text-lg
+        className="text-white absolute top-0 left-0 font-inter text-xl
         flex justify-center items-center w-full h-full pointer-events-none"
       >
         Click the menu icon in the top left to open the sidebar.

@@ -19,6 +19,31 @@ interface SidebarProps {
   className?: string;
 }
 
+const SOUND_URLS = [
+  "https://cdn.jsdelivr.net/gh/by-huy/soundlib@fe430a02c684814b53656d4619d2deb50bd52242/tap_01.wav",
+  "https://cdn.jsdelivr.net/gh/by-huy/soundlib@fe430a02c684814b53656d4619d2deb50bd52242/tap_02.wav",
+  "https://cdn.jsdelivr.net/gh/by-huy/soundlib@fe430a02c684814b53656d4619d2deb50bd52242/tap_03.wav",
+  "https://cdn.jsdelivr.net/gh/by-huy/soundlib@fe430a02c684814b53656d4619d2deb50bd52242/tap_04.wav",
+  "https://cdn.jsdelivr.net/gh/by-huy/soundlib@fe430a02c684814b53656d4619d2deb50bd52242/tap_05.wav",
+];
+
+let audioObjects: HTMLAudioElement[] = [];
+
+if (typeof window !== "undefined") {
+  audioObjects = SOUND_URLS.map((url) => {
+    const audio = new Audio(url);
+    audio.volume = 0.5;
+    return audio;
+  });
+}
+
+const playHoverSound = () => {
+  if (typeof window === "undefined" || audioObjects.length === 0) return;
+  const audio = audioObjects[Math.floor(Math.random() * audioObjects.length)];
+  audio.currentTime = 0;
+  audio.play().catch(() => {});
+};
+
 export default function Sidebar({
   items,
   title = "All Components",
@@ -31,83 +56,140 @@ export default function Sidebar({
       x: "-100%",
       opacity: 0,
       transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 40,
+        duration: 0.3,
+        ease: "easeOut",
       },
     },
     visible: {
       x: 0,
       opacity: 1,
       transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 40,
-        staggerChildren: 0.03,
-        delayChildren: 0.1,
+        duration: 0.3,
+        ease: "easeOut",
       },
     },
   };
 
   return (
-    <div className="relative h-full w-full">
+    <>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="absolute top-10 left-10 z-40 cursor-pointer p-2 bg-[#0F0F0F] rounded-md backdrop-blur-md transition-colors"
+        className="absolute top-10 left-10 z-40 cursor-pointer w-[34px] h-[34px] flex items-center justify-center bg-[#080808] rounded-md backdrop-blur-md transition-colors"
         aria-label="Toggle Menu"
       >
-        {isOpen ? (
-          <IconLayoutSidebarFilled size={18} className="text-zinc-200" />
-        ) : (
-          <IconLayoutSidebarRightFilled size={18} className="text-zinc-200" />
-        )}
+        <AnimatePresence mode="wait" initial={false}>
+          {isOpen ? (
+            <motion.div
+              key="open"
+              initial={{ opacity: 0, scale: 0.97, filter: "blur(2px)" }}
+              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              exit={{ opacity: 0, scale: 0.97, filter: "blur(2px)" }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              <IconLayoutSidebarFilled size={18} className="text-zinc-200" />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="closed"
+              initial={{ opacity: 0, scale: 0.97, filter: "blur(2px)" }}
+              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+              exit={{ opacity: 0, scale: 0.97, filter: "blur(2px)" }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              <IconLayoutSidebarRightFilled
+                size={18}
+                className="text-zinc-200"
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </button>
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            variants={sidebarVariants}
-            className={cn(
-              "absolute top-0 left-5 my-5 rounded-2xl w-[340px] max-w-[85vw] bg-[#0f0f0f]/95 backdrop-blur-xl border border-zinc-800/60 p-8 pt-24 shadow-2xl flex flex-col z-40",
-              className,
-            )}
-          >
-            <div className="flex-1 overflow-y-auto pr-4 pb-12 custom-scrollbar">
-              <div className="relative">
-                <motion.ul className="flex flex-col relative z-10">
-                  <motion.li className="relative flex items-center h-[40px]">
-                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-px bg-zinc-200" />
-                    <div className="pl-11 flex items-center">
-                      <span className="text-[15px] font-inter text-zinc-100 tracking-wide">
-                        {title}
-                      </span>
-                    </div>
-                  </motion.li>
-
-                  {items.map((item) => (
-                    <motion.li
-                      key={item.id}
-                      onClick={item.onClick}
-                      className="relative group cursor-pointer flex items-center h-[30px]"
-                    >
-                      <div className="absolute left-0 -top-px w-8 h-px bg-zinc-800" />
-                      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 group-hover:w-14 h-px bg-zinc-800 group-hover:bg-sky-500 transition-all duration-400 ease-out" />
-                      <div className="pl-11 flex items-center  transform transition-transform duration-400 ease-out group-hover:translate-x-6">
-                        <span className="text-[15px] font-geist font-medium text-zinc-400 group-hover:text-sky-500 transition-colors duration-400">
-                          {item.name}
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="absolute inset-0 z-30 bg-black/40 backdrop-blur-sm"
+              onClick={() => setIsOpen(false)}
+            />
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={sidebarVariants}
+              className={cn(
+                "absolute top-0 left-5 my-5 rounded-2xl w-[340px] max-w-[85vw] bg-[#0f0f0f]/95 backdrop-blur-xl border border-zinc-800/60 p-8 pt-24 shadow-2xl flex flex-col z-40",
+                className,
+              )}
+            >
+              <div className="flex-1 overflow-y-auto pr-4 pb-12 custom-scrollbar">
+                <div className="relative">
+                  <motion.ul className="flex flex-col relative z-10">
+                    <motion.li className="relative flex items-center h-[40px]">
+                      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-px bg-zinc-200" />
+                      <div className="pl-11 flex items-center">
+                        <span className="text-[15px] font-inter text-zinc-100 tracking-wide">
+                          {title}
                         </span>
                       </div>
                     </motion.li>
-                  ))}
-                </motion.ul>
+
+                    {items.map((item) => (
+                      <motion.li
+                        key={item.id}
+                        onClick={item.onClick}
+                        initial="initial"
+                        whileHover="hover"
+                        onHoverStart={playHoverSound}
+                        className="relative cursor-pointer flex items-center h-[30px]"
+                      >
+                        <div className="absolute left-0 -top-px w-8 h-px bg-zinc-800" />
+                        <motion.div
+                          variants={{
+                            initial: {
+                              width: "2rem",
+                              backgroundColor: "#27272a",
+                            },
+                            hover: {
+                              width: "3.5rem",
+                              backgroundColor: "#0ea5e9",
+                            },
+                          }}
+                          transition={{ duration: 0.28, ease: "easeOut" }}
+                          className="absolute left-0 top-1/2 -translate-y-1/2 h-px"
+                        />
+                        <motion.div
+                          variants={{
+                            initial: { x: 0 },
+                            hover: { x: 24 },
+                          }}
+                          transition={{ duration: 0.3, ease: "easeOut" }}
+                          className="pl-11 flex items-center"
+                        >
+                          <motion.span
+                            variants={{
+                              initial: { color: "#a1a1aa" },
+                              hover: { color: "#0ea5e9" },
+                            }}
+                            transition={{ duration: 0.3 }}
+                            className="text-[15px] font-geist font-medium"
+                          >
+                            {item.name}
+                          </motion.span>
+                        </motion.div>
+                      </motion.li>
+                    ))}
+                  </motion.ul>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 }

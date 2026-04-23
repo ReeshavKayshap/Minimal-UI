@@ -2,6 +2,7 @@ import { Step, PropsTable, CliManualTabs } from "@/components/ui/Doc-blocks";
 import { IconCopy } from "@tabler/icons-react";
 import { CodeHighlight } from "@/components/ui/Code-highlight";
 import { InstallCommand } from "../ui/Install-command";
+import { InstallDependencies } from "../ui/Install-dependencies";
 
 const utilsCode = `import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -180,14 +181,9 @@ export function FaqDocs() {
           manualContent={
             <div className="flex flex-col gap-2">
               <Step number={1} title="Install Package">
-                <div className="flex items-center justify-between bg-zinc-900 px-4 py-4.5 rounded-md border border-white/10 group">
-                  <code className="font-mono text-[16px] text-zinc-300">
-                    npm install motion clsx tailwind-merge
-                  </code>
-                  <button className="text-zinc-400 hover:text-zinc-100 transition-colors cursor-pointer">
-                    <IconCopy size={16} />
-                  </button>
-                </div>
+                <InstallDependencies
+                  dependencies={["motion", "clsx", "tailwind-merge"]}
+                />
               </Step>
 
               <Step number={2} title="Add util file">
