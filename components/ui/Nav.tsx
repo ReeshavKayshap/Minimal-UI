@@ -25,7 +25,12 @@ const Nav = () => {
         className="flex justify-between items-center mx-auto max-w-3xl bg-neutral-100 dark:bg-neutral-900  shadow-[0px_0.5px_0px_0px_var(--color-neutral-700)_inset] 
       py-3 px-4 rounded-2xl"
       >
-        <div className="w-full">
+        <div className="w-full flex gap-3 items-center">
+          <img
+            src="/thumbnails/Logo.png"
+            alt="logo"
+            className="rounded-full object-cover size-7"
+          />
           <Link
             href="/"
             className="text-neutral-900 dark:text-white text-[22px] font-bold font-geist"

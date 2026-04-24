@@ -19,6 +19,11 @@
   --font-inter: var(--font-inter);
   --font-geist-mono: var(--font-geist-mono);
   --font-serif: var(--font-instrument);
+  --font-pixel-square: var(--font-geist-pixel-square);
+  --font-pixel-grid: var(--font-geist-pixel-grid);
+  --font-pixel-circle: var(--font-geist-pixel-circle);
+  --font-pixel-triangle: var(--font-geist-pixel-triangle);
+  --font-pixel-line: var(--font-geist-pixel-line);
 }
 
 body {
