@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ThemeToggle } from "./theme-toggle";
 import { IconCommand } from "@tabler/icons-react";
+import Image from "next/image";
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,10 +27,13 @@ const Nav = () => {
       py-3 px-4 rounded-2xl"
       >
         <div className="w-full flex gap-3 items-center">
-          <img
+          <Image
             src="/thumbnails/Logo.png"
             alt="logo"
-            className="rounded-full object-cover size-7"
+            loading="eager"
+            width={30}
+            height={30}
+            className="rounded-full object-cover size-7.5"
           />
           <Link
             href="/"

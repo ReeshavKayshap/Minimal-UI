@@ -1,7 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import Silk from "../core/ShaderBackground";
 import { IconArrowNarrowRightDashed } from "@tabler/icons-react";
+import { motion } from "motion/react";
 
 export default function HeroSection() {
   const variants = {
@@ -17,9 +19,9 @@ export default function HeroSection() {
 
       <div className=" z-10 flex flex-col items-center justify-center w-full gap-10 h-full pt-10">
         <div className=" flex flex-col gap-3 items-center justify-center w-full">
-          <div className="text-neutral-300/80  text-lg tracking-wider font-geist ">
+          {/* <div className="text-neutral-300/80  text-lg tracking-wider font-geist ">
             Minimal UI
-          </div>
+          </div> */}
 
           <div
             className="text-white text-5xl  font-semibold flex flex-col items-center justify-center 
@@ -32,36 +34,71 @@ export default function HeroSection() {
 
         <p
           className="text-neutral-700 dark:text-neutral-300/80 text-center 
-          text-[16px] tracking-wide font-geist max-w-lg"
+          text-[17px] tracking-wide font-geist max-w-lg"
         >
           A collection of beautiful, ready-to-use components built specifically
           for minimal interaction.
         </p>
 
         <div className="flex gap-4">
-          <button
-            className="text-white group dark:text-black  font-geist cursor-pointer text-[15px]
-           bg-neutral-100 py-2 px-8 flex items-center gap-1 rounded-2xl hover:px-11 transition-all duration-300 "
+          <Link href="/components">
+            <motion.div
+              initial="initial"
+              whileHover="hover"
+              variants={{
+                initial: { paddingLeft: 32, paddingRight: 32 },
+                hover: { paddingLeft: 44, paddingRight: 44 },
+              }}
+              transition={{ type: "spring", stiffness: 250, damping: 20 }}
+              className="text-white dark:text-black font-geist cursor-pointer text-[15px] bg-neutral-100 py-2.5 px-8 flex items-center gap-1 rounded-2xl"
+            >
+              Quick Start
+              <motion.div
+                variants={{
+                  initial: { x: 0 },
+                  hover: { x: 4 },
+                }}
+                transition={{ type: "spring", stiffness: 250, damping: 20 }}
+              >
+                <IconArrowNarrowRightDashed />
+              </motion.div>
+            </motion.div>
+          </Link>
+          <Link
+            href="https://x.com/rshvkyp"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Quick Start
-            <div className="group-hover:translate-x-1 transition-all duration-300">
-              <IconArrowNarrowRightDashed />
-            </div>
-          </button>
-          <button className="dark:text-white text-black text-[15px] hover:px-10 transition-all duration-300  font-geist cursor-pointer border  border-neutral-600 bg-[#171717] py-2 px-8 rounded-2xl">
-            Contact Me
-          </button>
+            <motion.div
+              initial="initial"
+              whileHover="hover"
+              variants={{
+                initial: { paddingLeft: 32, paddingRight: 32 },
+                hover: { paddingLeft: 40, paddingRight: 40 },
+              }}
+              transition={{ type: "spring", stiffness: 250, damping: 20 }}
+              className="dark:text-white text-black text-[15px] font-geist cursor-pointer bg-[#171717] py-2.5 px-8 rounded-2xl"
+            >
+              Contact Me
+            </motion.div>
+          </Link>
         </div>
       </div>
 
       <div
-        className="w-full h-full bg-transparent z-10 fixed inset-0 flex justify-end 
-      items-end pb-4 pr-5 gap-1"
+        className="w-full h-full bg-transparent  absolute inset-0 flex justify-end 
+      items-end pb-4 pr-5 gap-1 text-[15px]"
       >
         <span className="text-gray-400">Built by</span>
-        <span className="text-gray-400 font-pixel-square underline underline-offset-3 decoration-gray-400 decoration-1">
+        <Link
+          href="https://x.com/rshvkyp"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-gray-400 font-pixel-square underline underline-offset-3 decoration-gray-400 decoration-1
+          hover:text-gray-200 hover:decoration-gray-200 transition-all duration-300 ease-out cursor-pointer"
+        >
           Reeshav
-        </span>
+        </Link>
       </div>
     </section>
   );

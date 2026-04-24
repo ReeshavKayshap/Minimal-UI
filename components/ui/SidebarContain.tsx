@@ -42,13 +42,18 @@ function Sidebar() {
 
   return (
     <div className="w-56 shrink-0 hidden md:block h-full sticky top-[120px] pt-2">
-      <span className="text-neutral-900 dark:text-white font-inter font-medium cursor-pointer ">
-        <h1 className="px-[10px] flex items-center gap-2">
+      <span className="text-neutral-900 dark:text-white font-inter font-medium ">
+        <Link
+          href="https://x.com/rshvkyp"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-[10px] flex items-center gap-2 cursor-pointer"
+        >
           <span className="text-neutral-900 dark:text-white ">
             <IconBrandX size={17} />
           </span>
           <span className="text-sm">Follow for updates</span>
-        </h1>
+        </Link>
       </span>
 
       <div className="flex flex-col w-fit relative pt-5">
