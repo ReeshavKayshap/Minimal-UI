@@ -77,7 +77,7 @@ export default function HeroSection() {
                 hover: { paddingLeft: 40, paddingRight: 40 },
               }}
               transition={{ type: "spring", stiffness: 250, damping: 20 }}
-              className="dark:text-white text-black text-[15px] font-geist cursor-pointer bg-[#171717] py-2.5 px-8 rounded-2xl"
+              className="dark:text-white text-black text-[15px] font-geist cursor-pointer bg-[#121212] py-2.5 px-8 rounded-2xl"
             >
               Contact Me
             </motion.div>
