@@ -146,7 +146,11 @@ const Silk: React.FC<SilkProps> = ({
     return () => {
       resizeObserver.disconnect();
       cancelAnimationFrame(animationFrameId);
-      if (currentMount && renderer.domElement && currentMount.contains(renderer.domElement)) {
+      if (
+        currentMount &&
+        renderer.domElement &&
+        currentMount.contains(renderer.domElement)
+      ) {
         currentMount.removeChild(renderer.domElement);
       }
       geometry.dispose();

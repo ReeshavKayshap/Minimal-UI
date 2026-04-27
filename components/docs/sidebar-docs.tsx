@@ -209,7 +209,26 @@ export default function Sidebar({
 `;
 
 export function SidebarDocs() {
-  const sidebarProps: any[] = [];
+  const sidebarProps = [
+    {
+      prop: "items",
+      type: "SidebarItem[]",
+      defaultValue: "[]",
+      description: "Array of items to display in the sidebar. Each item requires an id, name, and optional onClick handler.",
+    },
+    {
+      prop: "title",
+      type: "string",
+      defaultValue: '"All Components"',
+      description: "The title displayed at the top of the sidebar menu.",
+    },
+    {
+      prop: "className",
+      type: "string",
+      defaultValue: "undefined",
+      description: "Optional custom CSS classes to apply to the sidebar container.",
+    },
+  ];
 
   return (
     <div className="w-full flex flex-col gap-5 pt-5 animate-in fade-in duration-700">
@@ -268,14 +287,7 @@ export function SidebarDocs() {
         <h2 className="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-2">
           Props
         </h2>
-        {sidebarProps.length > 0 ? (
-          <PropsTable data={sidebarProps} />
-        ) : (
-          <p className="text-zinc-400 mb-4 leading-relaxed">
-            This component does not accept any props currently. You can modify
-            the internal <code>MENU_ITEMS</code> directly in the component file.
-          </p>
-        )}
+        <PropsTable data={sidebarProps} />
       </section>
     </div>
   );

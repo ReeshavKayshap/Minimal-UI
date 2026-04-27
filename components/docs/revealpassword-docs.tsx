@@ -204,24 +204,36 @@ export default function RevealPassword({
 `;
 
 export function RevealPasswordDocs() {
-  const repulsioProps = [
+  const revealPasswordProps = [
     {
-      prop: "text",
+      prop: "prefix",
       type: "string",
-      defaultValue: '"Minimal UI"',
-      description: "The text rendered into particles.",
+      defaultValue: '"4485 "',
+      description: "The text before the masked segment.",
     },
     {
-      prop: "gap",
-      type: "number",
-      defaultValue: "7",
-      description: "The space between particles (lower = denser).",
+      prop: "secret",
+      type: "string",
+      defaultValue: '"1996 2057"',
+      description: "The sensitive text that is masked and can be revealed.",
     },
     {
-      prop: "repulseRadius",
-      type: "number",
-      defaultValue: "90",
-      description: "How far the mouse pushes particles.",
+      prop: "suffix",
+      type: "string",
+      defaultValue: '" 7516"',
+      description: "The text after the masked segment.",
+    },
+    {
+      prop: "mask",
+      type: "string",
+      defaultValue: '"xxxx xxxx"',
+      description: "The placeholder string used when the text is hidden.",
+    },
+    {
+      prop: "valueToCopy",
+      type: "string",
+      defaultValue: '"4485 1996 2057 7516"',
+      description: "The exact value copied to the clipboard when clicked.",
     },
   ];
 
@@ -282,10 +294,9 @@ export function RevealPasswordDocs() {
           Understanding the Component
         </h2>
         <p className="text-zinc-400 mb-4 leading-relaxed">
-          The Repulsion Text effect reads the alpha channel of a hidden canvas
-          to determine where to place particles. It then applies a custom
-          physics engine calculating distance from the mouse cursor to apply
-          force vectors.
+          The Reveal Password component is an interactive element that securely
+          hides sensitive text, allowing users to temporarily reveal it with a
+          smooth animation and seamlessly copy the full value to their clipboard.
         </p>
       </section>
 
@@ -293,7 +304,7 @@ export function RevealPasswordDocs() {
         <h2 className="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-2">
           Props
         </h2>
-        <PropsTable data={repulsioProps} />
+        <PropsTable data={revealPasswordProps} />
       </section>
     </div>
   );

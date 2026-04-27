@@ -17,7 +17,7 @@ const Nav = () => {
 
   return (
     <>
-      <nav className="py-3 fixed top-0 w-full z-50 ">
+      <nav className="py-3 px-3  md:px-0  fixed top-0 w-full z-50 ">
         <div className="pointer-events-none absolute left-0 top-0 h-35 w-full backdrop-blur-md mask-[linear-gradient(to_bottom,black_30%,transparent_100%)] z-[-1]" />
         <div className="flex justify-between items-center mx-auto max-w-3xl bg-neutral-100 dark:bg-neutral-900 shadow-[0px_0.5px_0px_0px_var(--color-neutral-700)_inset] py-3 px-4 rounded-2xl">
           <div className="w-full flex gap-3 items-center">
@@ -36,7 +36,7 @@ const Nav = () => {
               Minimal UI
             </Link>
           </div>
-          <ul className="flex justify-end items-center font-inter w-full ">
+          <ul className="hidden xs:flex justify-end items-center font-inter w-full ">
             {navItems.map((item) => (
               <li key={item.label}>
                 <Link
@@ -57,6 +57,7 @@ const Nav = () => {
             >
               <IconCommand size={20} className="stroke-1.5" />
             </button>
+            <ThemeToggle />
           </div>
         </div>
       </nav>

@@ -12,8 +12,8 @@ export default function HeroSection() {
   };
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col justify-center items-center">
-      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none mask-b-from-80%">
+    <section className="relative w-full min-h-screen flex flex-col justify-center items-center bg-black">
+      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none mask-b-from-80% mask-b-black">
         <Silk color="#10AAFD" />
       </div>
 
@@ -24,7 +24,7 @@ export default function HeroSection() {
           </div> */}
 
           <div
-            className="text-white text-5xl  font-semibold flex flex-col items-center justify-center 
+            className="text-white text-4xl xs:text-6xl sm:text-8xl  font-semibold flex flex-col items-center justify-center 
            lg:text-[7.5rem]"
           >
             <span className="font-pixel-circle">Interactive UI</span>
@@ -34,7 +34,7 @@ export default function HeroSection() {
 
         <p
           className="text-neutral-700 dark:text-neutral-300/80 text-center 
-          text-[17px] tracking-wide font-geist max-w-lg"
+           text-[11px] xs:text-sm sm:text-[17px] tracking-wide font-geist max-w-60 xs:max-w-xs sm:max-w-lg"
         >
           A collection of beautiful, ready-to-use components built specifically
           for minimal interaction.

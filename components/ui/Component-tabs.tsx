@@ -19,7 +19,9 @@ export function ComponentTabs({ preview, code }: ComponentTabsProps) {
     <div className="flex flex-col w-full gap-6">
       <div className="flex items-center bg-neutral-200 dark:bg-neutral-800 px-1 py-1 w-fit rounded-lg">
         {changes.map((changes) => (
-          <button
+          <motion.button
+            whileTap={{ scale: 0.97 }}
+            transition={{ duration: 0.07 }}
             key={changes.id}
             onClick={() => setActiveTab(changes.id)}
             className="relative  px-4 py-1 cursor-pointer text-[13.5px] font-geist font-medium  z-10"
@@ -38,7 +40,7 @@ export function ComponentTabs({ preview, code }: ComponentTabsProps) {
             <span className="relative z-10 text-neutral-900 dark:text-zinc-100">
               {changes.label}
             </span>
-          </button>
+          </motion.button>
         ))}
       </div>
 
@@ -50,8 +52,8 @@ export function ComponentTabs({ preview, code }: ComponentTabsProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.07 }}
-              className="w-full min-h-[480px] flex items-center justify-center bg-neutral-100 dark:bg-black"
+              transition={{ duration: 0.1 }}
+              className="w-full min-h-[480px] flex items-center justify-center bg-white dark:bg-neutral-900  overflow-auto"
             >
               {preview}
             </motion.div>
@@ -61,7 +63,7 @@ export function ComponentTabs({ preview, code }: ComponentTabsProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.07 }}
+              transition={{ duration: 0.1 }}
               className="w-full max-h-[600px] overflow-auto"
             >
               {typeof code === "string" ? <CodeBlock code={code} /> : code}
