@@ -43,8 +43,9 @@ export function PreviewCard({
   return (
     <Link
       href={href}
-      className=" flex flex-col bg-neutral-100 dark:bg-neutral-900 p-1 w-full 
-      rounded-2xl shadow-[0px_0.5px_0px_0px_var(--color-neutral-700)_inset]"
+      className=" flex flex-col bg-[#F0F0F0] dark:bg-neutral-900 p-1 w-full 
+      rounded-2xl ring-1 ring-neutral-200 shadow-xs dark:ring-0
+      dark:shadow-[0px_0.5px_0px_0px_var(--color-neutral-700)_inset]"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

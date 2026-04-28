@@ -28,7 +28,7 @@ export function ThemeToggle() {
       onClick={toggleTheme}
       className="flex items-center justify-center pt-px"
     >
-      {isDark ? <Sun size={18} /> : <Moon size={18} />}
+      {isDark ? <Sun size={20} /> : <Moon size={20} />}
     </button>
   );
 }

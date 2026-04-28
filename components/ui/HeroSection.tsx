@@ -33,7 +33,7 @@ export default function HeroSection() {
         </div>
 
         <p
-          className="text-neutral-700 dark:text-neutral-300/80 text-center 
+          className="text-neutral-300/80 text-center 
            text-[11px] xs:text-sm sm:text-[17px] tracking-wide font-geist max-w-60 xs:max-w-xs sm:max-w-lg"
         >
           A collection of beautiful, ready-to-use components built specifically
@@ -50,7 +50,9 @@ export default function HeroSection() {
                 hover: { paddingLeft: 44, paddingRight: 44 },
               }}
               transition={{ type: "spring", stiffness: 250, damping: 20 }}
-              className="text-white dark:text-black font-geist cursor-pointer text-[15px] bg-neutral-100 py-2.5 px-8 flex items-center gap-1 rounded-2xl"
+              className="text-white bg-linear-to-b from-[#151515] via-[#131313] to-[#121212] 
+           dark:bg-none dark:bg-neutral-100 dark:text-neutral-900
+           py-2.5 px-8 flex items-center gap-1 rounded-2xl font-geist text-[15px] cursor-pointer"
             >
               Quick Start
               <motion.div
@@ -77,7 +79,8 @@ export default function HeroSection() {
                 hover: { paddingLeft: 40, paddingRight: 40 },
               }}
               transition={{ type: "spring", stiffness: 250, damping: 20 }}
-              className="dark:text-white text-black text-[15px] font-geist cursor-pointer bg-[#121212] py-2.5 px-8 rounded-2xl"
+              className="dark:text-white text-black text-[15px] font-geist cursor-pointer bg-neutral-100  
+              dark:bg-linear-to-b dark:from-[#151515] dark:via-[#131313] dark:to-[#121212]  py-2.5 px-8 rounded-2xl"
             >
               Contact Me
             </motion.div>

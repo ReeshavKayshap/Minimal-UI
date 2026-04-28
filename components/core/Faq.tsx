@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
+import { IconChevronDown } from "@tabler/icons-react";
 
 export interface FAQItem {
   id: string | number;
@@ -48,8 +49,8 @@ export default function FAQAccordion({
       borderTopRightRadius: roundTop ? 24 : 0,
       borderBottomLeftRadius: roundBottom ? 24 : 0,
       borderBottomRightRadius: roundBottom ? 24 : 0,
-      borderTopColor: roundTop ? "#e5e7eb" : "rgba(229, 231, 235, 0)",
-      borderBottomColor: roundBottom ? "#e5e7eb" : "rgba(229, 231, 235, 0)",
+      borderTopColor: roundTop ? "" : "rgba(229, 231, 235, 0)",
+      borderBottomColor: roundBottom ? "" : "rgba(229, 231, 235, 0)",
       boxShadow: isActive
         ? "0px 12px 32px rgba(0, 0, 0, 0.05)"
         : "0px 0px 0px rgba(0, 0, 0, 0)",
@@ -84,12 +85,14 @@ export default function FAQAccordion({
                 borderBottomStyle: "solid",
               }}
               className={cn(
-                "relative overflow-hidden cursor-pointer bg-white border-x border-gray-200",
-                isActive ? "z-10" : "z-0 hover:bg-gray-50/50",
+                "relative overflow-hidden cursor-pointer bg-white dark:bg-neutral-950 border-x border-gray-200 dark:border-neutral-800",
+                isActive
+                  ? "z-10"
+                  : "z-0 hover:bg-gray-50/50 dark:hover:bg-[#111111]",
               )}
             >
               <div className="flex items-center justify-between p-4 sm:p-5 relative">
-                <h3 className="text-base font-medium text-gray-800 select-none">
+                <h3 className="text-base font-medium text-gray-800 dark:text-zinc-200 select-none">
                   {faq.title}
                 </h3>
 
@@ -99,15 +102,18 @@ export default function FAQAccordion({
                   transition={spring}
                   className="text-gray-400"
                 >
-                  ▼
+                  <IconChevronDown
+                    size={20}
+                    className="text-gray-800 dark:text-zinc-200"
+                  />
                 </motion.div>
 
-                <motion.div
+                {/* <motion.div
                   initial={false}
                   animate={{ opacity: showDivider ? 1 : 0 }}
                   transition={{ duration: 0.2 }}
                   className="absolute bottom-0 left-4 sm:left-5 right-4 sm:right-5 h-px bg-gray-200"
-                />
+                /> */}
               </div>
 
               <AnimatePresence initial={false}>
@@ -119,7 +125,7 @@ export default function FAQAccordion({
                     transition={spring}
                     className="overflow-hidden"
                   >
-                    <div className="px-4 sm:px-5 pb-5 text-gray-500 text-sm leading-relaxed">
+                    <div className="px-4 sm:px-5 pb-5 text-gray-500 dark:text-zinc-400 text-sm leading-relaxed">
                       {faq.answer}
                     </div>
                   </motion.div>

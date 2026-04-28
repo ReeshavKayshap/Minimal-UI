@@ -53,7 +53,7 @@ export function ComponentTabs({ preview, code }: ComponentTabsProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.1 }}
-              className="w-full min-h-[480px] flex items-center justify-center bg-white dark:bg-neutral-900  overflow-auto"
+              className="w-full min-h-[480px] flex items-center justify-center bg-neutral-100 dark:bg-neutral-900  overflow-auto"
             >
               {preview}
             </motion.div>
