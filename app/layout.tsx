@@ -40,25 +40,25 @@ const instrumentSerif = Instrument_Serif({
 export const metadata: Metadata = {
   title: "Minimal UI",
   description: "A collection of minimal UI components",
-  openGraph: {
-    title: "Minimal UI",
-    description: "A collection of minimal UI components",
-    siteName: "Minimal UI",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Minimal UI",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Minimal UI",
-    description: "A collection of minimal UI components",
-    images: ["/og-image.png"],
-  },
+  // openGraph: {
+  //   title: "Minimal UI",
+  //   description: "A collection of minimal UI components",
+  //   siteName: "Minimal UI",
+  //   images: [
+  //     {
+  //       url: "/og-image.png",
+  //       width: 1200,
+  //       height: 630,
+  //       alt: "Minimal UI",
+  //     },
+  //   ],
+  // },
+  // twitter: {
+  //   card: "summary_large_image",
+  //   title: "Minimal UI",
+  //   description: "A collection of minimal UI components",
+  //   images: ["/og-image.png"],
+  // },
 };
 
 export default function RootLayout({
