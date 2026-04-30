@@ -240,7 +240,10 @@ export function RevealPasswordDocs() {
   return (
     <div className="w-full flex flex-col gap-5 pt-5 animate-in fade-in duration-700">
       <section>
-        <h2 className="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-2">
+        <h2
+          className="text-2xl font-bold text-neutral-900 dark:text-white mb-6
+         border-b border-neutral-200 dark:border-white/10 pb-2"
+        >
           Installation
         </h2>
 
@@ -260,28 +263,32 @@ export function RevealPasswordDocs() {
                 />
               </Step>
               <Step number={2} title="Add util file">
-                <div className="mb-4 text-[14px] text-zinc-400 leading-relaxed">
+                <div className="mb-4 text-[14px]  leading-relaxed">
                   Create a file at
-                  <code className="text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded-md font-mono border border-emerald-400/20">
+                  <code className="text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded-md font-mono border border-emerald-400/20 mx-1">
                     lib/utils.ts
                   </code>
                   and paste this code.
                 </div>
-                <div className="mb-6">
-                  <CodeHighlight code={utilsCode} />
+                <div className="mb-6 rounded-xl overflow-hidden shadow-xs ring-1 ring-neutral-200 dark:ring-white/10">
+                  <div className="overflow-auto relative custom-scrollbar">
+                    <CodeHighlight code={utilsCode} />
+                  </div>
                 </div>
               </Step>
 
               <Step number={3} title="Add the component">
-                <div className="mb-4 text-[14px] text-zinc-400 leading-relaxed">
+                <div className="mb-4 text-[14px] leading-relaxed">
                   Create a file at
-                  <code className="text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded-md font-mono border border-emerald-400/20">
+                  <code className="text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded-md font-mono border border-emerald-400/20 mx-1">
                     components/ui/reveal-password.tsx
                   </code>
                   and paste this code.
                 </div>
-                <div className="mb-6 max-h-[450px] overflow-y-auto rounded-xl border border-white/10 relative custom-scrollbar">
-                  <CodeHighlight code={revealPasswordCode} />
+                <div className="mb-6 rounded-xl overflow-hidden shadow-xs ring-1 ring-neutral-200 dark:ring-white/10">
+                  <div className="max-h-[450px] overflow-auto relative custom-scrollbar">
+                    <CodeHighlight code={revealPasswordCode} />
+                  </div>
                 </div>
               </Step>
             </div>
@@ -290,18 +297,7 @@ export function RevealPasswordDocs() {
       </section>
 
       <section>
-        <h2 className="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-2">
-          Understanding the Component
-        </h2>
-        <p className="text-zinc-400 mb-4 leading-relaxed">
-          The Reveal Password component is an interactive element that securely
-          hides sensitive text, allowing users to temporarily reveal it with a
-          smooth animation and seamlessly copy the full value to their clipboard.
-        </p>
-      </section>
-
-      <section>
-        <h2 className="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-2">
+        <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-6 border-b border-neutral-200 dark:border-white/10 pb-2">
           Props
         </h2>
         <PropsTable data={revealPasswordProps} />

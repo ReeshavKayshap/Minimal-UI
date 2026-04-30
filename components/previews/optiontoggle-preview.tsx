@@ -13,7 +13,7 @@ export default function OptionTogglePreview() {
   const [value, setValue] = useState("public");
 
   return (
-    <div className="w-full min-h-[480px] bg-gray-50 flex items-center justify-center p-4 py-12 md:p-8 rounded-xl border border-white/10">
+    <div className="w-full flex items-center justify-center ">
       <OptionToggle options={options} value={value} onChange={setValue} />
     </div>
   );

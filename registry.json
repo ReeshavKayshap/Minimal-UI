@@ -3,18 +3,6 @@
   "homepage": "https://minimal-ui.com",
   "items": [
     {
-      "name": "repulsio-text",
-      "type": "registry:ui",
-      "dependencies": ["motion", "clsx", "tailwind-merge"],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "components/core/RepulsioText.tsx",
-          "type": "registry:ui"
-        }
-      ]
-    },
-    {
       "name": "option-toggle",
       "type": "registry:ui",
       "dependencies": [
@@ -51,7 +39,11 @@
     {
       "name": "faq",
       "type": "registry:ui",
-      "dependencies": ["motion", "clsx", "tailwind-merge"],
+      "dependencies": [
+        "motion",
+        "clsx",
+        "tailwind-merge"
+      ],
       "registryDependencies": [],
       "files": [
         {
@@ -63,11 +55,31 @@
     {
       "name": "sidebar-menu",
       "type": "registry:ui",
-      "dependencies": ["motion", "clsx", "tailwind-merge"],
+      "dependencies": [
+        "motion",
+        "clsx",
+        "tailwind-merge"
+      ],
       "registryDependencies": [],
       "files": [
         {
           "path": "components/core/Sidebar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "text-hover",
+      "type": "registry:ui",
+      "dependencies": [
+        "motion",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/core/TextHover.tsx",
           "type": "registry:ui"
         }
       ]

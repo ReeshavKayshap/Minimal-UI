@@ -13,16 +13,19 @@ export async function CodeHighlight({
 }: CodeHighlightProps) {
   const html = await codeToHtml(code, {
     lang: language,
-    theme: "nord",
+    themes: {
+      light: "min-light",
+      dark: "nord",
+    },
   });
 
   return (
-    <div className="relative flex justify-between bg-[#121212] rounded-xl overflow-hidden border dark:border-[#1a1919] ">
+    <div className="relative flex justify-between overflow-hidden bg-neutral-200/20 dark:bg-neutral-900 ">
       <div
-        className="p-4 overflow-x-auto text-sm  scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent [&>pre]:bg-transparent!"
+        className="p-4 overflow-x-auto text-sm [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:display-none"
         dangerouslySetInnerHTML={{ __html: html }}
       />
-      <div className=" px-4 py-2 ">
+      <div className="px-4 py-2">
         <CopyButton textToCopy={code} />
       </div>
     </div>

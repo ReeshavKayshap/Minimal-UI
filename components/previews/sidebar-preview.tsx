@@ -18,7 +18,7 @@ const demoComponentsList = [
 
 export default function SidebarPreview() {
   return (
-    <div className="w-full min-h-[650px] bg-[#121212] relative overflow-hidden">
+    <div className="w-full h-full min-h-[600px] relative overflow-hidden">
       <Sidebar
         items={demoComponentsList}
         title="All Components"
@@ -58,7 +58,7 @@ export default function SidebarPreview() {
       </span>
 
       <span
-        className="text-white absolute top-0 left-0 font-inter text-xl
+        className="dark:text-white text-black absolute top-0 left-0 font-inter text-xl
         flex justify-center items-center w-full h-full pointer-events-none"
       >
         Click the menu icon in the top left to open the sidebar.

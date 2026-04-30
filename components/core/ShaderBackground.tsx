@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import * as THREE from "three";
 
 const vertexShader = `
@@ -64,21 +64,73 @@ export interface SilkProps {
   speed?: number;
   scale?: number;
   color?: string;
+  lightColor?: string;
+  darkColor?: string;
   noiseIntensity?: number;
   rotation?: number;
 }
 
+/** Returns true if dark mode is currently active (class-based or media-query) */
+const isDarkMode = (): boolean => {
+  if (typeof window === "undefined") return false;
+  // Tailwind / next-themes class strategy
+  if (document.documentElement.classList.contains("dark")) return true;
+  // Fallback: system preference
+  return window.matchMedia("(prefers-color-scheme: dark)").matches;
+};
+
 const Silk: React.FC<SilkProps> = ({
   speed = 5,
   scale = 1,
-  color = "#9cbfff",
+  color,
+  lightColor = "#7a9cc4",
+  darkColor = "#9cbfff",
   noiseIntensity = 1.5,
   rotation = 0,
 }) => {
   const mountRef = useRef<HTMLDivElement>(null);
   const materialRef = useRef<THREE.ShaderMaterial | null>(null);
 
-  const activeColor = color;
+  const resolveColor = () => color ?? (isDarkMode() ? darkColor : lightColor);
+
+  const [activeColor, setActiveColor] = useState<string>(resolveColor);
+
+  useEffect(() => {
+    // If an explicit color is passed, just use it directly — no observer needed
+    if (color) {
+      setActiveColor(color);
+      return;
+    }
+
+    // Sync immediately in case theme changed before mount
+    setActiveColor(resolveColor());
+
+    // Watch <html> class attribute changes (Tailwind class strategy)
+    const observer = new MutationObserver(() => {
+      setActiveColor(isDarkMode() ? darkColor : lightColor);
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    // Also watch system preference changes as a fallback
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const mqHandler = () => {
+      // Only apply if no `dark` class is present (class strategy takes priority)
+      if (!document.documentElement.classList.contains("dark")) {
+        setActiveColor(mq.matches ? darkColor : lightColor);
+      }
+    };
+    mq.addEventListener("change", mqHandler);
+
+    return () => {
+      observer.disconnect();
+      mq.removeEventListener("change", mqHandler);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [color, lightColor, darkColor]);
 
   // Setup Three.js scene once
   useEffect(() => {
@@ -86,15 +138,12 @@ const Silk: React.FC<SilkProps> = ({
     if (!currentMount) return;
 
     const scene = new THREE.Scene();
-
-    // Using an orthographic camera is perfect for 2D screen-space shaders
     const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     currentMount.appendChild(renderer.domElement);
 
-    // PlaneGeometry with 2x2 dimensions perfectly fills the OrthographicCamera bounds
     const geometry = new THREE.PlaneGeometry(2, 2);
 
     const uniforms = {
@@ -131,7 +180,6 @@ const Silk: React.FC<SilkProps> = ({
     };
     animate();
 
-    // Use ResizeObserver to automatically adjust to container sizing
     const resizeObserver = new ResizeObserver((entries) => {
       for (let entry of entries) {
         const { width, height } = entry.contentRect;
@@ -146,11 +194,7 @@ const Silk: React.FC<SilkProps> = ({
     return () => {
       resizeObserver.disconnect();
       cancelAnimationFrame(animationFrameId);
-      if (
-        currentMount &&
-        renderer.domElement &&
-        currentMount.contains(renderer.domElement)
-      ) {
+      if (currentMount?.contains(renderer.domElement)) {
         currentMount.removeChild(renderer.domElement);
       }
       geometry.dispose();
@@ -159,11 +203,10 @@ const Silk: React.FC<SilkProps> = ({
       renderer.forceContextLoss();
       timer.dispose();
     };
-    // Initialize exactly once
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Update uniforms dynamically when props change
+  // Push color changes into the shader uniform
   useEffect(() => {
     if (materialRef.current) {
       materialRef.current.uniforms.uSpeed.value = speed;

@@ -38,7 +38,8 @@ export function CopyButton({ textToCopy }: CopyButtonProps) {
   return (
     <button
       onClick={copyToClipboard}
-      className="p-1.5 cursor-pointer rounded-md text-zinc-400 hover:text-white hover:bg-white/10 transition-all focus:outline-none"
+      className="p-2 cursor-pointer rounded-md text-neutral-400 hover:text-black dark:hover:text-white
+       dark:bg-neutral-800 bg-neutral-200  transition-all  duration-300 ease-in "
       aria-label="Copy text"
     >
       <AnimatePresence mode="wait" initial={false}>
@@ -51,7 +52,7 @@ export function CopyButton({ textToCopy }: CopyButtonProps) {
             transition={{ duration: 0.15, ease: "easeOut" }}
           >
             {" "}
-            <IconCheck className="w-4 h-4 text-emerald-400" />
+            <IconCheck className="w-4 h-4 text-green-500" />
           </motion.div>
         ) : (
           <motion.div

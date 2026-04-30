@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useEffect, useCallback } from "react";
+import { useRef, useEffect, useCallback, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface Vector2D {
@@ -50,19 +50,19 @@ export interface RepulsionTextProps {
   minFontSize?: number;
   maxFontSize?: number;
   fontSizeRatio?: number;
-
   color?: string;
   dotRadius?: number;
-
   gap?: number;
   repulseRadius?: number;
   repulseForce?: number;
   springForce?: number;
   friction?: number;
-
   className?: string;
 }
 
+/**
+ * CONSTANTS
+ */
 const DEFAULT_PROPS = {
   text: "Minimal UI",
   fontFamily: '"Inter", system-ui, sans-serif',
@@ -70,7 +70,6 @@ const DEFAULT_PROPS = {
   minFontSize: 60,
   maxFontSize: 250,
   fontSizeRatio: 0.2,
-  color: "#ffffff",
   dotRadius: 2,
   gap: 7,
   repulseRadius: 90,
@@ -79,16 +78,15 @@ const DEFAULT_PROPS = {
   friction: 0.82,
 } as const;
 
-const DEFAULT_MOUSE_POSITION: Readonly<{ x: number; y: number }> = {
-  x: -1000,
-  y: -1000,
-} as const;
-
+const DEFAULT_MOUSE_POSITION = { x: -1000, y: -1000 } as const;
 const ALPHA_THRESHOLD = 128;
 const PARTICLE_OFFSET_RANGE = 2;
 const CANVAS_MIN_HEIGHT = 400;
 const INIT_DELAY = 100;
 
+/**
+ * PARTICLE CLASS
+ */
 class Particle implements IParticle {
   public readonly originX: number;
   public readonly originY: number;
@@ -138,6 +136,9 @@ class Particle implements IParticle {
   }
 }
 
+/**
+ * UTILS
+ */
 const calculateFontSize = (width: number, config: CanvasConfig): number => {
   return Math.max(
     Math.min(width * config.fontSizeRatio, config.maxFontSize),
@@ -152,13 +153,9 @@ const createParticlesFromText = (
   particleConfig: ParticleConfig,
 ): Particle[] => {
   const { logicalWidth, logicalHeight, devicePixelRatio } = dimensions;
-
-  if (logicalWidth === 0 || logicalHeight === 0) {
-    return [];
-  }
+  if (logicalWidth === 0 || logicalHeight === 0) return [];
 
   const particles: Particle[] = [];
-
   ctx.clearRect(0, 0, logicalWidth, logicalHeight);
 
   const fontSize = calculateFontSize(logicalWidth, canvasConfig);
@@ -176,35 +173,23 @@ const createParticlesFromText = (
       logicalHeight * devicePixelRatio,
     );
     const data = imageData.data;
-
     ctx.clearRect(0, 0, logicalWidth, logicalHeight);
 
-    for (
-      let y = 0;
-      y < logicalHeight * devicePixelRatio;
-      y += particleConfig.gap * devicePixelRatio
-    ) {
-      for (
-        let x = 0;
-        x < logicalWidth * devicePixelRatio;
-        x += particleConfig.gap * devicePixelRatio
-      ) {
+    const step = particleConfig.gap * devicePixelRatio;
+    for (let y = 0; y < logicalHeight * devicePixelRatio; y += step) {
+      for (let x = 0; x < logicalWidth * devicePixelRatio; x += step) {
         const intX = Math.floor(x);
         const intY = Math.floor(y);
-
         const index =
           (intY * Math.floor(logicalWidth * devicePixelRatio) + intX) * 4;
-        const alpha = data[index + 3];
 
-        if (alpha > ALPHA_THRESHOLD) {
+        if (data[index + 3] > ALPHA_THRESHOLD) {
           const logicalX = intX / devicePixelRatio;
           const logicalY = intY / devicePixelRatio;
-
           const offsetX =
             logicalX + (Math.random() - 0.5) * PARTICLE_OFFSET_RANGE;
           const offsetY =
             logicalY + (Math.random() - 0.5) * PARTICLE_OFFSET_RANGE;
-
           particles.push(new Particle(offsetX, offsetY));
         }
       }
@@ -212,10 +197,12 @@ const createParticlesFromText = (
   } catch (err) {
     console.error("Failed to read canvas pixels:", err);
   }
-
   return particles;
 };
 
+/**
+ * CUSTOM HOOKS
+ */
 const useCanvasSetup = () => {
   const setupCanvas = useCallback(
     (
@@ -227,130 +214,103 @@ const useCanvasSetup = () => {
 
       const logicalWidth = parent.clientWidth;
       const logicalHeight = parent.clientHeight || CANVAS_MIN_HEIGHT;
+      if (logicalWidth === 0 || logicalHeight === 0) return null;
 
-      if (logicalWidth === 0 || logicalHeight === 0) {
-        return null;
-      }
-
-      const devicePixelRatio = window.devicePixelRatio || 1;
-
-      canvas.width = logicalWidth * devicePixelRatio;
-      canvas.height = logicalHeight * devicePixelRatio;
-
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = logicalWidth * dpr;
+      canvas.height = logicalHeight * dpr;
       canvas.style.width = `${logicalWidth}px`;
       canvas.style.height = `${logicalHeight}px`;
+      ctx.scale(dpr, dpr);
 
-      ctx.scale(devicePixelRatio, devicePixelRatio);
-
-      return {
-        logicalWidth,
-        logicalHeight,
-        devicePixelRatio,
-      };
+      return { logicalWidth, logicalHeight, devicePixelRatio: dpr };
     },
     [],
   );
 
   const clearCanvas = useCallback(
-    (ctx: CanvasRenderingContext2D, width: number, height: number): void => {
-      ctx.clearRect(0, 0, width, height);
+    (ctx: CanvasRenderingContext2D, w: number, h: number) => {
+      ctx.clearRect(0, 0, w, h);
     },
     [],
   );
 
-  return {
-    setupCanvas,
-    clearCanvas,
-  };
+  return { setupCanvas, clearCanvas };
 };
 
 const useMouseTracking = () => {
   const mouseRef = useRef<Vector2D>({ ...DEFAULT_MOUSE_POSITION });
 
-  const handleMouseMove = useCallback((canvas: HTMLCanvasElement) => {
-    return (e: MouseEvent) => {
+  const handleMouseMove = useCallback(
+    (canvas: HTMLCanvasElement) => (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      mouseRef.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      };
-    };
-  }, []);
+      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    },
+    [],
+  );
 
-  const handleTouchMove = useCallback((canvas: HTMLCanvasElement) => {
-    return (e: TouchEvent) => {
+  const handleTouchMove = useCallback(
+    (canvas: HTMLCanvasElement) => (e: TouchEvent) => {
       const rect = canvas.getBoundingClientRect();
       mouseRef.current = {
         x: e.touches[0].clientX - rect.left,
         y: e.touches[0].clientY - rect.top,
       };
-    };
-  }, []);
+    },
+    [],
+  );
 
-  const handleMouseLeave = useCallback(() => {
-    return () => {
+  const handleMouseLeave = useCallback(
+    () => () => {
       mouseRef.current = { ...DEFAULT_MOUSE_POSITION };
-    };
-  }, []);
-
-  const getMousePosition = useCallback((): Vector2D => {
-    return mouseRef.current;
-  }, []);
+    },
+    [],
+  );
 
   return {
     handleMouseMove,
     handleTouchMove,
     handleMouseLeave,
-    getMousePosition,
+    getMousePosition: () => mouseRef.current,
   };
 };
 
 const useAnimationLoop = () => {
-  const animationFrameIdRef = useRef<number | null>(null);
+  const frameId = useRef<number | null>(null);
 
   const startAnimation = useCallback(
     (
       ctx: CanvasRenderingContext2D,
       particles: IParticle[],
-      getMousePosition: () => Vector2D,
+      getMouse: () => Vector2D,
       config: ParticleConfig,
-      dimensions: { width: number; height: number },
-      clearCanvas: (
-        ctx: CanvasRenderingContext2D,
-        width: number,
-        height: number,
-      ) => void,
+      dims: { width: number; height: number },
+      clear: (ctx: CanvasRenderingContext2D, w: number, h: number) => void,
     ) => {
       const render = () => {
-        clearCanvas(ctx, dimensions.width, dimensions.height);
-
-        const mousePos = getMousePosition();
-        particles.forEach((particle) => {
-          particle.update(mousePos, config);
-          particle.draw(ctx, config);
+        clear(ctx, dims.width, dims.height);
+        const mousePos = getMouse();
+        particles.forEach((p) => {
+          p.update(mousePos, config);
+          p.draw(ctx, config);
         });
-
-        animationFrameIdRef.current = requestAnimationFrame(render);
+        frameId.current = requestAnimationFrame(render);
       };
-
       render();
     },
     [],
   );
 
   const stopAnimation = useCallback(() => {
-    if (animationFrameIdRef.current !== null) {
-      cancelAnimationFrame(animationFrameIdRef.current);
-      animationFrameIdRef.current = null;
-    }
+    if (frameId.current !== null) cancelAnimationFrame(frameId.current);
   }, []);
 
-  return {
-    startAnimation,
-    stopAnimation,
-  };
+  return { startAnimation, stopAnimation };
 };
 
+/**
+ * MAIN COMPONENT
+ */
 export default function RepulsionText(props: RepulsionTextProps = {}) {
   const {
     text = DEFAULT_PROPS.text,
@@ -359,7 +319,7 @@ export default function RepulsionText(props: RepulsionTextProps = {}) {
     minFontSize = DEFAULT_PROPS.minFontSize,
     maxFontSize = DEFAULT_PROPS.maxFontSize,
     fontSizeRatio = DEFAULT_PROPS.fontSizeRatio,
-    color = DEFAULT_PROPS.color,
+    color: propColor,
     dotRadius = DEFAULT_PROPS.dotRadius,
     gap = DEFAULT_PROPS.gap,
     repulseRadius = DEFAULT_PROPS.repulseRadius,
@@ -373,6 +333,9 @@ export default function RepulsionText(props: RepulsionTextProps = {}) {
   const particlesRef = useRef<IParticle[]>([]);
   const dimensionsRef = useRef<CanvasDimensions | null>(null);
 
+  // Dynamic Theme Color Detection
+  const [resolvedColor, setResolvedColor] = useState(propColor || "#000000");
+
   const { setupCanvas, clearCanvas } = useCanvasSetup();
   const {
     handleMouseMove,
@@ -382,92 +345,95 @@ export default function RepulsionText(props: RepulsionTextProps = {}) {
   } = useMouseTracking();
   const { startAnimation, stopAnimation } = useAnimationLoop();
 
-  // Create config objects from props
-  const particleConfig: ParticleConfig = {
-    gap,
-    dotRadius,
-    repulseRadius,
-    repulseForce,
-    springForce,
-    friction,
-    color,
-  };
+  // Handle Light/Dark Mode Observation
+  useEffect(() => {
+    if (propColor) {
+      setResolvedColor(propColor);
+      return;
+    }
 
-  const canvasConfig: CanvasConfig = {
-    text,
-    fontFamily,
-    fontWeight,
-    minFontSize,
-    maxFontSize,
-    fontSizeRatio,
-  };
+    const updateColor = () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      setResolvedColor(isDark ? "#ffffff" : "#000000");
+    };
+
+    updateColor();
+    const observer = new MutationObserver(updateColor);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    return () => observer.disconnect();
+  }, [propColor]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) return;
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const particleConfig: ParticleConfig = {
+      gap,
+      dotRadius,
+      repulseRadius,
+      repulseForce,
+      springForce,
+      friction,
+      color: resolvedColor,
+    };
 
-    const initParticles = () => {
-      const dimensions = dimensionsRef.current;
-      if (!dimensions) return;
-
-      particlesRef.current = createParticlesFromText(
-        ctx,
-        dimensions,
-        canvasConfig,
-        particleConfig,
-      );
+    const canvasConfig: CanvasConfig = {
+      text,
+      fontFamily,
+      fontWeight,
+      minFontSize,
+      maxFontSize,
+      fontSizeRatio,
     };
 
     const handleResize = () => {
-      const dimensions = setupCanvas(canvas, ctx);
-      if (dimensions) {
-        dimensionsRef.current = dimensions;
-        initParticles();
+      const dims = setupCanvas(canvas, ctx);
+      if (dims) {
+        dimensionsRef.current = dims;
+        particlesRef.current = createParticlesFromText(
+          ctx,
+          dims,
+          canvasConfig,
+          particleConfig,
+        );
       }
     };
 
-    const startRendering = () => {
-      const dimensions = dimensionsRef.current;
-      if (!dimensions || particlesRef.current.length === 0) return;
-
-      startAnimation(
-        ctx,
-        particlesRef.current,
-        getMousePosition,
-        particleConfig,
-        {
-          width: dimensions.logicalWidth,
-          height: dimensions.logicalHeight,
-        },
-        clearCanvas,
-      );
-    };
-
-    const onMouseMove = handleMouseMove(canvas);
-    const onTouchMove = handleTouchMove(canvas);
-    const onMouseLeave = handleMouseLeave();
-
-    window.addEventListener("resize", handleResize);
-    canvas.addEventListener("mousemove", onMouseMove);
-    canvas.addEventListener("mouseleave", onMouseLeave);
-    canvas.addEventListener("touchmove", onTouchMove, { passive: true });
-    canvas.addEventListener("touchend", onMouseLeave);
-
     const initTimeout = setTimeout(() => {
       handleResize();
-      startRendering();
+      const dims = dimensionsRef.current;
+      if (dims && particlesRef.current.length > 0) {
+        startAnimation(
+          ctx,
+          particlesRef.current,
+          getMousePosition,
+          particleConfig,
+          { width: dims.logicalWidth, height: dims.logicalHeight },
+          clearCanvas,
+        );
+      }
     }, INIT_DELAY);
+
+    const onMM = handleMouseMove(canvas);
+    const onTM = handleTouchMove(canvas);
+    const onML = handleMouseLeave();
+
+    window.addEventListener("resize", handleResize);
+    canvas.addEventListener("mousemove", onMM);
+    canvas.addEventListener("mouseleave", onML);
+    canvas.addEventListener("touchmove", onTM, { passive: true });
+    canvas.addEventListener("touchend", onML);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      canvas.removeEventListener("mousemove", onMouseMove);
-      canvas.removeEventListener("mouseleave", onMouseLeave);
-      canvas.removeEventListener("touchmove", onTouchMove);
-      canvas.removeEventListener("touchend", onMouseLeave);
-
+      canvas.removeEventListener("mousemove", onMM);
+      canvas.removeEventListener("mouseleave", onML);
+      canvas.removeEventListener("touchmove", onTM);
+      canvas.removeEventListener("touchend", onML);
       stopAnimation();
       clearTimeout(initTimeout);
     };
@@ -478,7 +444,7 @@ export default function RepulsionText(props: RepulsionTextProps = {}) {
     minFontSize,
     maxFontSize,
     fontSizeRatio,
-    color,
+    resolvedColor,
     dotRadius,
     gap,
     repulseRadius,
@@ -498,11 +464,11 @@ export default function RepulsionText(props: RepulsionTextProps = {}) {
   return (
     <div
       className={cn(
-        "flex justify-center items-center w-full h-full py-20",
+        "relative flex justify-center items-center w-full min-h-[400px] h-full overflow-hidden",
         className,
       )}
     >
-      <canvas ref={canvasRef} className="block" />
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
     </div>
   );
 }

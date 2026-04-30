@@ -43,17 +43,19 @@ export default function FAQAccordion({
       : index === activeIndex - 1 || index === activeIndex || isLast;
 
     return {
-      marginTop: isActive && !isFirst ? 12 : 0,
-      marginBottom: isActive && !isLast ? 12 : 0,
-      borderTopLeftRadius: roundTop ? 24 : 0,
-      borderTopRightRadius: roundTop ? 24 : 0,
-      borderBottomLeftRadius: roundBottom ? 24 : 0,
-      borderBottomRightRadius: roundBottom ? 24 : 0,
-      borderTopColor: roundTop ? "" : "rgba(229, 231, 235, 0)",
-      borderBottomColor: roundBottom ? "" : "rgba(229, 231, 235, 0)",
-      boxShadow: isActive
-        ? "0px 12px 32px rgba(0, 0, 0, 0.05)"
-        : "0px 0px 0px rgba(0, 0, 0, 0)",
+      animateStyles: {
+        marginTop: isActive && !isFirst ? 12 : 0,
+        marginBottom: isActive && !isLast ? 12 : 0,
+        borderTopLeftRadius: roundTop ? 24 : 0,
+        borderTopRightRadius: roundTop ? 24 : 0,
+        borderBottomLeftRadius: roundBottom ? 24 : 0,
+        borderBottomRightRadius: roundBottom ? 24 : 0,
+        boxShadow: isActive
+          ? "0px 12px 32px rgba(0, 0, 0, 0.05)"
+          : "0px 0px 0px rgba(0, 0, 0, 0)",
+      },
+      roundTop,
+      roundBottom,
     };
   };
 
@@ -69,13 +71,15 @@ export default function FAQAccordion({
               index !== activeIndex &&
               index !== items.length - 1;
 
+        const { animateStyles, roundTop, roundBottom } = getItemStyles(index, isActive);
+
         return (
           <AnimatePresence key={faq.id}>
             <motion.div
               layout
               onClick={() => setActiveId(activeId === faq.id ? null : faq.id)}
               initial={false}
-              animate={getItemStyles(index, isActive)}
+              animate={animateStyles}
               transition={spring}
               exit={spring}
               style={{
@@ -83,6 +87,8 @@ export default function FAQAccordion({
                 borderBottomWidth: 1,
                 borderTopStyle: "solid",
                 borderBottomStyle: "solid",
+                borderTopColor: roundTop ? undefined : "transparent",
+                borderBottomColor: roundBottom ? undefined : "transparent",
               }}
               className={cn(
                 "relative overflow-hidden cursor-pointer bg-white dark:bg-neutral-950 border-x border-gray-200 dark:border-neutral-800",

@@ -4,25 +4,21 @@ import Link from "next/link";
 import Silk from "../core/ShaderBackground";
 import { IconArrowNarrowRightDashed } from "@tabler/icons-react";
 import { motion } from "motion/react";
+import { useTheme } from "next-themes";
 
 export default function HeroSection() {
-  const variants = {
-    inital: { x: 0 },
-    show: { x: 5 },
-  };
+  const { resolvedTheme } = useTheme();
+
+  const silkColor = resolvedTheme === "dark" ? "#2233ee" : "#9cbfff";
 
   return (
     <section className="relative w-full min-h-screen flex flex-col justify-center items-center bg-black">
       <div className="absolute inset-0 w-full h-full z-0 pointer-events-none mask-b-from-80% mask-b-black">
-        <Silk color="#10AAFD" />
+        <Silk color={silkColor} />
       </div>
 
       <div className=" z-10 flex flex-col items-center justify-center w-full gap-10 h-full pt-10">
         <div className=" flex flex-col gap-3 items-center justify-center w-full">
-          {/* <div className="text-neutral-300/80  text-lg tracking-wider font-geist ">
-            Minimal UI
-          </div> */}
-
           <div
             className="text-white text-4xl xs:text-6xl sm:text-8xl  font-semibold flex flex-col items-center justify-center 
            lg:text-[7.5rem]"

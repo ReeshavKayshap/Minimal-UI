@@ -39,11 +39,19 @@ export function InstallDependencies({
   if (!dependencies || dependencies.length === 0) return null;
 
   return (
-    <div className="mt-4 rounded-xl overflow-hidden border border-white/10 bg-[#18181b]">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 bg-white/2">
+    <div
+      className="mt-4 rounded-xl overflow-hidden shadow-xs border border-neutral-200 dark:border-white/10
+     bg-neutral-200/20 dark:bg-neutral-900"
+    >
+      <div
+        className="flex items-center justify-between px-4 py-3 border-b border-neutral-200 dark:border-neutral-800
+       "
+      >
         <div className="flex items-center gap-2">
           {managers.map((manager) => (
-            <button
+            <motion.button
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.07 }}
               key={manager}
               onClick={() => setActiveManager(manager)}
               className="relative  px-4 py-1 cursor-pointer text-[13.5px] font-geist font-medium  z-10"
@@ -51,7 +59,7 @@ export function InstallDependencies({
               {activeManager === manager && (
                 <motion.div
                   layoutId="deps-tab-pill"
-                  className="absolute inset-0 bg-white/10 rounded-md"
+                  className="absolute inset-0 bg-neutral-400/20 dark:bg-neutral-800 rounded-md"
                   transition={{
                     type: "spring",
                     stiffness: 300,
@@ -63,15 +71,14 @@ export function InstallDependencies({
               <span className="relative z-10 text-neutral-900 dark:text-neutral-100">
                 {manager}
               </span>
-            </button>
+            </motion.button>
           ))}
         </div>
 
         <CopyButton textToCopy={commandText} />
       </div>
-
-      <div className="p-4 overflow-x-auto bg-[#09090b]">
-        <code className="text-sm font-mono text-zinc-300 whitespace-nowrap">
+      <div className="p-4 overflow-x-auto bg-neutral-200/20 dark:bg-neutral-900">
+        <code className="text-sm font-geist-mono text-neutral-900 dark:text-zinc-300 whitespace-nowrap">
           <span className="text-emerald-400 mr-2">{">_"}</span>
           {commandText}
         </code>

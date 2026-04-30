@@ -2,9 +2,9 @@ import { PreviewCard } from "@/components/ui/Preview-card";
 
 const ALL_COMPONENTS = [
   {
-    slug: "repulsio-text",
-    name: "RepulsioText",
-    description: "Interactive text with mouse repulsion.",
+    slug: "text-hover",
+    name: "TextHover",
+    description: "Text scattered into particles that react to mouse hover.",
     thumbnailVideo: "/videos/TextHover.mp4",
     thumbnailSrc: "/thumbnails/TextHover.png",
   },

@@ -9,15 +9,15 @@ export type ComponentDefinition = {
 };
 
 export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
-  "repulsio-text": {
-    title: "Repulsio Text",
+  "text-hover": {
+    title: "Text Hover",
     description:
       "A magical text effect that repels particles on mouse movement.",
-    preview: dynamic(() => import("@/components/previews/repulsio-preview")),
+    preview: dynamic(() => import("@/components/previews/texthover-preview")),
     docs: dynamic(() =>
-      import("@/components/docs/repulsio-docs").then((mod) => mod.RepulsioDocs),
+      import("@/components/docs/texthover-docs").then((mod) => mod.TextHoverDocs),
     ),
-    previewFileName: "repulsio-preview.tsx",
+    previewFileName: "texthover-preview.tsx",
   },
   "option-toggle": {
     title: "Option Toggle",

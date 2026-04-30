@@ -85,38 +85,42 @@ export default function Sidebar({
 
   return (
     <>
-      <button
+      <div
         onClick={() => setIsOpen(!isOpen)}
-        className="absolute top-10 left-10 z-40 cursor-pointer w-[34px] h-[34px] flex items-center justify-center bg-[#080808] rounded-md backdrop-blur-md transition-colors"
+        className="absolute top-10 left-10 z-50 cursor-pointer size-[35px] flex items-center justify-center
+        dark:bg-[#080808] bg-white rounded-md backdrop-blur-md transition-colors"
         aria-label="Toggle Menu"
       >
         <AnimatePresence mode="wait" initial={false}>
           {isOpen ? (
             <motion.div
               key="open"
-              initial={{ opacity: 0, scale: 0.97, filter: "blur(2px)" }}
-              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              exit={{ opacity: 0, scale: 0.97, filter: "blur(2px)" }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
+              initial={{ opacity: 0, scale: 1, filter: "blur(2px)" }}
+              animate={{ opacity: 1, scale: 0.97, filter: "blur(0px)" }}
+              exit={{ opacity: 0, scale: 1, filter: "blur(2px)" }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
             >
-              <IconLayoutSidebarFilled size={18} className="text-zinc-200" />
+              <IconLayoutSidebarFilled
+                size={18}
+                className="text-neutral-800 dark:text-zinc-200"
+              />
             </motion.div>
           ) : (
             <motion.div
               key="closed"
-              initial={{ opacity: 0, scale: 0.97, filter: "blur(2px)" }}
-              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              exit={{ opacity: 0, scale: 0.97, filter: "blur(2px)" }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
+              initial={{ opacity: 0, scale: 1, filter: "blur(2px)" }}
+              animate={{ opacity: 1, scale: 0.97, filter: "blur(0px)" }}
+              exit={{ opacity: 0, scale: 1, filter: "blur(2px)" }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
             >
               <IconLayoutSidebarRightFilled
                 size={18}
-                className="text-zinc-200"
+                className="text-neutral-800 dark:text-zinc-200"
               />
             </motion.div>
           )}
         </AnimatePresence>
-      </button>
+      </div>
 
       <AnimatePresence>
         {isOpen && (
@@ -126,7 +130,7 @@ export default function Sidebar({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="absolute inset-0 z-30 bg-black/40 backdrop-blur-sm"
+              className="absolute inset-0 z-30 dark:bg-black/40 bg-white/40 backdrop-blur-xs"
               onClick={() => setIsOpen(false)}
             />
             <motion.div
@@ -135,17 +139,18 @@ export default function Sidebar({
               exit="hidden"
               variants={sidebarVariants}
               className={cn(
-                "absolute top-0 left-5 my-5 rounded-2xl w-[340px] max-w-[85vw] bg-[#0f0f0f]/95 backdrop-blur-xl border border-zinc-800/60 p-8 pt-24 shadow-2xl flex flex-col z-40",
+                "absolute top-0 left-5 my-5 rounded-2xl w-[340px] max-w-[85vw] bg-neutral-50 dark:bg-neutral-900",
+                " border border-neutral-200 dark:border-neutral-800 p-8 pt-24 shadow-lg z-40",
                 className,
               )}
             >
-              <div className="flex-1 overflow-y-auto pr-4 pb-12 custom-scrollbar">
+              <div className="flex pb-12 ">
                 <div className="relative">
-                  <motion.ul className="flex flex-col relative z-10">
+                  <motion.ul className="flex flex-col relative">
                     <motion.li className="relative flex items-center h-[40px]">
-                      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-px bg-zinc-200" />
+                      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-px dark:bg-neutral-100 bg-neutral-900" />
                       <div className="pl-11 flex items-center">
-                        <span className="text-[15px] font-inter text-zinc-100 tracking-wide">
+                        <span className="text-[15px] font-inter dark:text-neutral-100 text-neutral-900 tracking-wide">
                           {title}
                         </span>
                       </div>
@@ -160,12 +165,12 @@ export default function Sidebar({
                         onHoverStart={playHoverSound}
                         className="relative cursor-pointer flex items-center h-[30px]"
                       >
-                        <div className="absolute left-0 -top-px w-8 h-px bg-zinc-800" />
+                        <div className="absolute left-0 -top-px w-8 h-px bg-neutral-200 dark:bg-neutral-800" />
                         <motion.div
                           variants={{
                             initial: {
                               width: "2rem",
-                              backgroundColor: "#27272a",
+                              backgroundColor: "var(--line-color)",
                             },
                             hover: {
                               width: "3.5rem",
@@ -173,8 +178,10 @@ export default function Sidebar({
                             },
                           }}
                           transition={{ duration: 0.28, ease: "easeOut" }}
-                          className="absolute left-0 top-1/2 -translate-y-1/2 h-px"
+                          className="absolute left-0 top-1/2 -translate-y-1/2 h-px [--line-color:#e5e5e5]
+                           dark:[--line-color:#262626]"
                         />
+
                         <motion.div
                           variants={{
                             initial: { x: 0 },
@@ -214,7 +221,8 @@ export function SidebarDocs() {
       prop: "items",
       type: "SidebarItem[]",
       defaultValue: "[]",
-      description: "Array of items to display in the sidebar. Each item requires an id, name, and optional onClick handler.",
+      description:
+        "Array of items to display in the sidebar. Each item requires an id, name, and optional onClick handler.",
     },
     {
       prop: "title",
@@ -226,14 +234,18 @@ export function SidebarDocs() {
       prop: "className",
       type: "string",
       defaultValue: "undefined",
-      description: "Optional custom CSS classes to apply to the sidebar container.",
+      description:
+        "Optional custom CSS classes to apply to the sidebar container.",
     },
   ];
 
   return (
     <div className="w-full flex flex-col gap-5 pt-5 animate-in fade-in duration-700">
       <section>
-        <h2 className="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-2">
+        <h2
+          className="text-2xl font-bold text-neutral-900 dark:text-white mb-6
+         border-b border-neutral-200 dark:border-white/10 pb-2"
+        >
           Installation
         </h2>
 
@@ -254,28 +266,32 @@ export function SidebarDocs() {
               </Step>
 
               <Step number={2} title="Add util file">
-                <div className="mb-4 text-[14px] text-zinc-400 leading-relaxed">
+                <div className="mb-4 text-[14px]  leading-relaxed">
                   Create a file at
                   <code className="text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded-md font-mono border border-emerald-400/20 mx-1">
                     lib/utils.ts
                   </code>
                   and paste this code.
                 </div>
-                <div className="mb-6">
-                  <CodeHighlight code={utilsCode} />
+                <div className="mb-6 rounded-xl overflow-hidden shadow-xs ring-1 ring-neutral-200 dark:ring-white/10">
+                  <div className="overflow-auto relative custom-scrollbar">
+                    <CodeHighlight code={utilsCode} />
+                  </div>
                 </div>
               </Step>
 
               <Step number={3} title="Add the component">
-                <div className="mb-4 text-[14px] text-zinc-400 leading-relaxed">
+                <div className="mb-4 text-[14px] leading-relaxed">
                   Create a file at
-                  <code className="text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded-md font-mono border border-emerald-400/20">
-                    components/ui/sidebar.tsx
+                  <code className="text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded-md font-mono border border-emerald-400/20 mx-1">
+                    components/ui/sidebar-menu.tsx
                   </code>
                   and paste this code.
                 </div>
-                <div className="mb-6 max-h-[450px] overflow-y-auto rounded-xl border border-white/10 relative custom-scrollbar">
-                  <CodeHighlight code={sidebarcode} />
+                <div className="mb-6 rounded-xl overflow-hidden shadow-xs ring-1 ring-neutral-200 dark:ring-white/10">
+                  <div className="max-h-[450px] overflow-auto relative custom-scrollbar">
+                    <CodeHighlight code={sidebarcode} />
+                  </div>
                 </div>
               </Step>
             </div>
@@ -284,7 +300,7 @@ export function SidebarDocs() {
       </section>
 
       <section>
-        <h2 className="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-2">
+        <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-6 border-b border-neutral-200 dark:border-white/10 pb-2">
           Props
         </h2>
         <PropsTable data={sidebarProps} />

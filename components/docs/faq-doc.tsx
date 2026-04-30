@@ -16,6 +16,7 @@ const Faq = `"use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "@/lib/utils";
+import { IconChevronDown } from "@tabler/icons-react";
 
 export interface FAQItem {
   id: string | number;
@@ -55,17 +56,19 @@ export default function FAQAccordion({
       : index === activeIndex - 1 || index === activeIndex || isLast;
 
     return {
-      marginTop: isActive && !isFirst ? 12 : 0,
-      marginBottom: isActive && !isLast ? 12 : 0,
-      borderTopLeftRadius: roundTop ? 24 : 0,
-      borderTopRightRadius: roundTop ? 24 : 0,
-      borderBottomLeftRadius: roundBottom ? 24 : 0,
-      borderBottomRightRadius: roundBottom ? 24 : 0,
-      borderTopColor: roundTop ? "#e5e7eb" : "rgba(229, 231, 235, 0)",
-      borderBottomColor: roundBottom ? "#e5e7eb" : "rgba(229, 231, 235, 0)",
-      boxShadow: isActive
-        ? "0px 12px 32px rgba(0, 0, 0, 0.05)"
-        : "0px 0px 0px rgba(0, 0, 0, 0)",
+      animateStyles: {
+        marginTop: isActive && !isFirst ? 12 : 0,
+        marginBottom: isActive && !isLast ? 12 : 0,
+        borderTopLeftRadius: roundTop ? 24 : 0,
+        borderTopRightRadius: roundTop ? 24 : 0,
+        borderBottomLeftRadius: roundBottom ? 24 : 0,
+        borderBottomRightRadius: roundBottom ? 24 : 0,
+        boxShadow: isActive
+          ? "0px 12px 32px rgba(0, 0, 0, 0.05)"
+          : "0px 0px 0px rgba(0, 0, 0, 0)",
+      },
+      roundTop,
+      roundBottom,
     };
   };
 
@@ -81,13 +84,15 @@ export default function FAQAccordion({
               index !== activeIndex &&
               index !== items.length - 1;
 
+        const { animateStyles, roundTop, roundBottom } = getItemStyles(index, isActive);
+
         return (
           <AnimatePresence key={faq.id}>
             <motion.div
               layout
               onClick={() => setActiveId(activeId === faq.id ? null : faq.id)}
               initial={false}
-              animate={getItemStyles(index, isActive)}
+              animate={animateStyles}
               transition={spring}
               exit={spring}
               style={{
@@ -95,14 +100,18 @@ export default function FAQAccordion({
                 borderBottomWidth: 1,
                 borderTopStyle: "solid",
                 borderBottomStyle: "solid",
+                borderTopColor: roundTop ? undefined : "transparent",
+                borderBottomColor: roundBottom ? undefined : "transparent",
               }}
               className={cn(
-                "relative overflow-hidden cursor-pointer bg-white border-x border-gray-200",
-                isActive ? "z-10" : "z-0 hover:bg-gray-50/50",
+                "relative overflow-hidden cursor-pointer bg-white dark:bg-neutral-950 border-x border-gray-200 dark:border-neutral-800",
+                isActive
+                  ? "z-10"
+                  : "z-0 hover:bg-gray-50/50 dark:hover:bg-[#111111]",
               )}
             >
               <div className="flex items-center justify-between p-4 sm:p-5 relative">
-                <h3 className="text-base font-medium text-gray-800 select-none">
+                <h3 className="text-base font-medium text-gray-800 dark:text-zinc-200 select-none">
                   {faq.title}
                 </h3>
 
@@ -112,15 +121,18 @@ export default function FAQAccordion({
                   transition={spring}
                   className="text-gray-400"
                 >
-                  ▼
+                  <IconChevronDown
+                    size={20}
+                    className="text-gray-800 dark:text-zinc-200"
+                  />
                 </motion.div>
 
-                <motion.div
+                {/* <motion.div
                   initial={false}
                   animate={{ opacity: showDivider ? 1 : 0 }}
                   transition={{ duration: 0.2 }}
                   className="absolute bottom-0 left-4 sm:left-5 right-4 sm:right-5 h-px bg-gray-200"
-                />
+                /> */}
               </div>
 
               <AnimatePresence initial={false}>
@@ -132,7 +144,7 @@ export default function FAQAccordion({
                     transition={spring}
                     className="overflow-hidden"
                   >
-                    <div className="px-4 sm:px-5 pb-5 text-gray-500 text-sm leading-relaxed">
+                    <div className="px-4 sm:px-5 pb-5 text-gray-500 dark:text-zinc-400 text-sm leading-relaxed">
                       {faq.answer}
                     </div>
                   </motion.div>
@@ -166,7 +178,10 @@ export function FaqDocs() {
   return (
     <div className="w-full flex flex-col gap-5 pt-5 animate-in fade-in duration-700">
       <section>
-        <h2 className="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-2">
+        <h2
+          className="text-2xl font-bold text-neutral-900 dark:text-white mb-6
+         border-b border-neutral-200 dark:border-white/10 pb-2"
+        >
           Installation
         </h2>
 
@@ -187,28 +202,33 @@ export function FaqDocs() {
               </Step>
 
               <Step number={2} title="Add util file">
-                <div className="mb-4 text-[14px] text-zinc-400 leading-relaxed">
+                <div className="mb-4 text-[14px]  leading-relaxed">
                   Create a file at
                   <code className="text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded-md font-mono border border-emerald-400/20 mx-1">
                     lib/utils.ts
                   </code>
                   and paste this code.
                 </div>
-                <div className="mb-6">
-                  <CodeHighlight code={utilsCode} />
+                <div className="mb-6 rounded-xl overflow-hidden shadow-xs ring-1 ring-neutral-200 dark:ring-white/10">
+                  <div className="overflow-auto relative custom-scrollbar">
+                    <CodeHighlight code={utilsCode} />
+                  </div>
                 </div>
               </Step>
 
-              <Step number={3} title="Add the Component">
-                <div className="mb-4 text-[14px] text-zinc-400 leading-relaxed">
+              <Step number={3} title="Add the Component ">
+                <div className="mb-4 text-[14px] leading-relaxed">
                   Create a file at
                   <code className="text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded-md font-mono border border-emerald-400/20 mx-1">
                     components/ui/faq.tsx
                   </code>
                   and paste this code.
                 </div>
-                <div className="mb-6">
-                  <CodeHighlight code={Faq} />
+
+                <div className="mb-6 rounded-xl overflow-hidden shadow-xs ring-1 ring-neutral-200 dark:ring-white/10">
+                  <div className="max-h-[450px] overflow-auto relative custom-scrollbar">
+                    <CodeHighlight code={Faq} />
+                  </div>
                 </div>
               </Step>
             </div>
@@ -217,7 +237,7 @@ export function FaqDocs() {
       </section>
 
       <section>
-        <h2 className="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-2">
+        <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-6 border-b border-neutral-200 dark:border-white/10 pb-2">
           Props
         </h2>
         <PropsTable data={faqProps} />

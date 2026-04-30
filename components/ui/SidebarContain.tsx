@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { IconBrandX } from "@tabler/icons-react";
 
 const COMPONENT_LINKS = [
-  { name: "Repulsio Text", slug: "repulsio-text" },
+  { name: "Text Hover", slug: "text-hover" },
   { name: "Option Toggle", slug: "option-toggle" },
   { name: "Reveal Password", slug: "reveal-password" },
   { name: "Faq", slug: "faq" },

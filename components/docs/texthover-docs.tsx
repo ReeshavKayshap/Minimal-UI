@@ -3,15 +3,15 @@ import { CodeHighlight } from "@/components/ui/Code-highlight";
 import { InstallCommand } from "@/components/ui/Install-command";
 import { InstallDependencies } from "@/components/ui/Install-dependencies";
 
-const utilsCode = `import { clsx, type ClassValue } from "clsx";
+export const utilsCode = `import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }`;
 
-const repulsioCode = `"use client";
-import { useRef, useEffect, useCallback } from "react";
+export const texthoverCode = `"use client";
+import { useRef, useEffect, useCallback, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface Vector2D {
@@ -55,23 +55,20 @@ interface IParticle {
   draw(ctx: CanvasRenderingContext2D, config: ParticleConfig): void;
 }
 
-export interface RepulsionTextProps {
+export interface TextHoverProps {
   text?: string;
   fontFamily?: string;
   fontWeight?: string | number;
   minFontSize?: number;
   maxFontSize?: number;
   fontSizeRatio?: number;
-
   color?: string;
   dotRadius?: number;
-
   gap?: number;
   repulseRadius?: number;
   repulseForce?: number;
   springForce?: number;
   friction?: number;
-
   className?: string;
 }
 
@@ -82,7 +79,6 @@ const DEFAULT_PROPS = {
   minFontSize: 60,
   maxFontSize: 250,
   fontSizeRatio: 0.2,
-  color: "#ffffff",
   dotRadius: 2,
   gap: 7,
   repulseRadius: 90,
@@ -91,11 +87,7 @@ const DEFAULT_PROPS = {
   friction: 0.82,
 } as const;
 
-const DEFAULT_MOUSE_POSITION: Readonly<{ x: number; y: number }> = {
-  x: -1000,
-  y: -1000,
-} as const;
-
+const DEFAULT_MOUSE_POSITION = { x: -1000, y: -1000 } as const;
 const ALPHA_THRESHOLD = 128;
 const PARTICLE_OFFSET_RANGE = 2;
 const CANVAS_MIN_HEIGHT = 400;
@@ -164,21 +156,14 @@ const createParticlesFromText = (
   particleConfig: ParticleConfig,
 ): Particle[] => {
   const { logicalWidth, logicalHeight, devicePixelRatio } = dimensions;
-
-  if (logicalWidth === 0 || logicalHeight === 0) {
-    return [];
-  }
+  if (logicalWidth === 0 || logicalHeight === 0) return [];
 
   const particles: Particle[] = [];
-
   ctx.clearRect(0, 0, logicalWidth, logicalHeight);
 
   const fontSize = calculateFontSize(logicalWidth, canvasConfig);
   ctx.fillStyle = "white";
-  
-  // ⭐️ ESCAPED TEMPLATE LITERALS HERE
   ctx.font = \`\${canvasConfig.fontWeight} \${fontSize}px \${canvasConfig.fontFamily}\`;
-  
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   ctx.fillText(canvasConfig.text, logicalWidth / 2, logicalHeight / 2);
@@ -191,35 +176,23 @@ const createParticlesFromText = (
       logicalHeight * devicePixelRatio,
     );
     const data = imageData.data;
-
     ctx.clearRect(0, 0, logicalWidth, logicalHeight);
 
-    for (
-      let y = 0;
-      y < logicalHeight * devicePixelRatio;
-      y += particleConfig.gap * devicePixelRatio
-    ) {
-      for (
-        let x = 0;
-        x < logicalWidth * devicePixelRatio;
-        x += particleConfig.gap * devicePixelRatio
-      ) {
+    const step = particleConfig.gap * devicePixelRatio;
+    for (let y = 0; y < logicalHeight * devicePixelRatio; y += step) {
+      for (let x = 0; x < logicalWidth * devicePixelRatio; x += step) {
         const intX = Math.floor(x);
         const intY = Math.floor(y);
-
         const index =
           (intY * Math.floor(logicalWidth * devicePixelRatio) + intX) * 4;
-        const alpha = data[index + 3];
 
-        if (alpha > ALPHA_THRESHOLD) {
+        if (data[index + 3] > ALPHA_THRESHOLD) {
           const logicalX = intX / devicePixelRatio;
           const logicalY = intY / devicePixelRatio;
-
           const offsetX =
             logicalX + (Math.random() - 0.5) * PARTICLE_OFFSET_RANGE;
           const offsetY =
             logicalY + (Math.random() - 0.5) * PARTICLE_OFFSET_RANGE;
-
           particles.push(new Particle(offsetX, offsetY));
         }
       }
@@ -227,147 +200,35 @@ const createParticlesFromText = (
   } catch (err) {
     console.error("Failed to read canvas pixels:", err);
   }
-
   return particles;
 };
 
 const useCanvasSetup = () => {
-  const setupCanvas = useCallback(
-    (
-      canvas: HTMLCanvasElement,
-      ctx: CanvasRenderingContext2D,
-    ): CanvasDimensions | null => {
-      const parent = canvas.parentElement;
-      if (!parent) return null;
+  const setupCanvas = (
+    canvas: HTMLCanvasElement,
+    ctx: CanvasRenderingContext2D,
+  ): CanvasDimensions | null => {
+    const parent = canvas.parentElement;
+    if (!parent) return null;
 
-      const logicalWidth = parent.clientWidth;
-      const logicalHeight = parent.clientHeight || CANVAS_MIN_HEIGHT;
+    const logicalWidth = parent.clientWidth;
+    const logicalHeight = parent.clientHeight || 400;
+    if (logicalWidth === 0 || logicalHeight === 0) return null;
 
-      if (logicalWidth === 0 || logicalHeight === 0) {
-        return null;
-      }
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = logicalWidth * dpr;
+    canvas.height = logicalHeight * dpr;
+    canvas.style.width = \`\${logicalWidth}px\`;
+    canvas.style.height = \`\${logicalHeight}px\`;
+    ctx.scale(dpr, dpr);
 
-      const devicePixelRatio = window.devicePixelRatio || 1;
-
-      canvas.width = logicalWidth * devicePixelRatio;
-      canvas.height = logicalHeight * devicePixelRatio;
-
-      // ⭐️ ESCAPED TEMPLATE LITERALS HERE
-      canvas.style.width = \`\${logicalWidth}px\`;
-      canvas.style.height = \`\${logicalHeight}px\`;
-
-      ctx.scale(devicePixelRatio, devicePixelRatio);
-
-      return {
-        logicalWidth,
-        logicalHeight,
-        devicePixelRatio,
-      };
-    },
-    [],
-  );
-
-  const clearCanvas = useCallback(
-    (ctx: CanvasRenderingContext2D, width: number, height: number): void => {
-      ctx.clearRect(0, 0, width, height);
-    },
-    [],
-  );
-
-  return {
-    setupCanvas,
-    clearCanvas,
+    return { logicalWidth, logicalHeight, devicePixelRatio: dpr };
   };
+
+  return { setupCanvas };
 };
 
-const useMouseTracking = () => {
-  const mouseRef = useRef<Vector2D>({ ...DEFAULT_MOUSE_POSITION });
-
-  const handleMouseMove = useCallback((canvas: HTMLCanvasElement) => {
-    return (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseRef.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      };
-    };
-  }, []);
-
-  const handleTouchMove = useCallback((canvas: HTMLCanvasElement) => {
-    return (e: TouchEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseRef.current = {
-        x: e.touches[0].clientX - rect.left,
-        y: e.touches[0].clientY - rect.top,
-      };
-    };
-  }, []);
-
-  const handleMouseLeave = useCallback(() => {
-    return () => {
-      mouseRef.current = { ...DEFAULT_MOUSE_POSITION };
-    };
-  }, []);
-
-  const getMousePosition = useCallback((): Vector2D => {
-    return mouseRef.current;
-  }, []);
-
-  return {
-    handleMouseMove,
-    handleTouchMove,
-    handleMouseLeave,
-    getMousePosition,
-  };
-};
-
-const useAnimationLoop = () => {
-  const animationFrameIdRef = useRef<number | null>(null);
-
-  const startAnimation = useCallback(
-    (
-      ctx: CanvasRenderingContext2D,
-      particles: IParticle[],
-      getMousePosition: () => Vector2D,
-      config: ParticleConfig,
-      dimensions: { width: number; height: number },
-      clearCanvas: (
-        ctx: CanvasRenderingContext2D,
-        width: number,
-        height: number,
-      ) => void,
-    ) => {
-      const render = () => {
-        clearCanvas(ctx, dimensions.width, dimensions.height);
-
-        const mousePos = getMousePosition();
-        particles.forEach((particle) => {
-          particle.update(mousePos, config);
-          particle.draw(ctx, config);
-        });
-
-        animationFrameIdRef.current = requestAnimationFrame(render);
-      };
-
-      render();
-    },
-    [],
-  );
-
-  const stopAnimation = useCallback(() => {
-    if (animationFrameIdRef.current !== null) {
-      cancelAnimationFrame(animationFrameIdRef.current);
-      animationFrameIdRef.current = null;
-    }
-  }, []);
-
-  return {
-    startAnimation,
-    stopAnimation,
-  };
-};
-
-export default function RepulsionText(props: RepulsionTextProps = {}) {
+export default function TextHover(props: TextHoverProps = {}) {
   const {
     text = DEFAULT_PROPS.text,
     fontFamily = DEFAULT_PROPS.fontFamily,
@@ -375,7 +236,7 @@ export default function RepulsionText(props: RepulsionTextProps = {}) {
     minFontSize = DEFAULT_PROPS.minFontSize,
     maxFontSize = DEFAULT_PROPS.maxFontSize,
     fontSizeRatio = DEFAULT_PROPS.fontSizeRatio,
-    color = DEFAULT_PROPS.color,
+    color: propColor,
     dotRadius = DEFAULT_PROPS.dotRadius,
     gap = DEFAULT_PROPS.gap,
     repulseRadius = DEFAULT_PROPS.repulseRadius,
@@ -389,102 +250,75 @@ export default function RepulsionText(props: RepulsionTextProps = {}) {
   const particlesRef = useRef<IParticle[]>([]);
   const dimensionsRef = useRef<CanvasDimensions | null>(null);
 
-  const { setupCanvas, clearCanvas } = useCanvasSetup();
-  const {
-    handleMouseMove,
-    handleTouchMove,
-    handleMouseLeave,
-    getMousePosition,
-  } = useMouseTracking();
-  const { startAnimation, stopAnimation } = useAnimationLoop();
+  const [resolvedColor, setResolvedColor] = useState(propColor || "#000000");
 
-  // Create config objects from props
-  const particleConfig: ParticleConfig = {
-    gap,
-    dotRadius,
-    repulseRadius,
-    repulseForce,
-    springForce,
-    friction,
-    color,
-  };
+  const { setupCanvas } = useCanvasSetup();
 
-  const canvasConfig: CanvasConfig = {
-    text,
-    fontFamily,
-    fontWeight,
-    minFontSize,
-    maxFontSize,
-    fontSizeRatio,
-  };
+  useEffect(() => {
+    if (propColor) {
+      setResolvedColor(propColor);
+      return;
+    }
+
+    const updateColor = () => {
+      const isDark = document.documentElement.classList.contains("dark");
+      setResolvedColor(isDark ? "#ffffff" : "#000000");
+    };
+
+    updateColor();
+    const observer = new MutationObserver(updateColor);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    return () => observer.disconnect();
+  }, [propColor]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) return;
 
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const particleConfig: ParticleConfig = {
+      gap,
+      dotRadius,
+      repulseRadius,
+      repulseForce,
+      springForce,
+      friction,
+      color: resolvedColor,
+    };
 
-    const initParticles = () => {
-      const dimensions = dimensionsRef.current;
-      if (!dimensions) return;
-
-      particlesRef.current = createParticlesFromText(
-        ctx,
-        dimensions,
-        canvasConfig,
-        particleConfig,
-      );
+    const canvasConfig: CanvasConfig = {
+      text,
+      fontFamily,
+      fontWeight,
+      minFontSize,
+      maxFontSize,
+      fontSizeRatio,
     };
 
     const handleResize = () => {
-      const dimensions = setupCanvas(canvas, ctx);
-      if (dimensions) {
-        dimensionsRef.current = dimensions;
-        initParticles();
+      const dims = setupCanvas(canvas, ctx);
+      if (dims) {
+        dimensionsRef.current = dims;
+        particlesRef.current = createParticlesFromText(
+          ctx,
+          dims,
+          canvasConfig,
+          particleConfig,
+        );
       }
     };
 
-    const startRendering = () => {
-      const dimensions = dimensionsRef.current;
-      if (!dimensions || particlesRef.current.length === 0) return;
-
-      startAnimation(
-        ctx,
-        particlesRef.current,
-        getMousePosition,
-        particleConfig,
-        {
-          width: dimensions.logicalWidth,
-          height: dimensions.logicalHeight,
-        },
-        clearCanvas,
-      );
-    };
-
-    const onMouseMove = handleMouseMove(canvas);
-    const onTouchMove = handleTouchMove(canvas);
-    const onMouseLeave = handleMouseLeave();
-
-    window.addEventListener("resize", handleResize);
-    canvas.addEventListener("mousemove", onMouseMove);
-    canvas.addEventListener("mouseleave", onMouseLeave);
-    canvas.addEventListener("touchmove", onTouchMove, { passive: true });
-    canvas.addEventListener("touchend", onMouseLeave);
-
     const initTimeout = setTimeout(() => {
       handleResize();
-      startRendering();
-    }, INIT_DELAY);
+    }, 100);
+
+    window.addEventListener("resize", handleResize);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      canvas.removeEventListener("mousemove", onMouseMove);
-      canvas.removeEventListener("mouseleave", onMouseLeave);
-      canvas.removeEventListener("touchmove", onTouchMove);
-      canvas.removeEventListener("touchend", onMouseLeave);
-
-      stopAnimation();
       clearTimeout(initTimeout);
     };
   }, [
@@ -494,38 +328,29 @@ export default function RepulsionText(props: RepulsionTextProps = {}) {
     minFontSize,
     maxFontSize,
     fontSizeRatio,
-    color,
+    resolvedColor,
     dotRadius,
     gap,
     repulseRadius,
     repulseForce,
     springForce,
     friction,
-    setupCanvas,
-    clearCanvas,
-    handleMouseMove,
-    handleTouchMove,
-    handleMouseLeave,
-    getMousePosition,
-    startAnimation,
-    stopAnimation,
   ]);
 
   return (
     <div
       className={cn(
-        "flex justify-center items-center w-full h-full py-20",
+        "relative flex justify-center items-center w-full min-h-[400px] h-full overflow-hidden",
         className,
       )}
     >
-      <canvas ref={canvasRef} className="block" />
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
     </div>
   );
-}
-`;
+}`;
 
-export function RepulsioDocs() {
-  const repulsioProps = [
+export function TextHoverDocs() {
+  const texthoverProps = [
     {
       prop: "text",
       type: "string",
@@ -549,7 +374,10 @@ export function RepulsioDocs() {
   return (
     <div className="w-full flex flex-col gap-5 pt-5 animate-in fade-in duration-700">
       <section>
-        <h2 className="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-2">
+        <h2
+          className="text-2xl font-bold text-neutral-900 dark:text-white mb-6
+         border-b border-neutral-200 dark:border-white/10 pb-2"
+        >
           Installation
         </h2>
 
@@ -557,7 +385,7 @@ export function RepulsioDocs() {
           cliContent={
             <div className="flex flex-col gap-4">
               <Step number={1} title="Run the following Command">
-                <InstallCommand componentName="repulsio-text" />
+                <InstallCommand componentName="text-hover" />
               </Step>
             </div>
           }
@@ -570,29 +398,33 @@ export function RepulsioDocs() {
               </Step>
 
               <Step number={2} title="Add util file">
-                <div className="mb-4 text-[14px] text-zinc-400 leading-relaxed">
+                <div className="mb-4 text-[14px]  leading-relaxed">
                   Create a file at
                   <code className="text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded-md font-mono border border-emerald-400/20 mx-1">
                     lib/utils.ts
                   </code>
                   and paste this code.
                 </div>
-                <div className="mb-6">
-                  <CodeHighlight code={utilsCode} />
+                <div className="mb-6 rounded-xl overflow-hidden shadow-xs ring-1 ring-neutral-200 dark:ring-white/10">
+                  <div className="overflow-auto relative custom-scrollbar">
+                    <CodeHighlight code={utilsCode} />
+                  </div>
                 </div>
               </Step>
 
               <Step number={3} title="Copy the source code">
-                <div className="mb-4 text-[14px] text-zinc-400 leading-relaxed">
+                <div className="mb-4 text-[14px] leading-relaxed">
                   Create a file at
                   <code className="text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded-md font-mono border border-emerald-400/20 mx-1">
-                    components/core/RepulsioText.tsx
+                    components/ui/TextHover.tsx
                   </code>
                   and paste this code.
                 </div>
 
-                <div className="mb-6 max-h-[450px] overflow-y-auto rounded-xl border border-white/10 relative custom-scrollbar">
-                  <CodeHighlight code={repulsioCode} />
+                <div className="mb-6 rounded-xl overflow-hidden shadow-xs ring-1 ring-neutral-200 dark:ring-white/10">
+                  <div className="max-h-[450px] overflow-auto relative custom-scrollbar">
+                    <CodeHighlight code={texthoverCode} />
+                  </div>
                 </div>
               </Step>
             </div>
@@ -600,23 +432,11 @@ export function RepulsioDocs() {
         />
       </section>
 
-      {/* <section>
-        <h2 className="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-2">
-          Understanding the Component
-        </h2>
-        <p className="text-zinc-400 mb-4 leading-relaxed">
-          The Repulsion Text effect reads the alpha channel of a hidden canvas
-          to determine where to place particles. It then applies a custom
-          physics engine calculating distance from the mouse cursor to apply
-          force vectors.
-        </p>
-      </section> */}
-
       <section>
-        <h2 className="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-2">
+        <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-6 border-b border-neutral-200 dark:border-white/10 pb-2">
           Props
         </h2>
-        <PropsTable data={repulsioProps} />
+        <PropsTable data={texthoverProps} />
       </section>
     </div>
   );
