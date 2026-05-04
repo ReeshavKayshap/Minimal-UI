@@ -83,6 +83,22 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "stamp-book-reveal",
+      "type": "registry:ui",
+      "dependencies": [
+        "motion",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/core/Stamp-Book-Reveal.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

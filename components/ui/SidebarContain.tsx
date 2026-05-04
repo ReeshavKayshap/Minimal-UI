@@ -12,6 +12,7 @@ const COMPONENT_LINKS = [
   { name: "Reveal Password", slug: "reveal-password" },
   { name: "Faq", slug: "faq" },
   { name: "Sidebar Menu", slug: "sidebar-menu" },
+  { name: "Stamp Book Reveal", slug: "stamp-book-reveal" },
 ];
 
 function Sidebar() {

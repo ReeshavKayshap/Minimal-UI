@@ -47,6 +47,12 @@ export function CommandPalette({
           icon: IconBox,
           href: "/components/sidebar-menu",
         },
+        {
+          id: "stamp-book-reveal",
+          label: "Stamp Book Reveal",
+          icon: IconBox,
+          href: "/components/stamp-book-reveal",
+        },
       ],
     },
   ];

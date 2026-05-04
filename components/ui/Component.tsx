@@ -36,6 +36,13 @@ const ALL_COMPONENTS = [
     thumbnailVideo: "/videos/Sidebar.mp4",
     thumbnailSrc: "/thumbnails/Sidebar.png",
   },
+  {
+    slug: "stamp-book-reveal",
+    name: "Stamp Book Reveal",
+    description: "Stamp book reveal animation.",
+    thumbnailVideo: "/videos/Sidebar.mp4",
+    thumbnailSrc: "/thumbnails/Sidebar.png",
+  },
 ];
 
 export default function Components() {

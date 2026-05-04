@@ -15,7 +15,9 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
       "A magical text effect that repels particles on mouse movement.",
     preview: dynamic(() => import("@/components/previews/texthover-preview")),
     docs: dynamic(() =>
-      import("@/components/docs/texthover-docs").then((mod) => mod.TextHoverDocs),
+      import("@/components/docs/texthover-docs").then(
+        (mod) => mod.TextHoverDocs,
+      ),
     ),
     previewFileName: "texthover-preview.tsx",
   },
@@ -63,5 +65,19 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
       import("@/components/docs/sidebar-docs").then((mod) => mod.SidebarDocs),
     ),
     previewFileName: "sidebar-preview.tsx",
+  },
+  "stamp-book-reveal": {
+    title: "Stamp Book Reveal",
+    description:
+      "A charming stamp book animation with interactive page-flipping and stamp collection.",
+    preview: dynamic(
+      () => import("@/components/previews/stamp-book-reveal-preview"),
+    ),
+    docs: dynamic(() =>
+      import("@/components/docs/stamp-book-reveal-docs").then(
+        (mod) => mod.StampBookRevealDocs,
+      ),
+    ),
+    previewFileName: "stamp-book-reveal-preview.tsx",
   },
 };
