@@ -13,6 +13,8 @@ const COMPONENT_LINKS = [
   { name: "Faq", slug: "faq" },
   { name: "Sidebar Menu", slug: "sidebar-menu" },
   { name: "Stamp Book Reveal", slug: "stamp-book-reveal" },
+  { name: "Vercel Nav Bar", slug: "vercel-nav-bar" },
+  { name: "Price Roller", slug: "price-roller" },
 ];
 
 function Sidebar() {

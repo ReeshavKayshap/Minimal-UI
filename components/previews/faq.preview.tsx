@@ -37,7 +37,7 @@ const demoData = [
 
 export default function FAQAccordionPreview() {
   return (
-    <div className="w-full flex items-center justify-center py-20 ">
+    <div className="w-full flex items-center justify-center ">
       <FAQAccordion items={demoData} />
     </div>
   );

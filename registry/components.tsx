@@ -80,4 +80,31 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
     ),
     previewFileName: "stamp-book-reveal-preview.tsx",
   },
+  "vercel-nav-bar": {
+    title: "Vercel Nav Bar",
+    description: "A Vercel-style navigation bar with dropdown menus.",
+    preview: dynamic(
+      () => import("@/components/previews/vercel-nav-bar-preview"),
+    ),
+    docs: dynamic(() =>
+      import("@/components/docs/vercel-nav-bar-docs").then(
+        (mod) => mod.VercelNavBarDocs,
+      ),
+    ),
+    previewFileName: "vercel-nav-bar-preview.tsx",
+  },
+  "price-roller": {
+    title: "Price Roller",
+    description:
+      "A premium price display with smooth number rolling animations.",
+    preview: dynamic(
+      () => import("@/components/previews/price-roller-preview"),
+    ),
+    docs: dynamic(() =>
+      import("@/components/docs/price-roller-docs").then(
+        (mod) => mod.PriceRollerDocs,
+      ),
+    ),
+    previewFileName: "price-roller-preview.tsx",
+  },
 };

@@ -12,10 +12,10 @@ export default function HeroSection() {
   const silkColor = resolvedTheme === "dark" ? "#2233ee" : "#9cbfff";
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col justify-center items-center bg-black">
-      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none mask-b-from-80% mask-b-black">
+    <section className="relative w-full min-h-screen flex flex-col justify-center items-center ">
+      {/* <div className="absolute inset-0 w-full h-full z-0 pointer-events-none mask-b-from-80% mask-b-black">
         <Silk color={silkColor} />
-      </div>
+      </div> */}
 
       <div className=" z-10 flex flex-col items-center justify-center w-full gap-10 h-full pt-10">
         <div className=" flex flex-col gap-3 items-center justify-center w-full">

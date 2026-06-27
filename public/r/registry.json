@@ -99,6 +99,38 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "vercel-nav-bar",
+      "type": "registry:ui",
+      "dependencies": [
+        "motion",
+        "@tabler/icons-react",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/core/Vercel-Nav-Bar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "priceroller",
+      "type": "registry:ui",
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/core/PriceRoller.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

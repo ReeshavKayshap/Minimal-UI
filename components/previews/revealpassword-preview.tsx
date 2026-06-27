@@ -4,7 +4,7 @@ import RevealPassword from "@/components/core/RevealPassword";
 
 export default function RevealPasswordPreview() {
   return (
-    <div className="flex items-center justify-center w-full ">
+    <div className="w-full flex items-center justify-center ">
       <RevealPassword
         prefix="4485 "
         secret="1996 2057"

@@ -43,6 +43,20 @@ const ALL_COMPONENTS = [
     thumbnailVideo: "/videos/Sidebar.mp4",
     thumbnailSrc: "/thumbnails/Sidebar.png",
   },
+  {
+    slug: "vercel-nav-bar",
+    name: "Vercel Nav Bar",
+    description: "Vercel-style navigation bar with dropdown menus.",
+    thumbnailVideo: "/videos/VercelNavBar.mp4",
+    thumbnailSrc: "/thumbnails/VercelNavBar.png",
+  },
+  {
+    slug: "price-roller",
+    name: "PriceRoller",
+    description: "Price roller with smooth animation.",
+    thumbnailVideo: "/videos/price-roller.mp4",
+    thumbnailSrc: "/thumbnails/price-roller.png",
+  },
 ];
 
 export default function Components() {

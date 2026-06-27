@@ -291,7 +291,7 @@ export function OptionToggleDocs() {
                 </div>
                 <div className="mb-6 rounded-xl overflow-hidden shadow-xs ring-1 ring-neutral-200 dark:ring-white/10">
                   <div className="overflow-auto relative custom-scrollbar">
-                    <CodeHighlight code={utilsCode} />
+                    <CodeHighlight code={utilsCode} withBottomBlur={false} />
                   </div>
                 </div>
               </Step>

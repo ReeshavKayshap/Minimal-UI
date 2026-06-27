@@ -1,6 +1,5 @@
 import Container from "@/components/Container";
 import Sidebar from "@/components/ui/SidebarContain";
-import { div } from "motion/react-client";
 
 export default function ComponentsLayout({
   children,
@@ -9,7 +8,7 @@ export default function ComponentsLayout({
 }) {
   return (
     <div
-      className="bg-linear-to-tl from-neutral-100 from-70% to-[#0258ED]/5 
+      className="bg-linear-to-tl from-neutral-50 from-70% to-[#0258ED]/5 
        dark:from-[#080808] dark:from-70% dark:to-[#0258ED]/15 
      h-full w-full min-h-screen"
     >
