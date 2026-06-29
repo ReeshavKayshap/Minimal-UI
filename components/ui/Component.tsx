@@ -40,8 +40,8 @@ const ALL_COMPONENTS = [
     slug: "stamp-book-reveal",
     name: "Stamp Book Reveal",
     description: "Stamp book reveal animation.",
-    thumbnailVideo: "/videos/Sidebar.mp4",
-    thumbnailSrc: "/thumbnails/Sidebar.png",
+    thumbnailVideo: "/videos/StampBookReveal.mp4",
+    thumbnailSrc: "/thumbnails/StampBookReveal.png",
   },
   {
     slug: "vercel-nav-bar",
@@ -54,8 +54,8 @@ const ALL_COMPONENTS = [
     slug: "price-roller",
     name: "PriceRoller",
     description: "Price roller with smooth animation.",
-    thumbnailVideo: "/videos/price-roller.mp4",
-    thumbnailSrc: "/thumbnails/price-roller.png",
+    thumbnailVideo: "/videos/PriceRoller.mp4",
+    thumbnailSrc: "/thumbnails/PriceRoller.png",
   },
 ];
 

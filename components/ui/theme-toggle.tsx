@@ -2,33 +2,27 @@
 
 import { Moon, Sun } from "@wiggle/icons-react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const { resolvedTheme, setTheme } = useTheme();
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
-
-  if (!mounted) {
-    return <div className="w-9 h-9 rounded-lg" aria-hidden="true" />;
-  }
-
-  const isDark = theme === "dark";
 
   return (
     <button
       type="button"
       onClick={toggleTheme}
-      className="flex items-center justify-center pt-px"
+      className="flex items-center justify-center pt-px w-5 h-5 cursor-pointer"
+      aria-label="Toggle theme"
     >
-      {isDark ? <Sun size={20} /> : <Moon size={20} />}
+      <span className="hidden dark:block">
+        <Sun size={20} />
+      </span>
+      <span className="block dark:hidden">
+        <Moon size={20} />
+      </span>
     </button>
   );
 }

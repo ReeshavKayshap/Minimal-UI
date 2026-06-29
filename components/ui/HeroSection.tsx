@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Silk from "../core/ShaderBackground";
+import Particles from "./herosectionbg";
 import { IconArrowNarrowRightDashed } from "@tabler/icons-react";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
@@ -13,14 +13,30 @@ export default function HeroSection() {
 
   return (
     <section className="relative w-full min-h-screen flex flex-col justify-center items-center ">
-      {/* <div className="absolute inset-0 w-full h-full z-0 pointer-events-none mask-b-from-80% mask-b-black">
-        <Silk color={silkColor} />
-      </div> */}
+      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none mask-b-from-80% mask-b-black">
+        <Particles
+          particleCount={150}
+          particleSpread={7}
+          particleColors={
+            resolvedTheme === "dark"
+              ? ["#2B7FFF", "#2B7FFF"]
+              : ["#2233ee", "#2233ee"]
+          }
+          moveParticlesOnHover
+          particleHoverFactor={2}
+          alphaParticles
+          particleBaseSize={100}
+          sizeRandomness={1}
+          cameraDistance={20}
+          disableRotation={false}
+          pixelRatio={1}
+        />
+      </div>
 
       <div className=" z-10 flex flex-col items-center justify-center w-full gap-10 h-full pt-10">
         <div className=" flex flex-col gap-3 items-center justify-center w-full">
           <div
-            className="text-white text-4xl xs:text-6xl sm:text-8xl  font-semibold flex flex-col items-center justify-center 
+            className="text-black dark:text-white text-4xl xs:text-6xl sm:text-8xl  font-semibold flex flex-col items-center justify-center 
            lg:text-[7.5rem]"
           >
             <span className="font-pixel-circle">Interactive UI</span>
@@ -29,7 +45,7 @@ export default function HeroSection() {
         </div>
 
         <p
-          className="text-neutral-300/80 text-center 
+          className="text-neutral-700 dark:text-neutral-300/80 text-center 
            text-[11px] xs:text-sm sm:text-[17px] tracking-wide font-geist max-w-60 xs:max-w-xs sm:max-w-lg"
         >
           A collection of beautiful, ready-to-use components built specifically
