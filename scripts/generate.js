@@ -21,11 +21,15 @@ if (fs.existsSync(registryPath)) {
       name: slug,
       type: "registry:ui",
       title: componentName,
-      description: `${componentName} component`,
+      // description: `${componentName} component`,
       dependencies: ["clsx", "tailwind-merge"],
       registryDependencies: [],
       files: [
-        { path: `components/core/${componentName}.tsx`, type: "registry:ui" },
+        {
+          path: `components/core/${componentName}.tsx`,
+          type: "registry:ui",
+          target: `components/ui/${componentName.toLowerCase()}.tsx`,
+        },
       ],
     });
 

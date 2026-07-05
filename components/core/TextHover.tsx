@@ -311,7 +311,7 @@ const useAnimationLoop = () => {
 /**
  * MAIN COMPONENT
  */
-export default function RepulsionText(props: RepulsionTextProps = {}) {
+export default function TextHover(props: RepulsionTextProps = {}) {
   const {
     text = DEFAULT_PROPS.text,
     fontFamily = DEFAULT_PROPS.fontFamily,

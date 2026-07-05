@@ -1,7 +1,6 @@
 {
-  "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "minimal-ui",
-  "homepage": "https://minimal-ui-eta.vercel.app",
+  "homepage": "https://minimal-ui.com",
   "items": [
     {
       "name": "option-toggle",
@@ -40,7 +39,11 @@
     {
       "name": "faq",
       "type": "registry:ui",
-      "dependencies": ["motion", "clsx", "tailwind-merge"],
+      "dependencies": [
+        "motion",
+        "clsx",
+        "tailwind-merge"
+      ],
       "registryDependencies": [],
       "files": [
         {
@@ -52,7 +55,11 @@
     {
       "name": "sidebar-menu",
       "type": "registry:ui",
-      "dependencies": ["motion", "clsx", "tailwind-merge"],
+      "dependencies": [
+        "motion",
+        "clsx",
+        "tailwind-merge"
+      ],
       "registryDependencies": [],
       "files": [
         {
@@ -64,7 +71,11 @@
     {
       "name": "text-hover",
       "type": "registry:ui",
-      "dependencies": ["motion", "clsx", "tailwind-merge"],
+      "dependencies": [
+        "motion",
+        "clsx",
+        "tailwind-merge"
+      ],
       "registryDependencies": [],
       "files": [
         {
@@ -76,7 +87,11 @@
     {
       "name": "stamp-book-reveal",
       "type": "registry:ui",
-      "dependencies": ["motion", "clsx", "tailwind-merge"],
+      "dependencies": [
+        "motion",
+        "clsx",
+        "tailwind-merge"
+      ],
       "registryDependencies": [],
       "files": [
         {
@@ -105,7 +120,10 @@
     {
       "name": "priceroller",
       "type": "registry:ui",
-      "dependencies": ["clsx", "tailwind-merge"],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge"
+      ],
       "registryDependencies": [],
       "files": [
         {
