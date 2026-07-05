@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 const slug = process.argv[2];
 const componentName = process.argv[3] || slug;
@@ -9,7 +9,7 @@ if (!slug) {
   process.exit(1);
 }
 
-const registryPath = path.join(process.cwd(), 'registry.json');
+const registryPath = path.join(process.cwd(), "registry.json");
 
 if (fs.existsSync(registryPath)) {
   const registryData = JSON.parse(fs.readFileSync(registryPath, "utf8"));
@@ -20,6 +20,8 @@ if (fs.existsSync(registryPath)) {
     registryData.items.push({
       name: slug,
       type: "registry:ui",
+      title: componentName,
+      description: `${componentName} component`,
       dependencies: ["clsx", "tailwind-merge"],
       registryDependencies: [],
       files: [
@@ -34,12 +36,15 @@ if (fs.existsSync(registryPath)) {
   }
 } else {
   const initialRegistry = {
+    $schema: "https://ui.shadcn.com/schema/registry.json",
     name: "minimal-ui",
-    homepage: "https://minimal-ui.com",
+    homepage: "https://minimal-ui-eta.vercel.app",
     items: [
       {
         name: slug,
         type: "registry:ui",
+        title: componentName,
+        description: `${componentName} component`,
         dependencies: ["clsx", "tailwind-merge"],
         registryDependencies: [],
         files: [

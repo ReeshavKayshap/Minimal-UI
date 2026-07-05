@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 
 import { CopyButton } from "@/components/ui/Copy-button";
-import { motion } from "motion/react"; // ⭐️ Fixed the import!
+import { motion } from "motion/react";
 
 interface InstallCommandProps {
   componentName: string;
@@ -11,13 +11,18 @@ interface InstallCommandProps {
 
 type PackageManager = "npm" | "pnpm" | "yarn" | "bun";
 
+// Use the deployed site URL in production, fall back to localhost only in dev
+const BASE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+  (process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : "https://minimal-ui-eta.vercel.app");
+
 export function InstallCommand({ componentName }: InstallCommandProps) {
   const [activeManager, setActiveManager] = useState<PackageManager>("npm");
 
-  const BASE_URL = "http://localhost:3000/r";
-
   const commandText = React.useMemo(() => {
-    const url = `${BASE_URL}/${componentName}.json`;
+    const url = `${BASE_URL}/r/${componentName}.json`;
 
     switch (activeManager) {
       case "pnpm":

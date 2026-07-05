@@ -13,7 +13,7 @@ export default function HeroSection() {
 
   return (
     <section className="relative w-full min-h-screen flex flex-col justify-center items-center ">
-      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none mask-b-from-80% mask-b-black">
+      <div className="absolute inset-0 w-full h-full z-0  pointer-events-none mask-b-from-80% mask-b-black">
         <Particles
           particleCount={150}
           particleSpread={7}
