@@ -12,7 +12,7 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
   "text-hover": {
     title: "Text Hover",
     description:
-      "A magical text effect that repels particles on mouse movement.",
+      "Text that breaks apart into individual particles which respond and shift as the mouse moves over them.",
     preview: dynamic(() => import("@/components/previews/texthover-preview")),
     docs: dynamic(() =>
       import("@/components/docs/texthover-docs").then(
@@ -23,7 +23,7 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
   },
   "option-toggle": {
     title: "Option Toggle",
-    description: "A smooth, animated toggle switch using Framer Motion.",
+    description: "An option toggle with smooth animation.",
     preview: dynamic(
       () => import("@/components/previews/optiontoggle-preview"),
     ),
@@ -36,7 +36,8 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
   },
   "reveal-password": {
     title: "Reveal Password",
-    description: "A smooth, animated toggle switch using Framer Motion.",
+    description:
+      "A password field that reveals the hidden characters using a 3D flip transition.",
     preview: dynamic(
       () => import("@/components/previews/revealpassword-preview"),
     ),
@@ -50,7 +51,7 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
   faq: {
     title: "FAQ Accordion",
     description:
-      "A sleek, motion-driven accordion for frequently asked questions.",
+      "An accordion-style FAQ section with smooth expand/collapse animations.",
     preview: dynamic(() => import("@/components/previews/faq.preview")),
     docs: dynamic(() =>
       import("@/components/docs/faq-doc").then((mod) => mod.FaqDocs),
@@ -59,7 +60,8 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
   },
   "sidebar-menu": {
     title: "Sidebar Menu",
-    description: "A collapsible sidebar menu with fluid spring animations.",
+    description:
+      "A collapsible sidebar navigation menu with interactive hover states on its items.",
     preview: dynamic(() => import("@/components/previews/sidebar-preview")),
     docs: dynamic(() =>
       import("@/components/docs/sidebar-docs").then((mod) => mod.SidebarDocs),
@@ -69,7 +71,7 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
   "stamp-book-reveal": {
     title: "Stamp Book Reveal",
     description:
-      "A charming stamp book animation with interactive page-flipping and stamp collection.",
+      "A page/content reveal animation styled like flipping through a stamp book.",
     preview: dynamic(
       () => import("@/components/previews/stamp-book-reveal-preview"),
     ),
@@ -82,7 +84,8 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
   },
   "vercel-nav-bar": {
     title: "Vercel Nav Bar",
-    description: "A Vercel-style navigation bar with dropdown menus.",
+    description:
+      "A navigation bar modeled after Vercel's design, featuring dropdown submenus.",
     preview: dynamic(
       () => import("@/components/previews/vercel-nav-bar-preview"),
     ),
@@ -95,8 +98,7 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
   },
   "price-roller": {
     title: "Price Roller",
-    description:
-      "A premium price display with smooth number rolling animations.",
+    description: "A pricing display that animates numbers rolling into place.",
     preview: dynamic(
       () => import("@/components/previews/price-roller-preview"),
     ),

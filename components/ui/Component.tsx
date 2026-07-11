@@ -4,14 +4,14 @@ const ALL_COMPONENTS = [
   {
     slug: "text-hover",
     name: "TextHover",
-    description: "Text scattered into particles that react to mouse hover.",
+    description: "Text that scatters into particles on mouse hover.",
     thumbnailVideo: "/videos/TextHover.mp4",
     thumbnailSrc: "/thumbnails/TextHover.png",
   },
   {
     slug: "option-toggle",
     name: "OptionToggle",
-    description: "A beautiful glowing option toggle.",
+    description: "An option toggle with smooth animation.",
     thumbnailVideo: "/videos/OptionToggle.mp4",
     thumbnailSrc: "/thumbnails/OptionToggle.png",
   },

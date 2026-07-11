@@ -53,7 +53,7 @@ export default async function ComponentPage({
         <h1 className="text-4xl md:text-3xl font-inter font-semibold text-neutral-900 dark:text-zinc-100 tracking-tight">
           {componentData.title}
         </h1>
-        <p className="text-[17.3px] text-neutral-500 font-inter dark:text-zinc-400 max-w-2xl leading-relaxed">
+        <p className="text-[17.3px] text-neutral-500 font-inter dark:text-zinc-400  leading-relaxed">
           {componentData.description}
         </p>
       </div>
