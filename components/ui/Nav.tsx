@@ -26,7 +26,7 @@ const Nav = () => {
         >
           <div className="w-full flex gap-3 items-center">
             <Image
-              src="/thumbnails/Logo.png"
+              src="/thumbnails/logo.png"
               alt="logo"
               loading="eager"
               width={26}
