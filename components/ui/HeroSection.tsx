@@ -79,7 +79,7 @@ export default function HeroSection() {
             </motion.div>
           </Link>
           <Link
-            href="https://x.com/rshvkyp"
+            href="https://x.com/rshvksyp"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -106,7 +106,7 @@ export default function HeroSection() {
       >
         <span className="text-gray-400">Built by</span>
         <Link
-          href="https://x.com/rshvkyp"
+          href="https://x.com/rshvksyp"
           target="_blank"
           rel="noopener noreferrer"
           className="text-gray-400 font-pixel-square underline underline-offset-3 decoration-gray-400 decoration-1

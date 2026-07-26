@@ -112,9 +112,7 @@ export function CommandPalette({
             placeholder="Search..."
             className="w-full bg-transparent outline-none text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-500"
           />
-          <div className="flex items-center gap-2">
-            
-            </div>
+          <div className="flex items-center gap-2"></div>
           <div className="flex items-center gap-1 shrink-0 ">
             <kbd className="pointer-events-none hidden sm:inline-flex h-5 min-w-5 select-none items-center justify-center rounded border border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 px-1.5 font-inter text-[10px] font-medium text-neutral-500">
               {isMac ? "⌘" : "Ctrl"}
@@ -125,7 +123,7 @@ export function CommandPalette({
           </div>
         </div>
 
-        <Command.List className="max-h-[300px] overflow-y-auto p-2">
+        <Command.List className="max-h-75 overflow-y-auto p-2">
           <Command.Empty className="p-6 text-center text-sm text-neutral-500">
             No results found.
           </Command.Empty>

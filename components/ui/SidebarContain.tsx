@@ -47,7 +47,7 @@ function Sidebar() {
     <div className="w-56 shrink-0 hidden md:block h-full sticky top-[120px] pt-2">
       <span className="text-neutral-900 dark:text-white font-inter font-medium ">
         <Link
-          href="https://x.com/rshvkyp"
+          href="https://x.com/rshvksyp"
           target="_blank"
           rel="noopener noreferrer"
           className="px-[10px] flex items-center gap-2 cursor-pointer"
