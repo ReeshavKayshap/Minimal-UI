@@ -73,7 +73,7 @@ export default function FAQAccordion({
   };
 
   return (
-    <div className={cn("w-full max-w-[480px]", className)} {...props}>
+    <div className={cn("w-full max-w-120", className)} {...props}>
       {items.map((faq, index) => {
         const isActive = activeId === faq.id;
         const activeIndex = items.findIndex((f) => f.id === activeId);
@@ -197,7 +197,12 @@ export function FaqDocs() {
             <div className="flex flex-col gap-2">
               <Step number={1} title="Install Package">
                 <InstallDependencies
-                  dependencies={["motion", "clsx", "tailwind-merge"]}
+                  dependencies={[
+                    "motion",
+                    "@tabler/icons-react",
+                    "clsx",
+                    "tailwind-merge",
+                  ]}
                 />
               </Step>
 
@@ -226,7 +231,7 @@ export function FaqDocs() {
                 </div>
 
                 <div className="mb-6 rounded-xl overflow-hidden shadow-xs ring-1 ring-neutral-200 dark:ring-white/10">
-                  <div className="max-h-[450px] overflow-auto relative custom-scrollbar">
+                  <div className="max-h-112.5 overflow-auto relative custom-scrollbar">
                     <CodeHighlight code={Faq} />
                   </div>
                 </div>

@@ -60,7 +60,7 @@ export default function FAQAccordion({
   };
 
   return (
-    <div className={cn("w-full max-w-[480px]", className)} {...props}>
+    <div className={cn("w-full max-w-120", className)} {...props}>
       {items.map((faq, index) => {
         const isActive = activeId === faq.id;
         const activeIndex = items.findIndex((f) => f.id === activeId);
@@ -71,7 +71,10 @@ export default function FAQAccordion({
               index !== activeIndex &&
               index !== items.length - 1;
 
-        const { animateStyles, roundTop, roundBottom } = getItemStyles(index, isActive);
+        const { animateStyles, roundTop, roundBottom } = getItemStyles(
+          index,
+          isActive,
+        );
 
         return (
           <AnimatePresence key={faq.id}>

@@ -13,7 +13,7 @@ export function cn(...inputs: ClassValue[]) {
 
 const sidebarcode = `"use client";
 import { useState } from "react";
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "motion/react";
 import {
   IconLayoutSidebarRightFilled,
   IconLayoutSidebarFilled,
@@ -87,7 +87,7 @@ export default function Sidebar({
     <>
       <div
         onClick={() => setIsOpen(!isOpen)}
-        className="absolute top-10 left-10 z-50 cursor-pointer size-[35px] flex items-center justify-center
+        className="absolute top-10 left-10 z-50 cursor-pointer size-8.75 flex items-center justify-center
         dark:bg-[#080808] bg-white rounded-md backdrop-blur-md transition-colors"
         aria-label="Toggle Menu"
       >
@@ -139,7 +139,7 @@ export default function Sidebar({
               exit="hidden"
               variants={sidebarVariants}
               className={cn(
-                "absolute top-0 left-5 my-5 rounded-2xl w-[340px] max-w-[85vw] bg-neutral-50 dark:bg-neutral-900",
+                "absolute top-0 left-5 my-5 rounded-2xl w-85 max-w-[85vw] bg-neutral-50 dark:bg-neutral-900",
                 " border border-neutral-200 dark:border-neutral-800 p-8 pt-24 shadow-lg z-40",
                 className,
               )}
@@ -147,7 +147,7 @@ export default function Sidebar({
               <div className="flex pb-12 ">
                 <div className="relative">
                   <motion.ul className="flex flex-col relative">
-                    <motion.li className="relative flex items-center h-[40px]">
+                    <motion.li className="relative flex items-center h-10">
                       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-8 h-px dark:bg-neutral-100 bg-neutral-900" />
                       <div className="pl-11 flex items-center">
                         <span className="text-[15px] font-inter dark:text-neutral-100 text-neutral-900 tracking-wide">
@@ -163,7 +163,7 @@ export default function Sidebar({
                         initial="initial"
                         whileHover="hover"
                         onHoverStart={playHoverSound}
-                        className="relative cursor-pointer flex items-center h-[30px]"
+                        className="relative cursor-pointer flex items-center  h-7.5"
                       >
                         <div className="absolute left-0 -top-px w-8 h-px bg-neutral-200 dark:bg-neutral-800" />
                         <motion.div
@@ -261,7 +261,12 @@ export function SidebarDocs() {
             <div className="flex flex-col gap-2">
               <Step number={1} title="Install Package">
                 <InstallDependencies
-                  dependencies={["motion", "clsx", "tailwind-merge"]}
+                  dependencies={[
+                    "motion",
+                    "@tabler/icons-react",
+                    "clsx",
+                    "tailwind-merge",
+                  ]}
                 />
               </Step>
 
@@ -289,7 +294,7 @@ export function SidebarDocs() {
                   and paste this code.
                 </div>
                 <div className="mb-6 rounded-xl overflow-hidden shadow-xs ring-1 ring-neutral-200 dark:ring-white/10">
-                  <div className="max-h-[450px] overflow-auto relative custom-scrollbar">
+                  <div className="max-h-112.5 overflow-auto relative custom-scrollbar">
                     <CodeHighlight code={sidebarcode} />
                   </div>
                 </div>

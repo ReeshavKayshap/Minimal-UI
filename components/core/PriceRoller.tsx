@@ -187,16 +187,12 @@ export default function PriceRoller({
         </span>
 
         <span
-          className={cn(
-            "text-zinc-500 text-3xl font-medium",
-            suffixClassName,
-          )}
+          className={cn("text-zinc-500 text-3xl font-medium", suffixClassName)}
         >
           {suffix}
         </span>
       </div>
 
-   
       <div
         className={cn(
           "flex items-center bg-neutral-300/30 dark:bg-neutral-800 px-1.5 py-1.5 w-fit rounded-full",

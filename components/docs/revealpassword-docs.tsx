@@ -259,7 +259,12 @@ export function RevealPasswordDocs() {
             <div className="flex flex-col gap-2">
               <Step number={1} title="Install Package">
                 <InstallDependencies
-                  dependencies={["motion", "clsx", "tailwind-merge"]}
+                  dependencies={[
+                    "motion",
+                    "@tabler/icons-react",
+                    "clsx",
+                    "tailwind-merge",
+                  ]}
                 />
               </Step>
               <Step number={2} title="Add util file">

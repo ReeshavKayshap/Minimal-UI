@@ -10,10 +10,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }`;
 
-export const VercelNavBarCode = `
-"use client";
+export const VercelNavBarCode = `"use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { IconArrowRight, IconChevronDown } from "@tabler/icons-react";
 
@@ -48,84 +47,75 @@ export default function VercelNavBar({
   logo,
   actions,
 }: VercelNavBarProps = {}) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const btnRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+
+  const visibleRef = useRef(false);
+  const [translateX, setTranslateX] = useState(0);
+  const [isAppearing, setIsAppearing] = useState(true);
+
+  const [visible, setVisible] = useState(false);
   const [activeTab, setActiveTab] = useState<string | null>(null);
   const [hoveredTab, setHoveredTab] = useState<string | null>(null);
   const [coords, setCoords] = useState({ left: 0, width: 0 });
-  //   const [dropdownLeft, setDropdownLeft] = useState(0);
-  const [direction, setDirection] = useState<"left" | "right" | null>(null);
 
-  const navContainerRef = useRef<HTMLElement | null>(null);
-  const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const dropdownItems = navItems.filter(
+    (item) => item.hasDropdown && item.columns && item.columns.length > 0,
+  );
 
-  const springConfig = {
-    type: "spring" as const,
-    stiffness: 480,
-    damping: 30,
-  };
+  const reveal = useCallback((index: number, itemId: string) => {
+    const targetX = -index * 780;
 
-  const contentVariants = {
-    enter: (direction: "left" | "right" | null) => ({
-      opacity: 0,
-      x: direction === "right" ? 140 : direction === "left" ? -140 : 0,
-    }),
-    center: {
-      opacity: 1,
-      x: 0,
-    },
-    exit: (direction: "left" | "right" | null) => ({
-      opacity: 0,
-
-      x: direction === "right" ? -140 : direction === "left" ? 140 : 0,
-    }),
-  };
-
-  const handleTabHover = (tabId: string) => {
-    const tabEl = tabRefs.current[tabId];
-    const containerEl = navContainerRef.current;
-
-    if (tabEl && containerEl) {
-      const containerRect = containerEl.getBoundingClientRect();
-      const tabRect = tabEl.getBoundingClientRect();
-
-      const tabLeftRelative = tabRect.left - containerRect.left;
-
-      setCoords({
-        left: tabLeftRelative,
-        width: tabRect.width,
-      });
-
-      const dropdownWidth = 760;
-      const containerWidth = containerRect.width;
-      const tabCenter = tabLeftRelative + tabRect.width / 2;
-
-      let targetLeft = tabCenter - dropdownWidth / 2;
-      targetLeft = Math.max(
-        -100,
-        Math.min(targetLeft, containerWidth - dropdownWidth + 100),
-      );
-    }
-
-    const currentIndex = navItems.findIndex((item) => item.id === tabId);
-    const prevIndex = navItems.findIndex((item) => item.id === activeTab);
-
-    if (activeTab && currentIndex !== -1 && prevIndex !== -1) {
-      setDirection(currentIndex > prevIndex ? "right" : "left");
+    if (!visibleRef.current) {
+      setIsAppearing(true);
+      visibleRef.current = true;
     } else {
-      setDirection(null);
+      setIsAppearing(false);
     }
 
-    setHoveredTab(tabId);
-    if (navItems.find((item) => item.id === tabId)?.hasDropdown) {
-      setActiveTab(tabId);
-    } else {
-      setActiveTab(null);
-    }
-  };
+    setTranslateX(targetX);
+    setActiveTab(itemId);
+    setVisible(true);
+  }, []);
 
-  const handleMouseLeave = () => {
-    setHoveredTab(null);
+  const hideTooltip = useCallback(() => {
+    visibleRef.current = false;
+    setVisible(false);
     setActiveTab(null);
-  };
+  }, []);
+
+  const handleTabHover = useCallback(
+    (itemId: string) => {
+      const tabEl = btnRefs.current[itemId];
+      const containerEl = wrapperRef.current;
+
+      if (tabEl && containerEl) {
+        const containerRect = containerEl.getBoundingClientRect();
+        const tabRect = tabEl.getBoundingClientRect();
+        setCoords({
+          left: tabRect.left - containerRect.left,
+          width: tabRect.width,
+        });
+      }
+
+      setHoveredTab(itemId);
+
+      const dropdownIndex = dropdownItems.findIndex(
+        (item) => item.id === itemId,
+      );
+      if (dropdownIndex !== -1) {
+        reveal(dropdownIndex, itemId);
+      } else {
+        hideTooltip();
+      }
+    },
+    [dropdownItems, reveal, hideTooltip],
+  );
+
+  const handleMouseLeave = useCallback(() => {
+    setHoveredTab(null);
+    hideTooltip();
+  }, [hideTooltip]);
 
   return (
     <div className="h-full w-full">
@@ -144,7 +134,7 @@ export default function VercelNavBar({
             )}
 
             <nav
-              ref={navContainerRef}
+              ref={wrapperRef}
               onMouseLeave={handleMouseLeave}
               className="relative hidden md:flex items-center"
             >
@@ -161,7 +151,7 @@ export default function VercelNavBar({
                       height: "34px",
                     }}
                     exit={{ opacity: 0 }}
-                    transition={springConfig}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
                   />
                 )}
               </AnimatePresence>
@@ -171,9 +161,10 @@ export default function VercelNavBar({
                   <button
                     key={item.id}
                     ref={(el) => {
-                      tabRefs.current[item.id] = el;
+                      btnRefs.current[item.id] = el;
                     }}
                     onMouseEnter={() => handleTabHover(item.id)}
+                    onFocus={() => handleTabHover(item.id)}
                     className={\`relative px-4 py-1.5 cursor-pointer text-[15px] font-geist font-medium transition-colors duration-200 flex items-center gap-1 rounded-full outline-none
                       \${hoveredTab === item.id || activeTab === item.id ? "dark:text-white text-neutral-800" : "text-neutral-400"}\
                     \`}
@@ -188,124 +179,88 @@ export default function VercelNavBar({
                 ))}
               </div>
 
-              <AnimatePresence>
-                {activeTab && (
+              {/* ── Fixed Dropdown Container Shell (STAYS IN PLACE) ── */}
+              <div
+                className={\`absolute top-full -left-20 pt-4 z-50 \${
+                  visible ? "pointer-events-auto" : "pointer-events-none"
+                }\`}
+              >
+                <motion.div
+                  initial={false}
+                  animate={{
+                    opacity: visible ? 1 : 0,
+                    scale: visible ? 1 : 0.98,
+                    filter: visible ? "blur(0px)" : "blur(4px)",
+                  }}
+                  transition={{
+                    opacity: { duration: 0.15 },
+                    scale: { duration: 0.15 },
+                    filter: { duration: 0.12 },
+                  }}
+                  className="w-195 dark:bg-zinc-950/90 bg-neutral-200/70 border dark:border-zinc-800/80 border-neutral-300/80 rounded-2xl shadow-2xl shadow-black/20 dark:shadow-black/30 backdrop-blur-3xl overflow-hidden relative pointer-events-auto"
+                >
+                  {/* ── Sliding Content Rail (EASE ANIMATION) ── */}
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.98, filter: "blur(4px)" }}
-                    animate={{
-                      opacity: 1,
-                      scale: 1,
-                      filter: "blur(0px)",
-                    }}
-                    exit={{ opacity: 0, scale: 0.98, filter: "blur(4px)" }}
+                    animate={{ x: translateX }}
                     transition={{
-                      ...springConfig,
-                      opacity: { duration: 0.15 },
-                      scale: { duration: 0.15 },
-                      filter: { duration: 0.12 },
+                      x: { duration: isAppearing ? 0 : 0.3, ease: "easeOut" },
                     }}
-                    className="absolute top-full -left-20 pt-4 z-50 origin-top pointer-events-auto"
-                    style={{ width: "780px" }}
+                    className="flex w-max relative z-1"
                   >
-                    <motion.div
-                      className="w-full dark:bg-zinc-950/90 bg-neutral-200/70 border dark:border-zinc-800/80 border-neutral-300/80 rounded-2xl 
-                     shadow-2xl shadow-black/20 dark:shadow-black/30 backdrop-blur-3xl overflow-hidden relative"
-                    >
-                      <div
-                        className="absolute inset-0 
-                       bg-[radial-gradient(#27272a_1px,transparent_1px)]
-                       bg-size-[16px_16px] opacity-5 pointer-events-none"
-                      />
+                    {dropdownItems.map((item) => (
+                      <div key={item.id} className="w-195 shrink-0 p-6">
+                        <div className="grid grid-cols-3 gap-6 w-full">
+                          {item.columns?.map((col) => (
+                            <div key={col.title} className="space-y-4">
+                              <h3 className="text-[11px] font-bold tracking-widest font-inter dark:text-zinc-400 text-neutral-500 uppercase px-2">
+                                {col.title}
+                              </h3>
 
-                      <div className="relative overflow-hidden w-full p-4">
-                        <AnimatePresence
-                          mode="popLayout"
-                          initial={false}
-                          custom={direction}
-                        >
-                          <motion.div
-                            key={activeTab}
-                            custom={direction}
-                            variants={contentVariants}
-                            initial="enter"
-                            animate="center"
-                            exit="exit"
-                            transition={{
-                              x: springConfig,
-                              opacity: { duration: 0.08 },
-                            }}
-                            className="grid grid-cols-3 gap-6 w-full"
-                          >
-                            {navItems
-                              .find((item) => item.id === activeTab)
-                              ?.columns?.map((col) => (
-                                <div key={col.title} className="space-y-4">
-                                  <h3 className="text-[11px] font-bold tracking-widest font-inter dark:text-zinc-400 text-neutral-500 uppercase px-2">
-                                    {col.title}
-                                  </h3>
-
-                                  <div className="space-y-1">
-                                    {col.items.map((subItem) => {
-                                      const Icon = subItem.icon;
-                                      return (
-                                        <a
-                                          key={subItem.name}
-                                          href={subItem.href}
-                                          className="flex items-start gap-3 p-2 rounded-xl dark:hover:bg-zinc-900/60 hover:bg-neutral-200 transition-colors group"
-                                        >
-                                          <div
-                                            className="mt-0.5 p-1.5 bg-neutral-300 dark:bg-zinc-900 rounded-lg group-hover:bg-neutral-300
-                                         dark:group-hover:bg-zinc-800 transition-colors"
-                                          >
-                                            <Icon className="w-3.5 h-3.5 text-zinc-600 dark:group-hover:text-white transition-colors" />
-                                          </div>
-                                          <div className="flex-1 min-w-0">
-                                            <div
-                                              className="text-sm font-medium font-inter dark:text-zinc-300 text-neutral-800
-                                           group-hover:text-neutral-800 dark:group-hover:text-white flex items-center gap-1 transition-colors"
-                                            >
-                                              {subItem.name}
-                                              <IconArrowRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-150 text-zinc-400" />
-                                            </div>
-                                            <p className="text-xs font-geist text-zinc-500 mt-0.5 line-clamp-1 group-hover:text-zinc-400 transition-colors">
-                                              {subItem.desc}
-                                            </p>
-                                          </div>
-                                        </a>
-                                      );
-                                    })}
-                                  </div>
-                                </div>
-                              ))}
-                          </motion.div>
-                        </AnimatePresence>
+                              <div className="space-y-1">
+                                {col.items.map((subItem) => {
+                                  const Icon = subItem.icon;
+                                  return (
+                                    <a
+                                      key={subItem.name}
+                                      href={subItem.href}
+                                      className="flex items-start gap-3 p-2 rounded-xl dark:hover:bg-zinc-900/60 hover:bg-neutral-200 transition-colors group"
+                                    >
+                                      <div className="mt-0.5 p-1.5 bg-neutral-300 dark:bg-zinc-900 rounded-lg group-hover:bg-neutral-300 dark:group-hover:bg-zinc-800 transition-colors">
+                                        <Icon className="w-3.5 h-3.5 text-zinc-600 dark:group-hover:text-white transition-colors" />
+                                      </div>
+                                      <div className="flex-1 min-w-0">
+                                        <div className="text-sm font-medium font-inter dark:text-zinc-300 text-neutral-800 group-hover:text-neutral-800 dark:group-hover:text-white flex items-center gap-1 transition-colors">
+                                          {subItem.name}
+                                          <IconArrowRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-150 text-zinc-400" />
+                                        </div>
+                                        <p className="text-xs font-geist text-zinc-500 mt-0.5 line-clamp-1 group-hover:text-zinc-400 transition-colors">
+                                          {subItem.desc}
+                                        </p>
+                                      </div>
+                                    </a>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                    </motion.div>
+                    ))}
                   </motion.div>
-                )}
-              </AnimatePresence>
+                </motion.div>
+              </div>
             </nav>
           </div>
 
           {actions || (
             <div className="flex items-center gap-3 font-geist">
-              <button
-                className="text-sm cursor-pointer font-medium text-neutral-400
-               dark:hover:text-white hover:text-neutral-800 px-3.5 py-1.5 transition-colors"
-              >
+              <button className="text-sm cursor-pointer font-medium text-neutral-400 dark:hover:text-white hover:text-neutral-800 px-3.5 py-1.5 transition-colors">
                 Contact
               </button>
-              <button
-                className="text-sm cursor-pointer font-medium text-neutral-900 dark:text-neutral-100 dark:hover:text-white hover:text-neutral-800
-                px-3.5 py-1.5 border border-neutral-300  dark:border-zinc-800 dark:hover:border-zinc-700 hover:border-neutral-400/70
-                 bg-white dark:bg-zinc-900/40 rounded-full transition-all"
-              >
+              <button className="text-sm cursor-pointer font-medium text-neutral-900 dark:text-neutral-100 dark:hover:text-white hover:text-neutral-800 px-3.5 py-1.5 border border-neutral-300 dark:border-zinc-800 dark:hover:border-zinc-700 hover:border-neutral-400/70 bg-white dark:bg-zinc-900/40 rounded-full transition-all">
                 Log In
               </button>
-              <button
-                className="text-sm cursor-pointer font-medium bg-neutral-900 dark:bg-white text-neutral-100 dark:text-black
-               hover:bg-neutral-800 dark:hover:bg-zinc-100 px-4 py-1.5 rounded-full  transition-all"
-              >
+              <button className="text-sm cursor-pointer font-medium bg-neutral-900 dark:bg-white text-neutral-100 dark:text-black hover:bg-neutral-800 dark:hover:bg-zinc-100 px-4 py-1.5 rounded-full transition-all">
                 Sign Up
               </button>
             </div>
@@ -314,9 +269,7 @@ export default function VercelNavBar({
       </header>
     </div>
   );
-}
-
-`;
+}`;
 
 export function VercelNavBarDocs() {
   const vercelNavBarProps = [
@@ -324,19 +277,19 @@ export function VercelNavBarDocs() {
       prop: "navItems",
       type: "NavItem[]",
       defaultValue: "[]",
-      description: "The navigation items.",
+      description: "Array of navigation items, each with optional columns and subItems for dropdown menus.",
     },
     {
       prop: "logo",
       type: "ReactNode",
       defaultValue: "null",
-      description: "The logo to display.",
+      description: "Custom logo element displayed on the left side of the navbar.",
     },
     {
       prop: "actions",
       type: "ReactNode",
       defaultValue: "null",
-      description: "The actions to display.",
+      description: "Custom action elements (e.g., Log In / Sign Up buttons) displayed on the right.",
     },
   ];
 
@@ -354,7 +307,7 @@ export function VercelNavBarDocs() {
           cliContent={
             <div className="flex flex-col gap-4">
               <Step number={1} title="Run the following Command">
-                <InstallCommand componentName="text-hover" />
+                <InstallCommand componentName="vercel-nav-bar" />
               </Step>
             </div>
           }
@@ -362,7 +315,12 @@ export function VercelNavBarDocs() {
             <div className="flex flex-col gap-2">
               <Step number={1} title="Install Package">
                 <InstallDependencies
-                  dependencies={["motion", "clsx", "tailwind-merge"]}
+                  dependencies={[
+                    "motion",
+                    "@tabler/icons-react",
+                    "clsx",
+                    "tailwind-merge",
+                  ]}
                 />
               </Step>
 
@@ -391,7 +349,7 @@ export function VercelNavBarDocs() {
                 </div>
 
                 <div className="mb-6 rounded-xl overflow-hidden shadow-xs ring-1 ring-neutral-200 dark:ring-white/10">
-                  <div className="max-h-[450px] overflow-auto relative custom-scrollbar">
+                  <div className="max-h-112.5 overflow-auto relative custom-scrollbar">
                     <CodeHighlight code={VercelNavBarCode} />
                   </div>
                 </div>

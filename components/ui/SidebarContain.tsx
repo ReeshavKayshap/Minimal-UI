@@ -15,6 +15,8 @@ const COMPONENT_LINKS = [
   { name: "Stamp Book Reveal", slug: "stamp-book-reveal" },
   { name: "Vercel Nav Bar", slug: "vercel-nav-bar" },
   { name: "Price Roller", slug: "price-roller" },
+  { name: "404 Animation", slug: "404-animation" },
+  { name: "Spatial Tooltip", slug: "spatial-tooltip" },
 ];
 
 function Sidebar() {
@@ -44,13 +46,13 @@ function Sidebar() {
   };
 
   return (
-    <div className="w-56 shrink-0 hidden md:block h-full sticky top-[120px] pt-2">
+    <div className="w-56 shrink-0 hidden md:block h-full sticky top-30 pt-2">
       <span className="text-neutral-900 dark:text-white font-inter font-medium ">
         <Link
           href="https://x.com/rshvksyp"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-[10px] flex items-center gap-2 cursor-pointer"
+          className="px-2.5 flex items-center gap-2 cursor-pointer"
         >
           <span className="text-neutral-900 dark:text-white ">
             <IconBrandX size={17} />

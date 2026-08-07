@@ -113,12 +113,6 @@ const NAV_ITEMS = [
         title: "Company",
         items: [
           {
-            name: "Customers",
-            desc: "Trusted by the best teams",
-            icon: IconUsersGroup,
-            href: "#",
-          },
-          {
             name: "Blog",
             desc: "The latest posts and changes",
             icon: IconFileText,
@@ -128,12 +122,6 @@ const NAV_ITEMS = [
             name: "Changelog",
             desc: "See what shipped",
             icon: IconActivity,
-            href: "#",
-          },
-          {
-            name: "Press",
-            desc: "Read the latest news",
-            icon: IconWorld,
             href: "#",
           },
         ],
@@ -153,18 +141,6 @@ const NAV_ITEMS = [
             icon: IconSchool,
             href: "#",
           },
-          {
-            name: "Knowledge Base",
-            desc: "Find help quickly",
-            icon: IconHelp,
-            href: "#",
-          },
-          {
-            name: "Community",
-            desc: "Join the conversation",
-            icon: IconMessages,
-            href: "#",
-          },
         ],
       },
       {
@@ -174,18 +150,6 @@ const NAV_ITEMS = [
             name: "Next.js",
             desc: "The native Next.js platform",
             icon: IconCode,
-            href: "#",
-          },
-          {
-            name: "Nuxt",
-            desc: "The progressive web framework",
-            icon: IconGrid4x4,
-            href: "#",
-          },
-          {
-            name: "Svelte",
-            desc: "The web's efficient UI framework",
-            icon: IconSparkles,
             href: "#",
           },
           {
@@ -224,12 +188,6 @@ const NAV_ITEMS = [
             icon: IconSparkles,
             href: "#",
           },
-          {
-            name: "Multi-tenant Platforms",
-            desc: "Scale apps with one codebase",
-            icon: IconStack2,
-            href: "#",
-          },
         ],
       },
       {
@@ -251,12 +209,6 @@ const NAV_ITEMS = [
             name: "Partner Finder",
             desc: "Get help from solution partners",
             icon: IconUsers,
-            href: "#",
-          },
-          {
-            name: "Turborepo",
-            desc: "Speed with Enterprise scale",
-            icon: IconCpu,
             href: "#",
           },
         ],

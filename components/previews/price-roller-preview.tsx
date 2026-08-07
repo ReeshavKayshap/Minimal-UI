@@ -12,7 +12,7 @@ export default function PriceRollerPreview() {
   const [activePlan, setActivePlan] = useState("monthly");
 
   return (
-    <div className="w-full flex items-center justify-center py-20 h-screen">
+    <div className="w-full flex items-center justify-center py-20 ">
       <PriceRoller
         plans={plans}
         value={activePlan}

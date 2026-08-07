@@ -41,6 +41,7 @@
       "type": "registry:ui",
       "dependencies": [
         "motion",
+        "@tabler/icons-react",
         "clsx",
         "tailwind-merge"
       ],
@@ -57,6 +58,7 @@
       "type": "registry:ui",
       "dependencies": [
         "motion",
+        "@tabler/icons-react",
         "clsx",
         "tailwind-merge"
       ],
@@ -71,11 +73,7 @@
     {
       "name": "text-hover",
       "type": "registry:ui",
-      "dependencies": [
-        "motion",
-        "clsx",
-        "tailwind-merge"
-      ],
+      "dependencies": ["motion", "clsx", "tailwind-merge"],
       "registryDependencies": [],
       "files": [
         {
@@ -87,11 +85,7 @@
     {
       "name": "stamp-book-reveal",
       "type": "registry:ui",
-      "dependencies": [
-        "motion",
-        "clsx",
-        "tailwind-merge"
-      ],
+      "dependencies": ["motion", "clsx", "tailwind-merge"],
       "registryDependencies": [],
       "files": [
         {
@@ -120,14 +114,40 @@
     {
       "name": "priceroller",
       "type": "registry:ui",
+      "dependencies": ["motion", "clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/core/PriceRoller.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "404-animation",
+      "type": "registry:ui",
+      "dependencies": ["motion", "clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/core/404-Animation.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spatial-tooltip",
+      "type": "registry:ui",
       "dependencies": [
+        "motion",
+        "@tabler/icons-react",
         "clsx",
         "tailwind-merge"
       ],
       "registryDependencies": [],
       "files": [
         {
-          "path": "components/core/PriceRoller.tsx",
+          "path": "components/core/Spatial-Tooltip.tsx",
           "type": "registry:ui"
         }
       ]

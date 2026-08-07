@@ -57,6 +57,20 @@ const ALL_COMPONENTS = [
     thumbnailVideo: "/videos/PriceRoller.mp4",
     thumbnailSrc: "/thumbnails/PriceRoller.png",
   },
+  {
+    slug: "404-animation",
+    name: "404Animation",
+    description: "404 animation with smooth animation.",
+    thumbnailVideo: "/videos/404Animation.mp4",
+    thumbnailSrc: "/thumbnails/404Animation.png",
+  },
+  {
+    slug: "spatial-tooltip",
+    name: "SpatialTooltip",
+    description: "Spatial tooltip with smooth animation.",
+    thumbnailVideo: "/videos/SpatialTooltip.mp4",
+    thumbnailSrc: "/thumbnails/SpatialTooltip.png",
+  },
 ];
 
 export default function Components() {

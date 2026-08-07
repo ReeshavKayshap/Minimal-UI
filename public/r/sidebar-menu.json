@@ -3,6 +3,7 @@
   "name": "sidebar-menu",
   "dependencies": [
     "motion",
+    "@tabler/icons-react",
     "clsx",
     "tailwind-merge"
   ],

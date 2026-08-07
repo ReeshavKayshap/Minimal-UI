@@ -1,7 +1,6 @@
 {
-  "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "minimal-ui",
-  "homepage": "https://minimal-ui-eta.vercel.app",
+  "homepage": "https://minimal-ui.com",
   "items": [
     {
       "name": "option-toggle",
@@ -40,7 +39,12 @@
     {
       "name": "faq",
       "type": "registry:ui",
-      "dependencies": ["motion", "clsx", "tailwind-merge"],
+      "dependencies": [
+        "motion",
+        "@tabler/icons-react",
+        "clsx",
+        "tailwind-merge"
+      ],
       "registryDependencies": [],
       "files": [
         {
@@ -52,7 +56,12 @@
     {
       "name": "sidebar-menu",
       "type": "registry:ui",
-      "dependencies": ["motion", "clsx", "tailwind-merge"],
+      "dependencies": [
+        "motion",
+        "@tabler/icons-react",
+        "clsx",
+        "tailwind-merge"
+      ],
       "registryDependencies": [],
       "files": [
         {
@@ -64,7 +73,6 @@
     {
       "name": "text-hover",
       "type": "registry:ui",
-      "title": "Text Hover",
       "dependencies": ["motion", "clsx", "tailwind-merge"],
       "registryDependencies": [],
       "files": [
@@ -106,11 +114,40 @@
     {
       "name": "priceroller",
       "type": "registry:ui",
-      "dependencies": ["clsx", "tailwind-merge"],
+      "dependencies": ["motion", "clsx", "tailwind-merge"],
       "registryDependencies": [],
       "files": [
         {
           "path": "components/core/PriceRoller.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "404-animation",
+      "type": "registry:ui",
+      "dependencies": ["motion", "clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/core/404-Animation.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spatial-tooltip",
+      "type": "registry:ui",
+      "dependencies": [
+        "motion",
+        "@tabler/icons-react",
+        "clsx",
+        "tailwind-merge"
+      ],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/core/Spatial-Tooltip.tsx",
           "type": "registry:ui"
         }
       ]

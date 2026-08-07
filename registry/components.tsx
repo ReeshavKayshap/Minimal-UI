@@ -109,4 +109,32 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
     ),
     previewFileName: "price-roller-preview.tsx",
   },
+  "404-animation": {
+    title: "404 Animation",
+    description:
+      "Interactive 404 text composed of tiny face icon particles that spring away when hovered.",
+    preview: dynamic(
+      () => import("@/components/previews/404-animation-preview"),
+    ),
+    docs: dynamic(() =>
+      import("@/components/docs/404-animation-docs").then(
+        (mod) => mod.Animation404Docs,
+      ),
+    ),
+    previewFileName: "404-animation-preview.tsx",
+  },
+  "spatial-tooltip": {
+    title: "Spatial Tooltip",
+    description:
+      "A floating toolbar tooltip with fluid spring-driven clip-path reveal animations.",
+    preview: dynamic(
+      () => import("@/components/previews/spatial-tooltip-preview"),
+    ),
+    docs: dynamic(() =>
+      import("@/components/docs/spatial-tooltip-docs").then(
+        (mod) => mod.SpatialTooltipDocs,
+      ),
+    ),
+    previewFileName: "spatial-tooltip-preview.tsx",
+  },
 };
