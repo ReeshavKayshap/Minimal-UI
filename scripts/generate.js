@@ -42,7 +42,7 @@ if (fs.existsSync(registryPath)) {
   const initialRegistry = {
     $schema: "https://ui.shadcn.com/schema/registry.json",
     name: "minimal-ui",
-    homepage: "https://minimal-ui-eta.vercel.app",
+    homepage: "https://minimalui.rshv.dev",
     items: [
       {
         name: slug,

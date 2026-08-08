@@ -16,7 +16,7 @@ const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
   (process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
-    : "https://minimal-ui-eta.vercel.app");
+    : "https://minimalui.rshv.dev");
 
 export function InstallCommand({ componentName }: InstallCommandProps) {
   const [activeManager, setActiveManager] = useState<PackageManager>("npm");
