@@ -137,4 +137,18 @@ export const COMPONENT_REGISTRY: Record<string, ComponentDefinition> = {
     ),
     previewFileName: "spatial-tooltip-preview.tsx",
   },
+  "eat-me-button": {
+    title: "Eat Me Button",
+    description:
+      "A hand-drawn button that takes bites, bursts into crumbs, and automatically returns.",
+    preview: dynamic(
+      () => import("@/components/previews/eat-me-button-preview"),
+    ),
+    docs: dynamic(() =>
+      import("@/components/docs/eat-me-button-docs").then(
+        (mod) => mod.EatMeButtonDocs,
+      ),
+    ),
+    previewFileName: "eat-me-button-preview.tsx",
+  },
 };

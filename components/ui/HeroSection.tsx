@@ -5,11 +5,19 @@ import Particles from "./herosectionbg";
 import { IconArrowNarrowRightDashed } from "@tabler/icons-react";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
+import { useSyncExternalStore } from "react";
+
+const subscribeToMount = () => () => {};
 
 export default function HeroSection() {
   const { resolvedTheme } = useTheme();
+  const mounted = useSyncExternalStore(
+    subscribeToMount,
+    () => true,
+    () => false,
+  );
 
-  const silkColor = resolvedTheme === "dark" ? "#2233ee" : "#9cbfff";
+  const isDarkTheme = mounted && resolvedTheme === "dark";
 
   return (
     <section className="relative w-full min-h-screen flex flex-col justify-center items-center ">
@@ -18,9 +26,7 @@ export default function HeroSection() {
           particleCount={150}
           particleSpread={7}
           particleColors={
-            resolvedTheme === "dark"
-              ? ["#2B7FFF", "#2B7FFF"]
-              : ["#2233ee", "#2233ee"]
+            isDarkTheme ? ["#2B7FFF", "#2B7FFF"] : ["#2233ee", "#2233ee"]
           }
           moveParticlesOnHover
           particleHoverFactor={2}
@@ -110,7 +116,8 @@ export default function HeroSection() {
           target="_blank"
           rel="noopener noreferrer"
           className="text-gray-400 font-pixel-square underline underline-offset-3 decoration-gray-400 decoration-1
-          hover:text-gray-200 hover:decoration-gray-200 transition-all duration-300 ease-out cursor-pointer"
+         hover:text-gray-800 dark:hover:text-gray-200 hover:decoration-gray-800 dark:hover:decoration-gray-200 transition-all
+          duration-300 ease-out cursor-pointer"
         >
           Reeshav
         </Link>

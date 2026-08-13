@@ -18,7 +18,7 @@ const demoComponentsList = [
 
 export default function SidebarPreview() {
   return (
-    <div className="w-full h-full min-h-[600px] relative overflow-hidden">
+    <div className="w-full h-full min-h-150 relative overflow-hidden">
       <Sidebar
         items={demoComponentsList}
         title="All Components"

@@ -17,6 +17,7 @@ const COMPONENT_LINKS = [
   { name: "Price Roller", slug: "price-roller" },
   { name: "404 Animation", slug: "404-animation" },
   { name: "Spatial Tooltip", slug: "spatial-tooltip" },
+  { name: "Eat Me Button", slug: "eat-me-button" },
 ];
 
 function Sidebar() {

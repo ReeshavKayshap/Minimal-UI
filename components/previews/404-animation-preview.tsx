@@ -4,7 +4,7 @@ import Interactive404 from "@/components/core/404-Animation";
 
 export default function Animation404Preview() {
   return (
-    <div className="flex items-center justify-center w-full h-screen">
+    <div className="flex items-center justify-center w-full ">
       <Interactive404
         text="404"
         width={800}

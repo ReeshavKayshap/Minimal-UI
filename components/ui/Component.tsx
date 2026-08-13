@@ -71,6 +71,13 @@ const ALL_COMPONENTS = [
     thumbnailVideo: "/videos/SpatialTooltip.mp4",
     thumbnailSrc: "/thumbnails/SpatialTooltip.png",
   },
+  {
+    slug: "eat-me-button",
+    name: "EatMeButton",
+    description: "A button that 'eats' the user on click.",
+    thumbnailVideo: "/videos/EatMeButton.mp4",
+    thumbnailSrc: "/thumbnails/EatMeButton.png",
+  },
 ];
 
 export default function Components() {

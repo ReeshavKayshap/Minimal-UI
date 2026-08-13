@@ -1,8 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Command } from "cmdk";
-import { IconSearch, IconBox } from "@tabler/icons-react";
+import { IconSearch, IconBox, IconBrandX } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import Link from "next/dist/client/link";
 
 export function CommandPalette({
   open,
@@ -70,6 +71,24 @@ export function CommandPalette({
           icon: IconBox,
           href: "/components/price-roller",
         },
+        {
+          id: "404-animation",
+          label: "404 Animation",
+          icon: IconBox,
+          href: "/components/404-animation",
+        },
+        {
+          id: "spatial-tooltip",
+          label: "Spatial Tooltip",
+          icon: IconBox,
+          href: "/components/spatial-tooltip",
+        },
+        {
+          id: "eat-me-button",
+          label: "Eat Me Button",
+          icon: IconBox,
+          href: "/components/eat-me-button",
+        },
       ],
     },
   ];
@@ -103,9 +122,11 @@ export function CommandPalette({
       />
       <Command
         label="Global Command Menu"
-        className="fixed top-1/4 left-1/2 transform -translate-x-1/2 w-full max-w-xl bg-white dark:bg-neutral-950 rounded-xl shadow-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200"
+        className="fixed top-1/4 left-1/2 transform -translate-x-1/2 w-full  max-w-xl bg-gray-50 dark:bg-neutral-950 
+        rounded-2xl shadow-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden z-50 
+        animate-in fade-in zoom-in-95 duration-200 "
       >
-        <div className="flex items-center border-b border-neutral-200 dark:border-neutral-800 px-4 py-3">
+        <div className="flex items-center  px-4 py-3">
           <IconSearch className="size-5 text-neutral-500 shrink-0 mr-2" />
           <Command.Input
             autoFocus
@@ -123,7 +144,11 @@ export function CommandPalette({
           </div>
         </div>
 
-        <Command.List className="max-h-75 overflow-y-auto p-2">
+        <Command.List
+          className="max-h-80 bg-white overflow-y-auto  m-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
+        rounded-2xl border border-neutral-200 dark:border-neutral-800
+        "
+        >
           <Command.Empty className="p-6 text-center text-sm text-neutral-500">
             No results found.
           </Command.Empty>
@@ -131,15 +156,19 @@ export function CommandPalette({
           {data.map((group) => (
             <Command.Group
               key={group.heading}
-              heading={group.heading}
-              className="px-2 py-2 text-xs font-medium text-neutral-500"
+              className="px-2 py-2 text-xs font-medium text-neutral-500 overflow-hidden"
             >
+              <div className="px-2 py-1.5 text-xs font-medium font-inter text-neutral-500 dark:text-neutral-400">
+                {group.heading}
+              </div>
               {group.items.map((item) => (
                 <Command.Item
                   key={item.id}
                   value={item.label}
                   onSelect={() => handleSelect(item.href)}
-                  className="flex items-center gap-2 px-2 py-3 mt-1 rounded-md cursor-pointer hover:bg-neutral-100 dark:hover:bg-neutral-900 aria-selected:bg-neutral-100 dark:aria-selected:bg-neutral-900 text-sm text-neutral-900 dark:text-neutral-100 transition-colors"
+                  className="flex items-center gap-2 px-2 py-3 mt-1 font-inter font-medium rounded-md cursor-pointer
+                   hover:bg-neutral-200 dark:hover:bg-neutral-900 aria-selected:bg-neutral-100 dark:aria-selected:bg-neutral-900
+                   text-sm text-neutral-900 dark:text-neutral-100 transition-colors"
                 >
                   <item.icon className="w-4 h-4 text-neutral-500 shrink-0" />
                   {item.label}
@@ -148,6 +177,30 @@ export function CommandPalette({
             </Command.Group>
           ))}
         </Command.List>
+
+        <div className="flex items-center justify-between px-4 py-3 ">
+          <span className="text-neutral-900 dark:text-white font-inter font-medium ">
+            <Link
+              href="https://x.com/rshvksyp"
+              target="_blank"
+              rel="noopener noreferrer"
+              className=" flex items-center gap-2 cursor-pointer"
+            >
+              <span className="text-neutral-900 dark:text-white ">
+                <IconBrandX size={17} />
+              </span>
+              <span className="text-sm">Follow for updates</span>
+            </Link>
+          </span>
+          <div className="flex items-center gap-2 text-[13px]">
+            <span className="text-neutral-400 dark:text-neutral-500">
+              Go to page
+            </span>
+            <kbd className="pointer-events-none inline-flex h-5 min-w-5 select-none items-center justify-center rounded border border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 px-1.5 font-inter text-[10px] font-medium text-neutral-500">
+              ↵
+            </kbd>
+          </div>
+        </div>
       </Command>
     </>
   );

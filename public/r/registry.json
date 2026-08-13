@@ -151,6 +151,18 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "eat-me-button",
+      "type": "registry:ui",
+      "dependencies": ["motion", "clsx", "tailwind-merge"],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "components/core/Eat-me-button.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
