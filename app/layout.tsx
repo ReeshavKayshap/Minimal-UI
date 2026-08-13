@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/ui/Nav";
 import { Inter, Instrument_Serif } from "next/font/google";
+import { Caveat } from "next/font/google";
+
 import {
   GeistPixelSquare,
   GeistPixelGrid,
@@ -13,6 +15,12 @@ import {
 
 import { ThemeProvider } from "@/app/Provider/theme-provider";
 import { SITE_INFO, X_HANDLE } from "@/config/site";
+
+const caveat = Caveat({ 
+  subsets: ["latin"], 
+  weight: ["500", "600"],
+  variable: "--font-caveat",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -114,7 +122,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${instrumentSerif.variable} ${GeistPixelSquare.variable} ${GeistPixelGrid.variable} ${GeistPixelCircle.variable} ${GeistPixelTriangle.variable} ${GeistPixelLine.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${instrumentSerif.variable} ${caveat.variable} ${GeistPixelSquare.variable} ${GeistPixelGrid.variable} ${GeistPixelCircle.variable} ${GeistPixelTriangle.variable} ${GeistPixelLine.variable}  antialiased`}
         suppressHydrationWarning
       >
         <ThemeProvider
