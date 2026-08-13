@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, MotionValue } from "framer-motion";
+import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -262,10 +263,16 @@ export default function Interactive404({
   pixelThreshold = 70,
   floatRange = 4,
   floatDuration = 4,
-  archColor = "#c7cfd9",
-  eyeColor = "#aab4c2",
+  archColor,
+  eyeColor,
   className = "",
 }: Interactive404Props) {
+  const { resolvedTheme } = useTheme();
+  const effectiveArchColor =
+    archColor ?? (resolvedTheme === "dark" ? "#ffffff" : "#c7cfd9");
+  const effectiveEyeColor =
+    eyeColor ?? (resolvedTheme === "dark" ? "#ffffff" : "#aab4c2");
+
   const stageRef = useRef<HTMLDivElement>(null);
   const [particles, setParticles] = useState<ParticleData[]>([]);
 
@@ -339,8 +346,8 @@ export default function Interactive404({
             iconSize={iconSize}
             floatRange={floatRange}
             floatDuration={floatDuration}
-            archColor={archColor}
-            eyeColor={eyeColor}
+            archColor={effectiveArchColor}
+            eyeColor={effectiveEyeColor}
           />
         ))}
       </div>

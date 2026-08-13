@@ -1,8 +1,11 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import Interactive404 from "@/components/core/404-Animation";
 
 export default function Animation404Preview() {
+  const { resolvedTheme } = useTheme();
+
   return (
     <div className="flex items-center justify-center w-full ">
       <Interactive404
@@ -18,8 +21,8 @@ export default function Animation404Preview() {
         pixelThreshold={70}
         floatRange={4}
         floatDuration={4}
-        archColor="#c7cfd9"
-        eyeColor="#aab4c2"
+        archColor={resolvedTheme === "dark" ? "#ffffff" : "#c7cfd9"}
+        eyeColor={resolvedTheme === "dark" ? "#ffffff" : "#aab4c2"}
       />
     </div>
   );

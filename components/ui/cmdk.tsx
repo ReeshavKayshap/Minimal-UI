@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Command } from "cmdk";
-import { IconSearch, IconBox, IconBrandX } from "@tabler/icons-react";
+import { IconSearch, IconAtom2Filled, IconBrandX } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import Link from "next/dist/client/link";
 
@@ -26,67 +26,67 @@ export function CommandPalette({
         {
           id: "repulsio-text",
           label: "Repulsio Text",
-          icon: IconBox,
+          icon: IconAtom2Filled,
           href: "/components/repulsio-text",
         },
         {
           id: "option-toggle",
           label: "Option Toggle",
-          icon: IconBox,
+          icon: IconAtom2Filled,
           href: "/components/option-toggle",
         },
         {
           id: "reveal-password",
           label: "Reveal Password",
-          icon: IconBox,
+          icon: IconAtom2Filled,
           href: "/components/reveal-password",
         },
         {
           id: "faq",
           label: "FAQ",
-          icon: IconBox,
+          icon: IconAtom2Filled,
           href: "/components/faq",
         },
         {
           id: "sidebar-menu",
           label: "Sidebar Menu",
-          icon: IconBox,
+          icon: IconAtom2Filled,
           href: "/components/sidebar-menu",
         },
         {
           id: "stamp-book-reveal",
           label: "Stamp Book Reveal",
-          icon: IconBox,
+          icon: IconAtom2Filled,
           href: "/components/stamp-book-reveal",
         },
         {
           id: "vercel-nav-bar",
           label: "Vercel Nav Bar",
-          icon: IconBox,
+          icon: IconAtom2Filled,
           href: "/components/vercel-nav-bar",
         },
         {
           id: "price-roller",
           label: "Price Roller",
-          icon: IconBox,
+          icon: IconAtom2Filled,
           href: "/components/price-roller",
         },
         {
           id: "404-animation",
           label: "404 Animation",
-          icon: IconBox,
+          icon: IconAtom2Filled,
           href: "/components/404-animation",
         },
         {
           id: "spatial-tooltip",
           label: "Spatial Tooltip",
-          icon: IconBox,
+          icon: IconAtom2Filled,
           href: "/components/spatial-tooltip",
         },
         {
           id: "eat-me-button",
           label: "Eat Me Button",
-          icon: IconBox,
+          icon: IconAtom2Filled,
           href: "/components/eat-me-button",
         },
       ],
@@ -126,12 +126,12 @@ export function CommandPalette({
         rounded-2xl shadow-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden z-50 
         animate-in fade-in zoom-in-95 duration-200 "
       >
-        <div className="flex items-center  px-4 py-3">
+        <div className="flex items-center  px-4 py-4">
           <IconSearch className="size-5 text-neutral-500 shrink-0 mr-2" />
           <Command.Input
             autoFocus
             placeholder="Search..."
-            className="w-full bg-transparent outline-none text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-500"
+            className="w-full bg-transparent outline-none font-inter text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-500"
           />
           <div className="flex items-center gap-2"></div>
           <div className="flex items-center gap-1 shrink-0 ">
@@ -145,8 +145,8 @@ export function CommandPalette({
         </div>
 
         <Command.List
-          className="max-h-80 bg-white overflow-y-auto  m-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
-        rounded-2xl border border-neutral-200 dark:border-neutral-800
+          className="max-h-80 bg-white overflow-y-auto  mx-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
+        rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-xs  dark:bg-neutral-950
         "
         >
           <Command.Empty className="p-6 text-center text-sm text-neutral-500">
@@ -158,7 +158,7 @@ export function CommandPalette({
               key={group.heading}
               className="px-2 py-2 text-xs font-medium text-neutral-500 overflow-hidden"
             >
-              <div className="px-2 py-1.5 text-xs font-medium font-inter text-neutral-500 dark:text-neutral-400">
+              <div className="px-3 py-1.5 text-xs font-medium font-inter text-neutral-500 dark:text-neutral-400">
                 {group.heading}
               </div>
               {group.items.map((item) => (
@@ -166,9 +166,9 @@ export function CommandPalette({
                   key={item.id}
                   value={item.label}
                   onSelect={() => handleSelect(item.href)}
-                  className="flex items-center gap-2 px-2 py-3 mt-1 font-inter font-medium rounded-md cursor-pointer
-                   hover:bg-neutral-200 dark:hover:bg-neutral-900 aria-selected:bg-neutral-100 dark:aria-selected:bg-neutral-900
-                   text-sm text-neutral-900 dark:text-neutral-100 transition-colors"
+                  className="flex items-center gap-2 px-2 py-3 mt-1 font-inter font-medium rounded-lg cursor-pointer
+                   hover:bg-neutral-100 dark:hover:bg-neutral-900  
+                   text-sm text-neutral-900 dark:text-neutral-100 transition-colors ease-out duration-200"
                 >
                   <item.icon className="w-4 h-4 text-neutral-500 shrink-0" />
                   {item.label}
@@ -178,7 +178,7 @@ export function CommandPalette({
           ))}
         </Command.List>
 
-        <div className="flex items-center justify-between px-4 py-3 ">
+        <div className="flex items-center justify-between px-4 py-4 ">
           <span className="text-neutral-900 dark:text-white font-inter font-medium ">
             <Link
               href="https://x.com/rshvksyp"
